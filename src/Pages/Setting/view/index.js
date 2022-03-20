@@ -39,11 +39,7 @@ const Settings = () => {
     <div className="userAdmin-Settings">
       <div className="userAdmin--header">
         <h2>
-          {userState === "user"
-            ? "User Settings"
-            : userState === "rider"
-            ? "Rider Settings"
-            : null}
+          User Settings
           <br />
           <p>
             Here, you can edit your profile, change your preferences and log in
@@ -90,78 +86,6 @@ const Settings = () => {
                 </Col>
               </Row>
             </div>
-          )}
-          {userState === "rider" && (
-            <>
-              <h2 className="riderPaymentheading">Enter your full details</h2>
-              <Row>
-                <Col>
-                  <InputFeildComponent label="Alternative Number" />
-                </Col>
-                <Col>
-                  <InputFeildComponent label="Permanent Address" />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <InputFeildComponent label="Guardian's Name" />
-                </Col>
-                <Col>
-                  <InputFeildComponent label="Guardian Contact" />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <InputFeildComponent label="Guardian's Address" />
-                </Col>
-                <Col>
-                  <AutocompleteSetting name="Vechile Type" />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <InputFeildComponent
-                    arrayOfOption={["Scoter", "Bike", "Van"]}
-                    label="Vechilr Number"
-                  />
-                </Col>
-                <Col>
-                  <LableCom name="Submit License" />
-                  <div className="userAdmin-Settings--form--citizen">
-                    <div className="userAdmin-Settings--form--citizen-imgcontainer">
-                      <img src="/assets/upload.png" alt="upload" />
-                    </div>
-                    <Link to="#">
-                      <h5>Upload your file here</h5>
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <LableCom name="Submit Bill Book" />
-                  <div className="userAdmin-Settings--form--citizen">
-                    <div className="userAdmin-Settings--form--citizen-imgcontainer">
-                      <img src="/assets/upload.png" alt="upload" />
-                    </div>
-                    <Link to="#">
-                      <h5>Upload your file here</h5>
-                    </Link>
-                  </div>
-                </Col>
-                <Col>
-                  <LableCom name="Submit Citizenship" />
-                  <div className="userAdmin-Settings--form--citizen">
-                    <div className="userAdmin-Settings--form--citizen-imgcontainer">
-                      <img src="/assets/upload.png" alt="upload" />
-                    </div>
-                    <Link to="#">
-                      <h5>Upload your file here</h5>
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-            </>
           )}
         </div>
       </div>

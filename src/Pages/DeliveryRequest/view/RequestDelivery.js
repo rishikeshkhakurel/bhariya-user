@@ -16,6 +16,7 @@ import Loading from "../../../common/Components/loading/LoadingComp";
 import AlertBox from "../../../common/AlertBox";
 import { arrayOfLocation } from "../../../common/utils/LocationObject";
 import AutocompleteSetting from "../../../common/Components/AutoComplete";
+import { FacebookShareButton } from "react-share";
 import {
   useSendbulkdataMutation,
   useSendRequestDeliveryFormMutation,
@@ -24,6 +25,7 @@ import {
   useGetuserSettingQuery,
   useSetSearchUserQuery,
 } from "../../../Redux/Services/FetchApi";
+import { Col, Form, Row } from "react-bootstrap";
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
     color: "#28bb46",
@@ -442,7 +444,7 @@ const RequestDeliveryForm = () => {
         </DailogComp>
         <div className="userhomepage_banner">
           <div className="userhomepage_banner-imgcontainer">
-            <img src="/assets/happydeliveryMan.png" alt="img" />
+            <img src="/assets/happydeliveryman.png" alt="img" />
           </div>
           <div className="userhomepage_banner-caption">
             <h2>Delivery service that is always next to you</h2>
@@ -540,6 +542,50 @@ const RequestDeliveryForm = () => {
                       </div>
                       <h4>Copy</h4>
                     </div>
+                    <FacebookShareButton url={shareUrl}>
+                      <div className="shareContainer">
+                        <div
+                          className="shareContainer__imgcontainer"
+                          style={{ background: "#3b5999" }}
+                        >
+                          <img src="/assets/facebook.png" alt="facebook" />
+                        </div>
+                        <h4>Facebook</h4>
+                      </div>
+                    </FacebookShareButton>
+                    <FacebookShareButton url={shareUrl}>
+                      <div className="shareContainer">
+                        <div
+                          className="shareContainer__imgcontainer"
+                          style={{ background: "#28BB46" }}
+                        >
+                          <img src="/assets/whatsapp.png" alt="facebook" />
+                        </div>
+                        <h4>Whatsapp</h4>
+                      </div>
+                    </FacebookShareButton>
+                    <FacebookShareButton url={shareUrl}>
+                      <div className="shareContainer">
+                        <div
+                          className="shareContainer__imgcontainer"
+                          style={{ background: "#9069AE" }}
+                        >
+                          <img src="/assets/viber.png" alt="facebook" />
+                        </div>
+                        <h4>Viber</h4>
+                      </div>
+                    </FacebookShareButton>
+                    <FacebookShareButton url={shareUrl}>
+                      <div className="shareContainer">
+                        <div
+                          className="shareContainer__imgcontainer"
+                          style={{ background: "#158CFF" }}
+                        >
+                          <img src="/assets/messenger.png" alt="facebook" />
+                        </div>
+                        <h4>Messenger</h4>
+                      </div>
+                    </FacebookShareButton>
                   </div>
                   {shareLink && (
                     <p className="SharelinkMsg">your share link is coppied</p>
@@ -561,7 +607,7 @@ const RequestDeliveryForm = () => {
                   onChange={(e) => setBusiness(e.target.value)}
                 >
                   <MenuItem value="none">Chose Business</MenuItem>
-                  {getBusinessForm?.data?.map((value, index) => (
+                  {getBusinessForm?.data?.results?.map((value, index) => (
                     <MenuItem value={`${value.businessname}`}>
                       {value.businessname}
                     </MenuItem>
@@ -583,8 +629,8 @@ const RequestDeliveryForm = () => {
                   <LableCom name="Package Information" />
                 </div>
                 <div>
-                  <div>
-                    <div>
+                  <Row>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Eg: book"
                         label="Product Name"
@@ -592,8 +638,8 @@ const RequestDeliveryForm = () => {
                         value={productname}
                         onChange={(e) => setProductname(e.target.value)}
                       />
-                    </div>
-                    <div>
+                    </Col>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Any sensitive case"
                         label="Package details"
@@ -601,10 +647,10 @@ const RequestDeliveryForm = () => {
                         value={packagedetail}
                         onChange={(e) => setPackagedetail(e.target.value)}
                       />
-                    </div>
-                  </div>
-                  <div>
-                    <div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Eg: Rs 1300"
                         label="Package Value"
@@ -612,8 +658,8 @@ const RequestDeliveryForm = () => {
                         value={packagevalue}
                         onChange={(e) => setPackageValue(e.target.value)}
                       />
-                    </div>
-                    <div>
+                    </Col>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Eg: Rs1200"
                         label="COD"
@@ -621,8 +667,8 @@ const RequestDeliveryForm = () => {
                         value={cod}
                         onChange={(e) => setCod(e.target.value)}
                       />
-                    </div>
-                  </div>
+                    </Col>
+                  </Row>
                   <div className="userhomepage_form-details-form-search">
                     <div className="userhomepage_form-details-form-search-input">
                       <input
@@ -677,8 +723,8 @@ const RequestDeliveryForm = () => {
                   <LableCom name="Delivery Information" />
                 </div>
                 <div>
-                  <div>
-                    <div>
+                  <Row>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Name"
                         label="Delivery to"
@@ -686,8 +732,8 @@ const RequestDeliveryForm = () => {
                         value={deliveryTo}
                         onChange={(e) => setDeliveryto(e.target.value)}
                       />
-                    </div>
-                    <div>
+                    </Col>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Number"
                         label="Phone Number"
@@ -695,10 +741,10 @@ const RequestDeliveryForm = () => {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                       />
-                    </div>
-                  </div>
-                  <div>
-                    <div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Email Address"
                         label="Email"
@@ -706,8 +752,8 @@ const RequestDeliveryForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
-                    </div>
-                    <div>
+                    </Col>
+                    <Col>
                       <InputFeildComponent
                         placeholder="Eg: Koteshor"
                         label="Address"
@@ -715,10 +761,10 @@ const RequestDeliveryForm = () => {
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                       />
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: "0px" }}>
-                    <div>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "0px" }}>
+                    <Col>
                       <AutocompleteSetting
                         name="Delivery Branch"
                         arrayOfOption={branchOption}
@@ -727,8 +773,8 @@ const RequestDeliveryForm = () => {
                         onChange={(e, v) => setDeliveryBranch(v)}
                         value={deliveryBranch}
                       />
-                    </div>
-                    <div>
+                    </Col>
+                    <Col>
                       {fetchOrAdd ? (
                         <InputFeildComponent
                           placeholder="Live Location"
@@ -771,8 +817,8 @@ const RequestDeliveryForm = () => {
                           {fetchOrAdd ? "Add Custom" : "Add Live Location"}
                         </button>
                       </div>
-                    </div>
-                  </div>
+                    </Col>
+                  </Row>
                 </div>
                 <div>
                   {/* <LableCom name="When Would You like to Place A Delivery Order?" />
@@ -820,15 +866,17 @@ const RequestDeliveryForm = () => {
                     </div>
                   )} */}
 
-                  <div>
-                    <Checkbox
-                      style={{ color: "#28bb46" }}
+                  <Form.Group
+                    className="mb-3 userhomepage_form-details-form_buttonGrop"
+                    id="formGridCheckbox"
+                    onChange={(e) => setRequestPickUp(!requestPickUp)}
+                  >
+                    <Form.Check
                       checked={requestPickUp}
                       type="checkbox"
                       label="Request pick up"
-                      onChange={(e) => setRequestPickUp(!requestPickUp)}
                     />
-                  </div>
+                  </Form.Group>
                   {requestPickUp && (
                     <div className="userhomepage_form-details-form_delivery">
                       <h3>
