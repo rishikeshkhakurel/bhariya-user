@@ -1,0 +1,346 @@
+.userAdmin-Deliveryhistory {
+  & .userAdmin--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    @media (max-width: 600px) {
+      flex-wrap: wrap;
+    }
+    &_buttonGroup {
+      & > * {
+        margin-left: 15px;
+        @media (max-width: 600px) {
+          margin: 0px;
+          margin-top: 10px;
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+  &-table {
+    &-top {
+      margin: 20px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      @media (max-width: 600px) {
+        flex-wrap: wrap;
+      }
+      &_left {
+        font-size: 20px;
+        & input {
+          border: none;
+          font-size: 14px;
+          outline: none;
+          padding: 0px 10px;
+          background: transparent;
+          @media (max-width: 900px) {
+            margin-bottom: 10px;
+          }
+        }
+      }
+      &_right {
+        display: flex;
+        align-items: center;
+        @media (max-width: 600px) {
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}
+
+.MuiTableCell-stickyHeader {
+  font-weight: 600 !important;
+  background: white !important;
+  color: $neutral-blacktwo !important;
+}
+.MuiTableCell-root {
+  font-size: 14px !important;
+  font-weight: 4000 !important;
+  color: $neutral-black !important;
+}
+.userTable__paginatin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $primary-colorgrey;
+  margin-top: 20px;
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
+  & .MuiToolbar-gutters {
+    @media (max-width: 600px) {
+      padding-left: 0px;
+    }
+  }
+}
+.userTable__paginatin-2 {
+  display: flex;
+  align-items: center;
+  & button {
+    padding: 10px;
+    background: transparent;
+    font-size: 14px;
+    color: $neutral-blacktwo;
+    border: 1px solid #d1d5db;
+  }
+  & h2 {
+    font-size: 14px;
+    margin-right: 20px;
+    color: $neutral-blackthree;
+  }
+}
+.forPosition {
+  position: relative;
+  overflow: hidden;
+}
+
+.OnlyforFixed {
+  background-color: black;
+  display: block;
+  height: 20px;
+  width: 20px;
+  position: fixed;
+}
+.rowHandeller {
+  & span {
+    white-space: nowrap;
+    & span {
+      color: $neutral-blackthree;
+    }
+  }
+}
+.userAdmin--header_buttonGroup {
+  & button {
+    & input {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: $neutral-blackthree;
+    }
+    & span {
+      &:first-child {
+        font-size: 14px;
+      }
+    }
+  }
+}
+.userAdmin-Deliveryhistory_customizetable {
+  // margin-left: 15px;
+  width: 300px;
+  &_button {
+    margin: 20px 0px;
+    & .MuiButton-root {
+      padding: 2px 16px;
+    }
+    & button {
+      &:last-child {
+        margin-left: 10px;
+      }
+    }
+  }
+  & .MuiFormControlLabel-root {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0px;
+    & .PrivateSwitchBase-root-10 {
+      padding: 0px 10px;
+    }
+    & .MuiTypography-body1 {
+      font-weight: 600;
+      font-size: 14px;
+      color: $neutral-black;
+    }
+    & .MuiCheckbox-root {
+      color: $primary-colorgreen;
+    }
+  }
+}
+.paymentHistory {
+  // padding: 0px !important;
+  & .MuiBox-root-22 {
+    margin: 0px;
+  }
+}
+.paymentTabel {
+  & > * {
+    padding-left: 0px;
+  }
+}
+.paymentHistory {
+  & .MuiTableCell-root {
+    padding-left: 0px;
+  }
+}
+.branchRiderDetails__details {
+  background: white;
+  padding: 20px 30px;
+}
+.nothingtoshow {
+  &__middle {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    & h2 {
+      margin: 5px 0px 20px 0px;
+      font-size: 25px;
+    }
+    & p {
+      color: #585757;
+      font-size: 26px;
+    }
+  }
+}
+.bulktabel__table {
+  margin-top: 40px;
+  & .MuiTableContainer-root {
+    max-height: 400px;
+  }
+  & .simpletabel__button {
+    padding: 30px 20px;
+    & button {
+      margin-right: 15px;
+    }
+  }
+  & span {
+    white-space: nowrap;
+  }
+  & .MuiTableRow-head {
+    white-space: nowrap !important;
+  }
+  & th,
+  & td {
+    border: 1px solid #d1d5db;
+  }
+  // & table {
+  //   width: inherit;
+  //   overflow: scroll;
+  //   & th {
+  //     padding: 10px;
+  //     white-space: nowrap;
+  //   }
+  // }
+}
+.responsivehamburger {
+  background: none;
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 50px;
+  & span {
+    border-radius: 50px;
+    &:nth-child(1) {
+      display: block;
+      height: 3px;
+      background: $primary-colorgreen;
+      width: 25px;
+    }
+    &:nth-child(2) {
+      display: block;
+      height: 3px;
+      margin: 5px 0px;
+      background: $primary-colorgreen;
+      width: 15px;
+    }
+    &:nth-child(3) {
+      display: block;
+      height: 3px;
+      background: $primary-colorgreen;
+      width: 25px;
+    }
+  }
+}
+.bulktabeldata {
+  & input {
+    outline: none;
+    border: none;
+  }
+}
+.MuiButton-text {
+  padding: 0px !important;
+  margin-left: 10px !important;
+}
+// .MuiTableCell-stickyHeader {
+//   white-space: nowrap;
+// }
+.userhomepage_form-details-form-search {
+  position: relative;
+}
+.userhomepage_form-details-form-search__container {
+  display: block;
+  max-height: 300px;
+  width: 300px;
+  box-shadow: 0px 1px 26px 0px #0000001a;
+  background-color: white;
+  position: absolute;
+  top: 120%;
+  right: 0%;
+  overflow: scroll;
+}
+.isOverFlowed {
+  display: none;
+}
+.userhomepage_form-details-form-search__box {
+  padding: 10px 20px;
+  cursor: pointer;
+  & h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 4px;
+  }
+  & p {
+    font-weight: 400;
+    color: $neutral-blacktwo;
+    margin: 0;
+  }
+}
+.RiderPaymentConformation {
+  & .lableForInput {
+    margin-top: 10px;
+  }
+  & .areyousurecomponent_buttons {
+    margin-top: 20px;
+  }
+}
+.deliverycommentcontainer {
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.deliverySummery-container-right_Comments-box-left {
+  text-transform: capitalize;
+}
+.deliverySummery-container-right_Comments-box-right {
+  width: 100%;
+}
+.addCustomLocation {
+  & .css-2b097c-container {
+    outline: none;
+    height: 44px;
+    width: 100%;
+    border: 1px solid #9ca3af;
+    border-radius: 5px;
+    font-size: 16px;
+    & .css-1hwfws3 {
+      border: none;
+    }
+    & .css-1wy0on6 {
+      display: none;
+    }
+    & .css-yk16xz-control {
+      border: none;
+      min-height: 42px;
+    }
+    & .css-1pahdxg-control {
+      border: 0px;
+      box-shadow: none;
+    }
+  }
+}

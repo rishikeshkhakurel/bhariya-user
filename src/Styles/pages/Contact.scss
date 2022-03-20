@@ -1,0 +1,156 @@
+.contactuspage {
+  position: relative;
+  @media (max-width: 600px) {
+    display: none;
+  }
+  &__banner {
+    padding: 130px;
+    background-color: #dcf7e3;
+    & p {
+      margin: 0px;
+      color: $primary-colorgreen;
+    }
+    & h2 {
+      font-size: 60px;
+      color: black;
+      font-weight: 600;
+    }
+  }
+  &__details {
+    padding: 130px;
+    margin-bottom: 200px;
+    & h1 {
+      font-size: 28px;
+      font-weight: 500;
+    }
+    & p {
+      margin: 0px;
+      font-size: 16px;
+      margin: 15px 0px;
+      color: $neutral-blacktwo;
+    }
+    &__contacts {
+      & p {
+        font-size: 14px;
+        margin: 3px 0px;
+      }
+    }
+    &__icons {
+      margin-top: 10px;
+      font-size: 25px;
+      & > * {
+        margin-right: 3px;
+      }
+      & span {
+        &:nth-child(1) {
+          color: $primary-colorblue;
+        }
+        &:nth-child(2) {
+          color: #833ab4;
+        }
+        &:nth-child(3) {
+          color: $primary-colorred;
+        }
+        &:nth-child(4) {
+          color: #833ab4;
+        }
+      }
+    }
+  }
+  &__form {
+    position: absolute;
+    right: 9%;
+    top: 7%;
+    padding: 50px 30px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    background-color: white;
+    width: 500px;
+    box-shadow: 0px 2px 25px 0px #00000017;
+    & input {
+      border: 1px solid #d1d5db;
+    }
+    &__textarea {
+      margin: 30px 0px;
+      margin-bottom: 20px;
+      & textarea {
+        border: none;
+        outline: none;
+        border: 1px solid #d1d5db;
+        border-radius: 5px;
+      }
+    }
+    & h2 {
+      margin-bottom: 30px;
+    }
+    & label {
+      margin-top: 30px;
+    }
+  }
+}
+.contactuspage__forphone {
+  display: none;
+  position: relative;
+  &__form {
+    position: absolute;
+    margin: 0px 10px;
+    background: white;
+    padding: 40px 20px;
+    border-radius: 20px;
+    top: 12%;
+    box-shadow: 0px 2px 25px 0px #00000017;
+
+    & h2 {
+      margin-bottom: 40px;
+    }
+  }
+  @media (max-width: 600px) {
+    display: block;
+  }
+  & .contactuspage__details {
+    padding: 30px;
+    margin-bottom: 20px;
+    padding-top: 115px;
+  }
+  &__banner {
+    background: #daf5f2;
+    padding: 30px;
+    height: 600px;
+    margin-bottom: 300px;
+    & h4 {
+      font-size: 16px;
+      color: $primary-colorgreen;
+      text-align: center;
+    }
+    & h1 {
+      font-size: 45px;
+      font-weight: 700;
+      text-align: center;
+      color: black;
+    }
+  }
+}
+.contactuspage__forphone__form__inputes {
+  & .inputfeildcomponent {
+    margin-bottom: 30px;
+    box-shadow: none;
+    border: 1px solid #d1d5db;
+  }
+  & textarea {
+    width: 100%;
+    height: 214px;
+    padding: 20px !important;
+    margin-bottom: 25px;
+    outline: none;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+  }
+}
+.confettiexplsion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000000;
+  backface-visibility: visible;
+}

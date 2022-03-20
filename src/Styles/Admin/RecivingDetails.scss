@@ -1,0 +1,273 @@
+.recivingPrewviewRatig {
+  margin-top: 30px;
+  background: white;
+  padding: 30px;
+  border: 1px solid #d1d5db;
+  @media (max-width: 900px) {
+    padding: 10px;
+    margin-top: 10px;
+  }
+  & .row {
+    align-items: center;
+    @media (max-width: 900px) {
+      padding: 0px 10px;
+    }
+  }
+  & h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: $neutral-black;
+    margin-bottom: 20px;
+  }
+  &-imgcontainer {
+    height: 80px;
+    width: 80px;
+
+    border-radius: 100px;
+    overflow: hidden;
+    & img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &-discriptin {
+    & h3 {
+      margin: 0;
+      padding: auto;
+      font-size: 18px;
+      color: 18px;
+      @media (max-width: 900px) {
+        font-size: 15px;
+      }
+    }
+  }
+  &_button {
+    & button {
+      padding: 5px 8px;
+      background: $primary-coloryellow;
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 6px;
+    }
+  }
+}
+.ratingdailog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &--heading {
+    & h2 {
+      font-size: 28px;
+      color: $neutral-black;
+      margin-bottom: 0px;
+      margin: 10px 0px;
+      @media (max-width: 900px) {
+        font-size: 20px;
+      }
+    }
+  }
+  &_subheading {
+    & h2 {
+      font-size: 20px;
+      color: $neutral-black;
+      font-weight: 500;
+      margin: 20px 0px;
+    }
+  }
+  &-textarea {
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    background-color: #eff4ff;
+    width: 400px;
+    width: 400px;
+    @media (max-width: 900px) {
+      width: 300px;
+    }
+    @media (max-width: 600px) {
+      width: 250px;
+    }
+  }
+  &_emoji {
+    & .MuiBox-root {
+      margin: 0px !important;
+    }
+  }
+  &_imgcontainer {
+    height: 100px;
+    width: 100px;
+    position: relative;
+    & img {
+      height: 100%;
+      width: 100%;
+    }
+    &_emoji {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 30px;
+      width: 30px;
+      & img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  &_buttons {
+    width: 100%;
+    & button {
+      margin: 10px 0px;
+      width: 100%;
+    }
+  }
+}
+.MuiDialogTitle-root .MuiTypography-h6 {
+  & button {
+    margin-left: auto;
+  }
+}
+.adminHeader__details-notification {
+  & .dropdown-toggle::after {
+    display: none;
+  }
+  & .btn-primary,
+  .btn-check:active + .btn-primary,
+  .btn-check:checked + .btn-primary,
+  .btn-primary.active,
+  .btn-primary:active,
+  .show > .btn-primary.dropdown-toggle {
+    background-color: transparent;
+    color: $neutral-blacktwo;
+    border-color: white;
+  }
+  & .btn-check:active + .btn-primary:focus,
+  .btn-check:checked + .btn-primary:focus,
+  .btn-primary.active:focus,
+  .btn-primary:active:focus,
+  .show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+  }
+  & .dropdown-menu {
+    border: none;
+  }
+}
+.adminHeader__details-notification-details {
+  box-shadow: 0px 4px 24px 0px #00000017;
+  width: 407px;
+  height: 395px;
+  overflow-y: scroll;
+  @media (max-width: 600px) {
+    width: 322px;
+  }
+  &::-webkit-scrollbar {
+    width: 3px !important;
+  }
+  &-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid #d1d5db;
+    @media (max-width: 600px) {
+      padding: 10px;
+    }
+    & h3 {
+      font-size: 24px;
+      font-weight: 600;
+      color: $neutral-black;
+    }
+  }
+}
+.recivingPrewviewRatig-lay {
+  display: flex;
+  align-items: center;
+  & .recivingPrewviewRatig-discriptin {
+    flex: 1;
+    margin-left: 20px;
+    @media (max-width: 900px) {
+      margin-left: 13px;
+    }
+  }
+}
+.RiderDaillyReciving {
+  &_callender {
+    padding: 20px;
+    &-inputs {
+      display: flex;
+    }
+    &-inputs-1 {
+      margin-right: 20px;
+      & h4 {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0px;
+        margin-bottom: 10px;
+      }
+      & input {
+        background-color: #daf5f2;
+        border: none;
+        outline: none;
+        padding: 10px;
+      }
+    }
+    &-inputs-2 {
+      & input {
+        background-color: #daf5f2;
+        border: none;
+        outline: none;
+        padding: 10px;
+      }
+      & h4 {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  &-tablehead {
+    padding: 0px 20px;
+    & h4 {
+      color: #4b5563;
+      font-size: 14px;
+    }
+  }
+}
+.myPaymentDetails {
+  background-color: #fafafa;
+  padding: 20px 40px;
+  &_button {
+    margin-bottom: 20px;
+    & button {
+      border-radius: none !important;
+      & span {
+        font-size: 14px;
+      }
+    }
+  }
+  &--box {
+    margin-bottom: 20px;
+    width: fit-content;
+    &_heading {
+      & h2 {
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+        & span {
+          font-size: 15px;
+          color: $neutral-blacktwo;
+          font-weight: 400;
+          margin-left: 10px;
+          & span {
+            font-size: 20px;
+            margin-left: 50px;
+            cursor: pointer;
+          }
+        }
+      }
+      & h6 {
+        font-size: 14px;
+        color: $neutral-black;
+      }
+    }
+  }
+}

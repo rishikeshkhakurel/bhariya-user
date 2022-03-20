@@ -1,0 +1,106 @@
+.userAdmin-business {
+  & .row {
+    --bs-gutter-x: 4.5rem;
+    @media (max-width: 900px) {
+      --bs-gutter-x: 1rem;
+    }
+    @media (max-width: 600px) {
+      --bs-gutter-x: 0rem;
+      display: block;
+    }
+  }
+  &-form {
+    background: white;
+    padding: 30px 50px;
+    padding-right: 100px;
+    @media (max-width: 900px) {
+      padding: 10px;
+      & .col {
+        margin-bottom: 14px;
+      }
+    }
+    &-heading {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      color: $neutral-blacktwo;
+      @media (max-width: 900px) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+.businessformAddDocuments {
+  display: flex;
+  &--imgContainer {
+    height: 133px;
+    width: 90px;
+    border: 1px dashed #9f9f9f;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    font-size: 40px;
+    color: $primary-colorred;
+    & img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+.businessformAddDocuments--imgContaineruploded {
+  border: none;
+  margin: 0px 20px;
+}
+.businessformAddDocuments {
+  &-button {
+    & button {
+      margin-right: 20px;
+    }
+  }
+  margin: 20px 0px;
+  margin-bottom: 50px;
+}
+.businessformAddDocuments__imgupload {
+  border: 1px dashed #9f9f9f;
+  height: 133px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & button {
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    outline: none;
+  }
+}
+.businessformAddDocuments__images__imgcontainer {
+  height: 133px;
+  width: 100px;
+  margin: 0px 20px;
+  position: relative;
+
+  & span {
+    position: absolute;
+    top: -15%;
+    right: -12%;
+    cursor: pointer;
+
+    font-size: 30px;
+    color: red;
+  }
+  & img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+.businessformAddDocuments__imgsection {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.businessformAddDocuments__images {
+  display: flex;
+}

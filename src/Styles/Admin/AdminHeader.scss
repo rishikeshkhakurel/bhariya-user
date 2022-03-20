@@ -1,0 +1,130 @@
+.adminHeader {
+  display: flex;
+  padding: $primary-padding;
+  box-shadow: 0px 4px 16px 0px #0000001a;
+  position: fixed;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+  align-items: center;
+  @media (max-width: 900px) {
+    padding: 10px 20px;
+  }
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+  &__imgcontainer {
+    flex: 1;
+    & img {
+      height: 30px;
+    }
+  }
+  &__details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+
+    &-name {
+      & button {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 16px;
+        @media (max-width: 600px) {
+          font-size: 13px;
+          margin-left: 9px;
+        }
+      }
+    }
+    & > * {
+      margin-left: 15px;
+      @media (max-width: 600px) {
+        margin-left: 2px;
+      }
+    }
+  }
+}
+.notificationBoxHeader {
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 10px;
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+  &__reded {
+    position: absolute;
+    right: 5%;
+    font-size: 30px;
+    cursor: pointer;
+    top: 0;
+    color: $neutral-blackthree;
+    transition: all 0.3s ease;
+  }
+  &__left {
+    height: 100%;
+    padding-left: 20px;
+    padding-top: 10px;
+    width: 20%;
+    @media (max-width: 600px) {
+      padding: 0px;
+    }
+    &__imgcontainer {
+      height: 50px;
+      width: 50px;
+      overflow: hidden;
+      border-radius: 200px;
+      & img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  &__details {
+    padding: 10px 0px;
+    margin-left: 4px;
+    &-button {
+      display: flex;
+      margin-top: 23px;
+      & button {
+        border-radius: 20px !important;
+        padding: 6px 10px;
+        margin-right: 12px;
+        & span {
+          font-size: 12px;
+          @media (max-width: 600px) {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+    & h4 {
+      font-size: 11px;
+      color: $neutral-black;
+      margin: 0px;
+      margin-bottom: 10px;
+      & span {
+        color: $neutral-blackthree;
+      }
+    }
+    & h3 {
+      font-size: 12px;
+      color: $neutral-blacktwo;
+      font-weight: 500;
+      & span {
+        font-weight: 700;
+      }
+    }
+  }
+}
+.notificationBoxHeader__isActive {
+  color: $primary-colorgreen;
+}
+.notificationBoxHeader__details_afterRead {
+  margin: 20px 0px;
+}
+.dropdown-toggle {
+  padding-right: 0px;
+}

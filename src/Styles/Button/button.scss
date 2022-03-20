@@ -1,0 +1,99 @@
+.primarybutton {
+  @include basicButtonSettings;
+  background-color: $primary-colorgreen !important;
+  &:hover {
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.141) !important;
+    background-color: #0b9a4b !important;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.141) inset !important;
+    background-color: #0b9a4b !important;
+  }
+}
+.textbutton {
+  @include basicButtonSettings;
+  background-color: transparent !important;
+  color: $neutral-grey !important;
+  &:hover,
+  &:active,
+  &:focus {
+    color: $primary-colorgreen !important;
+  }
+}
+.secondarybutton {
+  @include basicButtonSettings;
+  background-color: #f3f3f3 !important;
+  color: $neutral-blacktwo !important;
+  &:hover {
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.141) !important;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.141) inset !important;
+  }
+}
+.tersarybutton {
+  @include basicButtonSettings;
+  background-color: transparent !important;
+  color: $neutral-grey !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.055) !important;
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $primary-colorgreen !important ;
+    color: $primary-colorgreen !important;
+  }
+}
+.selectButton {
+  width: auto;
+  margin-top: 20px;
+}
+.requiredFeild {
+  color: $primary-colorred;
+}
+.lableForInput {
+  font-size: 16px;
+}
+.ShareButtonHomePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 48px;
+  &-icon {
+    border-radius: 200px;
+    cursor: pointer;
+    height: 70px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & h2 {
+    font-size: 14px;
+    margin: 10px 0px;
+    color: black;
+    text-transform: capitalize;
+  }
+}
+.MuiButton-contained.Mui-disabled {
+  background: rgb(240, 240, 240) !important;
+}
+.validationMsg {
+  color: $primary-colorred;
+  margin: 0;
+  padding: 0;
+}
+.userAdmin-Deliveryhistory-table-top_right_sortbutton {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 14px;
+  color: $neutral-blacktwo;
+  padding: 0;
+  padding: 5px 8px;
+}
+.sortbuttonone {
+  height: 37px;
+}

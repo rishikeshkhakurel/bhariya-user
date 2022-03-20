@@ -1,0 +1,58 @@
+@import "./Button/button.scss";
+
+.inputfeildcomponent {
+  height: 44px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid $neutral-grey;
+  border-radius: 5px;
+  font-size: 16px;
+  &:hover {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.239);
+  }
+  &:focus,
+  &:active {
+    box-shadow: 0px 1px 2px 0px #0000000d;
+    border: 1px solid #7d7b7b;
+  }
+  &:hover,
+  &:focus-visible,
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.areyousurecomponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 493px;
+  & h2 {
+    font-size: 18px;
+    margin: 10px;
+    margin-top: 20px;
+    color: black;
+  }
+  & p {
+    font-size: 14px;
+    text-align: center;
+  }
+  &_buttons {
+    width: 100%;
+    margin: 10px 0px;
+    & button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+.areyousurecomponentOnlyforred {
+  & .areyousurecomponent_buttons {
+    & .primarybutton {
+      background-color: $primary-colorred !important;
+    }
+  }
+}

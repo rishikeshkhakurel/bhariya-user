@@ -1,0 +1,214 @@
+.userAdmin-Settings-avatar {
+  display: flex;
+  margin-top: 35px;
+  flex-wrap: wrap;
+  @media (max-width: 600px) {
+    margin-top: 20px;
+  }
+  &-button {
+    margin-left: 20px;
+    & button {
+      background: transparent;
+      border: 1px solid #c4c4c4;
+      padding: 10px;
+      border-radius: 20px;
+      color: $neutral-blackthree;
+      margin-bottom: 10px;
+    }
+    & p {
+      color: $primary-colorred;
+    }
+  }
+}
+.userAdmin-Settings-box {
+  width: 100%;
+  background: white;
+  padding-bottom: 30px;
+  padding: 20px 40px;
+  padding-right: 0px;
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+  & .row {
+    @media (max-width: 600px) {
+      margin-top: 0px;
+      display: block;
+      & .col {
+        margin: 0px;
+        margin-top: 10px;
+      }
+    }
+    & > * {
+      padding: 0px;
+      padding-right: 60px;
+      @media (max-width: 600px) {
+        padding-right: 0px;
+      }
+    }
+  }
+  &-button {
+    & button {
+      background: transparent;
+      border: 1px solid #f7f8fa;
+      padding: 10px 10px;
+      color: $primary-colorgreen;
+      border-bottom: 2px solid $primary-colorgreen;
+    }
+  }
+}
+.userAdmin-Settings--form {
+  & .row {
+    margin: 20px 0px;
+    @media (max-width: 600px) {
+      margin: 0px;
+    }
+  }
+}
+.userAdmin-Settings--form--citizen-imgcontainer {
+  height: 45px;
+  width: 45px;
+  cursor: pointer;
+  & img {
+    height: 100%;
+    width: 100%;
+  }
+}
+.userAdmin-Settings--form--citizen {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  @media (max-width: 600px) {
+    margin: 15px 0px;
+  }
+  & h5 {
+    font-size: 14px;
+    color: $primary-colorblue;
+  }
+}
+.passwordChange {
+  margin-top: 15px;
+  text-align: right;
+  & a {
+    color: $primary-colorred;
+  }
+}
+.riderPaymentheading {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 30px;
+}
+.autocomplete_setting {
+  display: flex;
+  position: relative;
+  &-icon {
+    position: absolute;
+    font-size: 26px;
+    right: 2%;
+    top: 23%;
+    color: #7d7b7b;
+  }
+}
+.userAdmin-Settings-box-button {
+  & button {
+    margin-right: 15px;
+  }
+}
+.userAdmin-Settings-box-button-isNotActive {
+  color: black !important;
+  border-bottom: black !important;
+}
+.accordionedit {
+  margin: 0px;
+  color: $primary-colorblue;
+  text-align: right;
+}
+.accordionDiscription {
+  font-size: 16px;
+  color: $neutral-blacktwo;
+  margin: 0px;
+}
+.accordionTitle {
+  font-size: 16px;
+  color: $neutral-black;
+  margin: 0px;
+}
+.accordionSetting {
+  & .MuiPaper-elevation1 {
+    box-shadow: none !important;
+  }
+  & .MuiAccordion-root.Mui-expanded {
+    background-color: #f1f1f1;
+    margin: 0px;
+  }
+}
+.accordingheader {
+  font-size: 16px;
+  color: $neutral-blacktwo;
+  margin: 0px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+.accordingdetails {
+  & .row {
+    margin: 0px;
+    padding: 10px 0px;
+    padding: 0px;
+    margin-left: 15px;
+    margin-top: 10px;
+    padding-left: 15px;
+    border: 1px solid #d1d5db;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 0px;
+  }
+}
+.MuiAccordionSummary-expandIcon.Mui-expanded {
+  transform: rotate(0) !important;
+}
+.accordion__details {
+  & .row {
+    margin: 0px;
+  }
+  &-button {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: end;
+    & button {
+      margin: 0px 10px;
+      &:last-child {
+        background-color: white !important;
+      }
+    }
+  }
+}
+.upload__image-wrapper {
+  display: flex;
+  & .MuiAvatar-root {
+    height: 60px;
+    width: 60px;
+  }
+}
+.userAdmin-Settings-avatar-button {
+  & button {
+    margin-right: 10px;
+  }
+}
+.accordion__details__name {
+  display: flex;
+  align-items: flex-end;
+  & .row {
+    margin: 0px;
+  }
+  & .accordion__details-button {
+    margin: 0px;
+  }
+}
+.accordion__details__name__citizen {
+  display: block;
+}

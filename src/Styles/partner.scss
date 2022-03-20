@@ -1,0 +1,264 @@
+.bepartnerwithus {
+  padding-bottom: 130px;
+  @media (max-width: 600px) {
+    padding-bottom: 50px;
+  }
+  &__banner {
+    padding: 30px 0px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    @media (max-width: 600px) {
+      padding: 0px;
+      padding-top: 20px;
+    }
+    & h2 {
+      font-size: 60px;
+      color: $primary-colorgreen;
+      font-weight: 600;
+      @media (max-width: 600px) {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      height: 232px;
+      width: 100%;
+      z-index: -1;
+      background-color: #daf5f2;
+      top: 0;
+      right: 0;
+      left: 0;
+      @media (max-width: 600px) {
+        height: 600px;
+      }
+    }
+  }
+}
+.partnerbhariyaform__buttons {
+  margin: 20px 0px;
+  margin: 0px 273px;
+  box-shadow: 0px 2px 25px 0px #00000017;
+  padding: 20px;
+  background: white;
+  @media (max-width: 600px) {
+    margin: 10px;
+    border-radius: 10px;
+    margin-top: 0px;
+    padding: 0px;
+  }
+  & .bhariyaform__buttons {
+    margin-top: 30px;
+    @media (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+    }
+    & button {
+      border: none;
+      outline: none;
+      margin-right: 20px;
+      padding: 7px 15px;
+      font-size: 18px;
+      border-radius: 5px;
+      @media (max-width: 600px) {
+        margin: 6px 0px;
+      }
+    }
+    &-1 {
+      background-color: $primary-colorgreen;
+      color: white;
+    }
+    &-2 {
+      color: black;
+      background-color: #f2f2f2;
+    }
+  }
+
+  & .bhariyaform {
+    padding: 15px 10px;
+    @media (max-width: 600px) {
+      padding: 20px 15px;
+    }
+  }
+  & .bhariyaform-status {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
+  & .bhariyaform-status p {
+    font-size: 16px;
+  }
+  & .bhariyaform-status_imgcontainer {
+    height: 30px;
+    width: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  & .bhariyaform-status_imgcontainer img {
+    height: 100%;
+    width: 100%;
+  }
+  & .bhariyaform-heading {
+    line-height: 1.9;
+    margin-bottom: 24px;
+    @media (max-width: 600px) {
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+  }
+  & .bhariyaform-heading h1 {
+    color: $primary-colorgreen;
+    font-size: 48px;
+    margin-bottom: 10px;
+    @media (max-width: 600px) {
+      font-size: 24px;
+    }
+  }
+  & .bhariyaform-heading p {
+    font-size: 18px;
+    line-height: 1.2;
+    color: #244182;
+    margin-bottom: 20px;
+    @media (max-width: 600px) {
+      font-size: 14px;
+    }
+  }
+  & .bhariyaform_form-input {
+    font-size: 15px;
+    margin: 20px 0px;
+    margin-bottom: 5px;
+    @media (max-width: 600px) {
+      margin: 25px 0px;
+      margin-bottom: 5px;
+    }
+  }
+  & .bhariyaform_form-input label {
+    font-weight: 400;
+
+    @media (max-width: 600px) {
+      width: auto;
+    }
+  }
+  & .bhariyaform_form-input label span {
+    color: red;
+  }
+  & .bhariyaform_form-input input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #c8c8c8;
+    padding: 15px 10px;
+    width: 100%;
+  }
+  & .row {
+    --bs-gutter-x: 4.5rem;
+    @media (max-width: 600px) {
+      display: block;
+      --bs-gutter-x: 0rem;
+    }
+  }
+  & .bhariyaform-status-onlyResponsive {
+    display: none;
+    @media (max-width: 600px) {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0px;
+    }
+  }
+  & .bhariyaform__inputfeildcontainr-errormsg {
+    color: red;
+    margin: 0px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  & .col {
+    margin-bottom: 10px;
+  }
+}
+.thankyoupartner {
+  position: relative;
+  height: 100vh;
+  @media (max-width: 600px) {
+    padding-bottom: 120px;
+    height: auto;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    background: #daf5f2;
+    height: 232px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  & .thankyoupage {
+    display: flex;
+    justify-content: center;
+    padding: 0px 20px;
+    padding-top: 60px;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    &__middle {
+      background-color: white;
+      border-radius: 15px;
+      display: flex;
+      width: 540px;
+      padding: 50px 40px;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0px 0px 13px 0px #0000001a;
+      @media (max-width: 600px) {
+        width: auto;
+        padding: 40px 30px;
+      }
+      &-imgcontainer {
+        height: 120px;
+        width: 120px;
+        margin-bottom: 10px;
+        & img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+  & .thankyoupage__para {
+    & p {
+      color: #7a7a7a;
+      line-height: 1.3;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
+      & span {
+        font-weight: 600;
+      }
+    }
+  }
+  & .thankyoupage__header {
+    margin-top: 10px;
+    & h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 0.1;
+      @media (max-width: 600px) {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  & .thankyoupage__dots {
+    font-size: 20px;
+    margin: 17px 0px;
+    @media (max-width: 600px) {
+      margin-bottom: 0px;
+      margin-top: 10px;
+    }
+  }
+}

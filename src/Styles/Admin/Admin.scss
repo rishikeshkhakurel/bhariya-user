@@ -1,0 +1,113 @@
+@import "./AdminHeader.scss";
+@import "./AdminTabs.scss";
+@import "./Business.scss";
+@import "./Dashboard.scss";
+@import "./DeliveryHistory.scss";
+@import "./Payment.scss";
+@import "./RecivingDetails.scss";
+@import "./Setting.scss";
+@import "./deliverySummary.scss";
+@import "./branch/MainBranch.scss";
+.userAdmin-body {
+  display: flex;
+  padding-top: 60px;
+}
+.userAdmin-body-left {
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+.userAdmin-body-right {
+  padding: 60px 60px;
+  overflow-y: hidden;
+  width: 100%;
+  background: $primary-colorgrey;
+  @media (max-width: 900px) {
+    padding: 10px 20px;
+
+    padding-top: 70px;
+  }
+  @media (max-width: 600px) {
+    padding: 10px;
+    overflow: hidden;
+    padding-top: 20px;
+  }
+}
+.userAdmin--header {
+  color: #2e2c2c;
+
+  & h2 {
+    font-size: 28px;
+    font-weight: 500;
+    margin: 0px;
+    & p {
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+}
+.MuiTableContainer-root {
+  &::-webkit-scrollbar {
+    height: 7px !important;
+  }
+}
+.AdminNavigationButton-business {
+  &-box {
+    height: 62px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: relative;
+    transition: all 0.2s ease;
+    padding-left: 70px;
+    &::before {
+      z-index: 1;
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 3px;
+      left: 20%;
+      top: 0;
+      background-color: #e5e5e5;
+      transition: all 0.2s ease;
+    }
+    &::after {
+      z-index: 10;
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 51px;
+      left: 0;
+      top: 0;
+      background-color: #ffffff;
+      transition: all 0.2s ease;
+    }
+  }
+}
+.AdminNavigationButton-business-box-add {
+  & span {
+    margin-left: 10px;
+  }
+}
+.business-box-isActive {
+  color: $primary-colorblue;
+  background-color: #f7f8fa;
+  &::before {
+    background-color: $primary-colorgreen;
+  }
+}
+.userAdminResponsive {
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
+.userhomepage_form-details__bulksection {
+  margin-top: 30px;
+  & > * {
+    margin-right: 10px;
+    text-transform: capitalize;
+  }
+  & button {
+    margin-right: 20px;
+  }
+}

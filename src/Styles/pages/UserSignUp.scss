@@ -1,0 +1,153 @@
+.userSignUpPage {
+  padding: 60px 50px;
+  position: relative;
+  height: 100vh;
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: $primary-colorgreen;
+    right: 0;
+    top: 0;
+    clip-path: circle(50% at 92% 50%);
+  }
+  &_middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &-imgcontainer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    &-form {
+      width: 460px;
+      background: white;
+      border-radius: 11px;
+      padding: 40px 40px;
+      padding-bottom: 20px;
+      box-shadow: 0px 24px 32px 0px #32324714;
+      & h2 {
+        font-size: 18px;
+        color: #111827;
+      }
+    }
+    & button {
+      width: 100%;
+      border-radius: 25px !important;
+      & span {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+  &_backButton {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: $neutral-black;
+    font-weight: 500;
+    & span {
+      font-size: 20px;
+      margin-right: 10px;
+      font-weight: 700;
+    }
+  }
+}
+.userSignUpPage_middle-form_input {
+  border: 1px solid #d1d5db;
+  display: flex;
+  border-radius: 6px;
+  height: 42px;
+  padding: 0px 0px;
+  margin: 50px 0px;
+  margin-bottom: 20px;
+  & input {
+    border: none;
+    outline: none;
+  }
+}
+.PhoneInputInput {
+  border: none;
+  width: 100%;
+}
+.PhoneInputCountryIcon--border {
+  background-color: transparent;
+  box-shadow: none;
+}
+.userSignUpPage_middle-form_buttons {
+  text-align: center;
+  & h5 {
+    margin: 15px 0px;
+    color: #9ca3af;
+    font-size: 12px;
+  }
+}
+.userSignUpPage_middle-form_socials {
+  margin: 20px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-1 {
+    height: 54px;
+    width: 54px;
+    border-radius: 100px;
+    border: 1px solid #d1d5db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    margin: 0px 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:nth-child(1) {
+      color: #2f55a4;
+    }
+    &:nth-child(2) {
+      background-color: black;
+      color: white;
+    }
+  }
+}
+.userSignUpPage_middle-form_text {
+  text-align: center;
+  color: #6b7280;
+  font-weight: 400;
+  & a {
+    color: blue !important;
+  }
+}
+.loadingcomp {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 100000;
+  background-color: #ffffffc5;
+  & .MuiCircularProgress-colorPrimary {
+    color: #28bb46;
+  }
+}
+.userSignUpPage_middle-form_input_email {
+  margin: 50px 0px;
+  margin-bottom: 20px;
+}
+.userSignUpPage_middle-form-reset {
+  & p {
+    font-size: 14px;
+  }
+  & button {
+    margin-top: 20px;
+  }
+}
+.react-tel-input .form-control {
+  width: 100% !important;
+  border: none !important;
+  height: auto !important;
+  margin-left: 0px;
+}

@@ -1,0 +1,108 @@
+.adminNavigation {
+  display: inline-block;
+  position: fixed;
+  padding-top: 60px;
+  transition: all 0.3s ease-in-out;
+  width: inherit;
+  transform: translateX(0px);
+  height: 100%;
+  padding-bottom: 100px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0px !important;
+  }
+}
+.userAdmin-body-left {
+  min-width: 253px;
+  height: 100vh;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+.AdminNavigationButton {
+  height: 62px;
+  width: 254px;
+  display: flex;
+  align-items: center;
+  padding: 0px 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  & span {
+    &:first-child {
+      font-size: 20px;
+      color: #9ca3af;
+    }
+    &:nth-child(2) {
+      color: #9ca3af;
+      font-weight: 400;
+      margin-left: 15px;
+    }
+  }
+}
+.AdminNavigationButton--isactive {
+  background: #f7f8fa;
+  border-right: 3px solid $primary-colorgreen;
+  & span {
+    &:nth-child(1) {
+      color: $primary-colorgreen;
+    }
+    &:nth-child(2) {
+      color: $primary-colorgreen;
+      text-shadow: -0.04ex 0 $primary-colorgreen, 0.04ex 0 $primary-colorgreen;
+    }
+  }
+}
+.AdminNavigationButton-business {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.adminNavigation-hamburger {
+  position: absolute;
+  bottom: -30%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+.userAdmin-body-left-responsive {
+  display: flex;
+  top: 15%;
+  right: 10%;
+  height: 20px;
+  position: absolute;
+  width: 20px;
+  background: red;
+}
+.adminNavigation-toggel {
+  min-width: 0px;
+  & .adminNavigation {
+    transform: translateX(-370px);
+  }
+}
+.responsiveNavigation {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 10%;
+}
+.makeStyles-list-4 {
+  & .adminNavigation {
+    padding-top: 30px;
+    & .AdminNavigationButton {
+      width: auto;
+      padding: 0px 23px;
+    }
+    & .AdminNavigationButton-business {
+      height: auto;
+      max-height: max-content;
+    }
+  }
+}
+.userAdmin-Settings {
+  & .userAdmin--header {
+    & h2 {
+      & p {
+        margin-top: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@mixin display {
+  font-size: 4.8;
+  font-weight: 800px;
+}
+@mixin textBold {
+  font-weight: 700px;
+}
+@mixin textRegular {
+  font-weight: 400px;
+}
+@mixin textLight {
+  font-size: 1.4;
+  font-weight: 400;
+  color: $neutral-blackthree;
+}
+
+@mixin basicButtonSettings {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  text-transform: capitalize !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  transition: $transition;
+}

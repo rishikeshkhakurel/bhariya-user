@@ -1,0 +1,89 @@
+.userSignUpPageAuth {
+  padding: 60px 50px;
+  position: relative;
+  height: 100vh;
+  @media (max-width: 900px) {
+    padding: 30px;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: $primary-colorgreen;
+    right: 0;
+    top: 0;
+    clip-path: circle(50% at 92% 50%);
+  }
+  &_middle {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &-imgcontainer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    &-form {
+      display: flex;
+      width: 865px;
+      justify-content: space-between;
+      background: white;
+      border-radius: 11px;
+      padding: 40px 40px;
+      padding-bottom: 20px;
+      box-shadow: 0px 24px 32px 0px #32324714;
+      @media (max-width: 900px) {
+        width: auto;
+      }
+      & h2 {
+        font-size: 36px;
+        color: #111827;
+        @media (max-width: 900px) {
+          font-size: 25px;
+        }
+      }
+    }
+    & button {
+      width: 85%;
+      border-radius: 25px !important;
+      & span {
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+  &_backButton {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: $neutral-black;
+    font-weight: 500;
+    & span {
+      font-size: 20px;
+      margin-right: 10px;
+      font-weight: 700;
+    }
+  }
+}
+
+.userSignUpPageAuth_middle-form--1 {
+  & p {
+    color: $neutral-blackthree !important;
+    & a {
+      color: blue;
+      font-weight: 500;
+    }
+  }
+  & h6 {
+    text-align: center;
+    width: 70%;
+    margin: 20px 0px;
+    & a {
+      color: $primary-colorred;
+    }
+  }
+}
+.userSignUpPageAuth_middle-form-text2 {
+  margin: 20px 0px;
+}

@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  width: 7px !important;
+  &-track {
+    border-radius: 10px;
+  }
+  &-thumb {
+    background: $primary-colorgreen;
+    border-radius: 10px;
+  }
+}
+body {
+  font-family: "Noto Sans Display", sans-serif;
+  color: $neutral-black;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+// html {
+//   font-size: 62.5%;
+// }
+
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+}
+h2 {
+  font-size: 28px;
+  font-weight: 500;
+  color: $neutral-blacktwo;
+}
+p {
+  font-size: 16px;
+}
+a {
+  text-decoration: none;
+  color: $neutral-blacktwo;
+}
+.alertBox {
+  position: fixed;
+  top: 5%;
+  right: 0%;
+  background: white;
+  color: $primary-colorgreen;
+  box-shadow: 0px 0px 13px 0px #00000014;
+  display: flex;
+  height: 52px;
+  width: 289px;
+  align-items: center;
+  padding: 0px 20px;
+  // transform: translateY(-300px);
+  border-left: 5px solid $primary-colorgreen;
+  transition: all 0.3s ease;
+  animation: showbutton 3s ease;
+  z-index: 1111111;
+  & span {
+    margin-left: auto;
+  }
+}
+.alertBoxerror {
+  color: $primary-colorred;
+  border-left: 5px solid $primary-colorred;
+}
+@keyframes showbutton {
+  0% {
+    transform: translateX(300px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+.hidealertbox {
+  transform: translateX(300px);
+  transition: 3s ease;
+}
+.MuiButton-root {
+  font-weight: 600 !important;
+  padding: 9px 20px !important;
+}
+.realhomepage__discription__buttons-2 {
+  & button {
+    font-weight: 600;
+  }
+}
+.onlyforfaq {
+  color: $primary-colorblue;
+  font-weight: 700;
+}
+.primarybutton {
+  & span {
+    font-weight: 600;
+  }
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

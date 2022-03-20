@@ -1,0 +1,235 @@
+.header {
+  display: flex;
+  padding: 10px 130px;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f8fa;
+  // box-shadow: 0px 0px 5px 8px rgba(0, 0, 0, 0.089);
+  @media (max-width: 900px) {
+    padding: 10px 18px;
+  }
+  &_imgcontainer {
+    height: 46px;
+    width: 130px;
+    @media (max-width: 900px) {
+      height: 30px;
+    }
+    & img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &_navigation {
+    display: flex;
+    align-items: center;
+    @media (max-width: 900px) {
+      display: none;
+    }
+    & li {
+      list-style: none;
+      padding: 0 10px;
+      font-size: 16px;
+      font-weight: 400px;
+      & a {
+        transition: $transition;
+        &:hover {
+          color: $primary-colorgreen;
+          //   font-weight: 700;
+        }
+      }
+      &:first-child {
+        margin: 0px;
+      }
+      &:last-child {
+        padding: 10px 35px;
+        margin-left: 10px;
+        // outline: 1px solid $neutral-grey;
+        border-radius: 3px;
+        background-color: $primary-colorgreen;
+        & a {
+          color: white;
+        }
+      }
+    }
+    &-isactive {
+      & a {
+        color: $primary-colorgreen;
+        text-shadow: -0.06ex 0 $primary-colorgreen, 0.06ex 0 $primary-colorgreen;
+      }
+    }
+  }
+}
+.userFoter {
+  overflow: hidden;
+  padding: 50px 130px;
+  background-color: #f9f9f9;
+  @media (max-width: 900px) {
+    padding: 30px 20px;
+    & .row {
+      display: block;
+    }
+  }
+  @media (max-width: 600px) {
+    padding: 20px 20px;
+    & .row {
+      display: block;
+      & .col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 36px 0px;
+        &:last-child {
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
+  &_logosection {
+    padding-right: 59px;
+    width: 432px;
+    // padding-right: 40%;
+    @media (max-width: 900px) {
+      padding-right: 0px;
+      width: auto;
+      text-align: center;
+    }
+    & p {
+      color: $neutral-blackthree;
+      font-weight: 500;
+      margin: 25px 0px;
+      @media (max-width: 600px) {
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+    }
+    &--icons {
+      @media (max-width: 600px) {
+        margin-bottom: 30px;
+      }
+      & > * {
+        font-size: 20px;
+        margin-right: 10px;
+        &:first-child {
+          color: #3b5998;
+        }
+        &:nth-child(2) {
+          color: #c13584;
+        }
+        &:nth-child(3) {
+          color: #833ab4;
+        }
+        &:nth-child(4) {
+          color: #3b5998;
+        }
+      }
+    }
+  }
+  &_detailssection {
+    & h3 {
+      font-size: 16px;
+      margin-bottom: 30px;
+      @media (max-width: 900px) {
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+    }
+    & p {
+      color: #7d7b7b;
+      line-height: 0.8;
+    }
+  }
+}
+.header_navigation-responsive {
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
+.responsiveNavigateionMenu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0px;
+  &--1 {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    font-size: 23px;
+    color: $primary-colorgreen;
+
+    height: 60px;
+    &:hover {
+      background: $primary-colorblue;
+      color: white;
+      & li {
+        color: white;
+        font-weight: 600;
+      }
+    }
+    & li {
+      font-size: 20px;
+      color: $neutral-black;
+      margin-left: 10px;
+    }
+  }
+  & h2 {
+    text-align: center;
+    color: $neutral-blacktwo;
+    margin-bottom: 20px;
+  }
+}
+.responsiveNavigateionMenu--1_isActive {
+  background: $primary-colorblue;
+  color: white;
+  & li {
+    color: white;
+    font-weight: 600;
+  }
+}
+.userFoter {
+  & .col-sm-5 {
+    @media (min-width: 900px) {
+      width: 70% !important;
+    }
+  }
+}
+.headerchange {
+  padding: 10px 130px;
+  @media (max-width: 900px) {
+    padding: 10px 30px;
+  }
+}
+
+.responsiveNavigateionMenu--1:hover {
+  background: white;
+  color: black;
+  font-weight: 600;
+}
+.responsiveNavigateionMenu--1:hover li {
+  color: black;
+}
+.responsiveNavigateionMenu--1_isActive {
+  background: white;
+  color: black;
+  font-weight: 600;
+}
+.responsivenavigationmain {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & a {
+    margin: 10px 0px;
+    font-size: 16px;
+    color: black;
+    font-weight: 500;
+    &:first-child {
+      margin-top: 20px;
+    }
+  }
+}
+.navigation-isActive {
+  font-weight: 700;
+}

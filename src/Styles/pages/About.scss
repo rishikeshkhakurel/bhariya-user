@@ -1,0 +1,254 @@
+.Aboutuspage {
+  overflow: hidden;
+  &__banner {
+    padding: 0px 10px;
+    padding-top: 30px;
+    display: flex;
+    margin-bottom: 5px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &::before {
+      content: "";
+      background-color: #dcf7e3;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 372px;
+      @media (max-width: 600px) {
+        height: 332px;
+      }
+    }
+    &__middle {
+      text-align: center;
+      position: relative;
+      & p {
+        margin: 0;
+        color: $primary-colorgreen;
+        @media (max-width: 600px) {
+          margin-top: 20px;
+        }
+      }
+      & h2 {
+        font-size: 60px;
+        color: black;
+        font-weight: 600;
+        margin: 0;
+      }
+      &__imgcontainer {
+        height: 380px;
+        width: 545px;
+        @media (max-width: 600px) {
+          height: 323px;
+          width: auto;
+          margin-top: 30px;
+        }
+        & img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+  &__introduction {
+    margin: 30px 130px;
+    margin-top: 0px;
+    @media (max-width: 600px) {
+      margin: 10px;
+      margin-top: 0px;
+    }
+    & p {
+      font-size: 20px;
+      color: $neutral-blacktwo;
+      padding: 10px;
+      @media (max-width: 600px) {
+        padding: 0px;
+      }
+    }
+  }
+  &__heading {
+    & .realhomepage__why__heading {
+      margin-top: 50px;
+      margin-bottom: 0px;
+      @media (max-width: 600px) {
+        margin: 70px 0px;
+      }
+    }
+  }
+  &__inovation {
+    padding: 0px 130px;
+    display: flex;
+    @media (max-width: 600px) {
+      padding: 0px 10px;
+      flex-wrap: wrap;
+    }
+    &__imgcontainer {
+      @media (max-width: 600px) {
+        height: auto;
+        width: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      & img {
+        @media (max-width: 600px) {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+    &__texts {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      @media (max-width: 600px) {
+        margin-top: 40px;
+      }
+      & h3 {
+        font-size: 20px;
+        color: $neutral-blacktwo;
+        margin-bottom: 30px;
+        @media (max-width: 600px) {
+          margin-bottom: 25px;
+        }
+      }
+      & p {
+        font-size: 16px;
+        color: $neutral-blacktwo;
+      }
+    }
+  }
+  &__ourmission {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 40px;
+    &__imgcontainer {
+      @media (max-width: 600px) {
+        height: 220px;
+      }
+      & img {
+        height: 100%;
+        width: auto;
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: #dcf7e3;
+      height: 198px;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      z-index: -1;
+      border-radius: 20px;
+      @media (max-width: 600px) {
+        right: 0;
+        left: 0;
+        border-radius: 0px;
+      }
+    }
+    & h3 {
+      color: $primary-colorgreen;
+      font-weight: 600;
+      margin: 0px;
+      @media (max-width: 600px) {
+        font-size: 36px;
+        margin-bottom: 0px;
+      }
+    }
+    & p {
+      padding: 0px 200px;
+      font-size: 25px;
+      text-align: center;
+      font-weight: 500;
+      color: $neutral-blacktwo;
+      @media (max-width: 600px) {
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 15px 10px;
+      }
+    }
+  }
+  &__vision {
+    @media (max-width: 600px) {
+      margin-bottom: 40px;
+    }
+    & .Aboutuspage__inovation {
+      @media (max-width: 600px) {
+        flex-direction: column-reverse;
+      }
+    }
+    & .Aboutuspage__inovation__texts {
+      & h3 {
+        font-weight: 600;
+        font-size: 36px;
+        color: $primary-colorgreen;
+        @media (max-width: 600px) {
+          text-align: center;
+        }
+      }
+    }
+  }
+  &__journy {
+    padding: 30px 100px;
+    background-color: #dcf7e3;
+    @media (max-width: 600px) {
+      padding: 30px 10px;
+    }
+    & .col {
+      text-align: right;
+      & h3 {
+        color: $primary-colorgreen;
+        font-size: 36px;
+        font-weight: 600;
+        white-space: nowrap;
+        margin: 0px;
+        text-align: left;
+        @media (max-width: 600px) {
+          font-size: 20px;
+          white-space: normal;
+        }
+      }
+      &:nth-child(2) {
+        text-align: right;
+        @media (max-width: 600px) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+.digitalpadding {
+  margin-left: 60px;
+  @media (max-width: 600px) {
+    margin-left: 0px;
+  }
+}
+.reliablepadding {
+  margin-right: 300px;
+  @media (max-width: 600px) {
+    margin-right: 0px;
+  }
+}
+.digitalandtransparrent {
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+  }
+}
+.Aboutuspage__inovation__texts-p-0 {
+  @media (max-width: 600px) {
+    margin-top: 0px;
+  }
+}
+.everywhere {
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+  }
+}

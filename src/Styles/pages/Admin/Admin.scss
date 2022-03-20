@@ -1,0 +1,13 @@
+@import "./AdminHeader.scss";
+@import "./AdminTabs.scss";
+.userAdmin-body {
+  display: flex;
+}
+.userAdmin-body-left {
+  height: 140vh;
+}
+.userAdmin-body-right {
+  padding: 50px 60px;
+  width: 100%;
+  background: $primary-colorgrey;
+}
