@@ -1,6 +1,6 @@
 import React from "react";
 import Loading from "../../../common/Components/loading/LoadingComp";
-import { useGetAddPaymentCustomerQuery } from "../../../Redux/Services/FetchApi";
+import { useGetPendingPaymentQuery } from "../../../Redux/Services/FetchApi";
 import PaymentTable from "./PaymentTabel";
 const PendingPayment = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -12,12 +12,12 @@ const PendingPayment = () => {
     setAnchorEl(null);
   };
 
-  const getUserPaymentResponseInfo = useGetAddPaymentCustomerQuery();
-  return getUserPaymentResponseInfo.isLoading ? (
+  const getPendingPaymentResponse=useGetPendingPaymentQuery()
+  return getPendingPaymentResponse.isLoading ? (
     <Loading />
   ) : (
     <>
-      <PaymentTable tabelData={getUserPaymentResponseInfo?.data?.results} />
+      <PaymentTable tabelData={getPendingPaymentResponse?.data} />
     </>
   );
 };

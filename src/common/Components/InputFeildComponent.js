@@ -7,10 +7,12 @@ const InputFeildComponent = (props) => {
 
   const checkValidationMsgForRequired = (data) => {
     if (checkValidationState) {
-      if (data.length > 0) {
-        return null;
-      } else {
-        return <FormValidationMsg msg="This Field is Required" />;
+      if (data) {
+        if (data.length > 0) {
+          return null;
+        } else {
+          return <FormValidationMsg msg="This Field is Required" />;
+        }
       }
     }
   };

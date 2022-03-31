@@ -9,10 +9,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { useNavigate } from "react-router-dom";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// import MenuComp from "../menu/MenuComp";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
+import MenuComp from "../../../common/Components/MenuComp";
+import moment from "moment";
+import CsvDownload from "react-json-to-csv";
 
 const useStyles = makeStyles({
   root: {
@@ -104,6 +105,20 @@ export default function UserDeliveryHistoryTabel({
     };
   }
 
+  const exportData = tabelData?.map((value) => {
+    return {
+      "Date Time": value.deliverytime,
+      "Business": value.business,
+      "Branch": value.deliverybranch,
+      "Receiver": value.deliveryto,
+      "Phone": value.phone,
+      "Address": value.deliverylocation,
+      "Email": value.email,
+      "ProductValue": value.packagevalue,
+      "DeliveryStatus": value.order_status,
+    };
+  });
+
   const changeStringToVariableName = (variable, value) => {
     window[variable] = value;
   };
@@ -192,7 +207,7 @@ export default function UserDeliveryHistoryTabel({
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>Salina Lama</span>
+          <span>{value.deliveryto}</span>
         </div>,
         <div
           className="rowHandeller"
@@ -273,12 +288,12 @@ export default function UserDeliveryHistoryTabel({
           <span>{value.order_status}</span>
         </div>,
         <div className="tableCellbutton">
-          {/* <MenuComp
+          <MenuComp
             onClickToEditUserDelivery={() => navigateToEditPage(value.id)}
             userDeliveryHistory
-          > */}
+          >
             <BsThreeDotsVertical fontSize="20px" />
-          {/* </MenuComp> */}
+          </MenuComp>
         </div>
       )
     );
@@ -355,7 +370,21 @@ export default function UserDeliveryHistoryTabel({
 
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-          <PrimaryButton>Export</PrimaryButton>
+          <PrimaryButton>
+            <CsvDownload
+              filename="Franchise form.csv"
+              style={{
+                background: "transparent",
+                color: "white",
+                fontWeight: "600",
+                border: "none",
+                outline: "none",
+              }}
+              data={exportData}
+            >
+              Export
+            </CsvDownload>
+          </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">
           <TablePagination

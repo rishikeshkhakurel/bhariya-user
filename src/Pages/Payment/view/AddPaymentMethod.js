@@ -14,7 +14,11 @@ import TersaryButton from "../../../common/Components/Button/TersaryButton";
 import Loading from "../../../common/Components/loading/LoadingComp";
 import InputFeildComponent from "../../../common/Components/InputFeildComponent";
 import AlertBox from "../../../common/AlertBox";
-import { useAddPaymentMethodMutation, useGetPaymentMethodQuery } from "../../../Redux/Services/FetchApi";
+import {
+  useAddPaymentMethodMutation,
+  useGetPaymentMethodQuery,
+} from "../../../Redux/Services/FetchApi";
+import { Col, Row } from "react-bootstrap";
 const AddPaymentMethod = () => {
   const [paymentState, setPaymentState] = useState(0);
 
@@ -89,7 +93,7 @@ const AddPaymentMethod = () => {
   }, [addPaymentMethodResponseInfo.isSuccess]);
   return (
     <>
-      {addPaymentMethodResponseInfo.isLoading && <Loading />}
+      {addPaymentMethodResponseInfo.isLoading && <Loading/>}
       {addPaymentMethodResponseInfo.isSuccess && (
         <AlertBox AlertMessage={"Your Account is added sucessfully"} />
       )}
@@ -122,8 +126,8 @@ const AddPaymentMethod = () => {
                 <BsBank /> <span> Bank details</span>
               </div>
               <div className="AddPymentMethod__Bank-inputsection">
-                <div>
-                  <div>
+                <Row>
+                  <Col>
                     <InputFeildComponent
                       placeholder="Eg: Rastra Banijaye Bank "
                       label="Bank Name"
@@ -131,8 +135,8 @@ const AddPaymentMethod = () => {
                       value={bankname}
                       onChange={(e) => setBankname(e.target.value)}
                     />
-                  </div>
-                  <div>
+                  </Col>
+                  <Col>
                     <InputFeildComponent
                       placeholder="Eg: Dharan"
                       label="Branch"
@@ -140,10 +144,10 @@ const AddPaymentMethod = () => {
                       value={branch}
                       onChange={(e) => setBranch(e.target.value)}
                     />
-                  </div>
-                </div>
-                <div>
-                  <div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
                     <InputFeildComponent
                       placeholder="Account number"
                       label="Account Number"
@@ -151,8 +155,8 @@ const AddPaymentMethod = () => {
                       value={accountNumber}
                       onChange={(e) => setAccountNumber(e.target.value)}
                     />
-                  </div>
-                  <div>
+                  </Col>
+                  <Col>
                     <InputFeildComponent
                       placeholder="Eg: Laxmi sherpa"
                       label="Account Name"
@@ -160,8 +164,8 @@ const AddPaymentMethod = () => {
                       value={accountName}
                       onChange={(e) => setAccountName(e.target.value)}
                     />
-                  </div>
-                </div>
+                  </Col>
+                </Row>
               </div>
             </div>
           ) : (
@@ -229,16 +233,16 @@ const AddPaymentMethod = () => {
                 </FormControl>
               </div>
               <div className="AddPymentMethod__wallet-form-2">
-                <div>
-                  <div>
+                <Row>
+                  <Col>
                     <InputFeildComponent
                       value={esewaId}
                       onChange={(e) => setEsewaId(e.target.value)}
                       placeholder="Account ID"
                       label="ID"
                     />
-                  </div>
-                  <div>
+                  </Col>
+                  <Col>
                     <InputFeildComponent
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
@@ -246,8 +250,8 @@ const AddPaymentMethod = () => {
                       label="Name"
                       disabled={bankDetails.length > 0 ? true : false}
                     />
-                  </div>
-                </div>
+                  </Col>
+                </Row>
               </div>
             </div>
           )}

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
+import CsvDownload from "react-json-to-csv";
 
 const useStyles = makeStyles({
   root: {
@@ -276,6 +277,21 @@ export default function UserRecivingTabel({
       )
     );
   });
+
+  const exportData = tabelData?.map((value) => {
+    return {
+      "Date Time": value.deliverytime,
+      "Business": value.business,
+      "Branch": value.deliverybranch,
+      "Receiver": value.deliveryto,
+      "Phone": value.phone,
+      "Address": value.deliverylocation,
+      "Email": value.email,
+      "ProductValue": value.packagevalue,
+      "DeliveryStatus": value.order_status,
+    };
+  });
+  
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -348,7 +364,21 @@ export default function UserRecivingTabel({
 
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-          <PrimaryButton>Export</PrimaryButton>
+          <PrimaryButton>
+            <CsvDownload
+              filename="Franchise form.csv"
+              style={{
+                background: "transparent",
+                color: "white",
+                fontWeight: "600",
+                border: "none",
+                outline: "none",
+              }}
+              data={exportData}
+            >
+              Export
+            </CsvDownload>
+          </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">
           <TablePagination

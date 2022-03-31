@@ -7,7 +7,6 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
 import { IoIosArrowDown } from "react-icons/io";
 import { Accordion } from "react-bootstrap";
 import { BsArrowLeftShort } from "react-icons/bs";
@@ -26,6 +25,8 @@ import SelectAndSearch from "./SelectAndSearch";
 import SwitchMode from "./SwitchMode";
 import {
   useAssigneToRiderMutation,
+  useGetBranchDetailsQuery,
+  useGetBusinessFormQuery,
   useGetRiderDetailsQuery,
 } from "../../Redux/Services/FetchApi";
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +47,8 @@ export default function MenuComp(props) {
     setOpen((prevOpen) => !prevOpen);
   };
 
+  const getAllBranchResponseInfo = useGetBranchDetailsQuery();
+  const getAllBusinessResponseInfo = useGetBusinessFormQuery();
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -92,30 +95,35 @@ export default function MenuComp(props) {
         } else if (props.userDeliveryHistorySortBranch) {
           return (
             <>
-              <MenuItem onClick={handleClose}>KathMandu</MenuItem>
+              <MenuItem>KathMandu</MenuItem>
               <MenuItem onClick={handleClose}>Dharan</MenuItem>
               <MenuItem onClick={handleClose}>Butwal</MenuItem>
               <MenuItem onClick={handleClose}>Dhamak</MenuItem>
             </>
           );
+        } else if (props.BranchList) {
+          return getAllBranchResponseInfo?.data?.map((value) => (
+            <MenuItem
+              onClick={(e)=>
+                props.search(value.branchname)
+              }
+            >
+              {value.branchname}
+            </MenuItem>
+          ));
         } else if (props.userDeliveryHistorySortStatus) {
           return (
             <>
-              <MenuItem onClick={handleClose}>Delivered</MenuItem>
-              <MenuItem onClick={handleClose}>Picked up</MenuItem>
-              <MenuItem onClick={handleClose}>On the way</MenuItem>
-              <MenuItem onClick={handleClose}>Cancel</MenuItem>
+              <MenuItem onClick={(e)=>props.search("delivered")}>Delivered</MenuItem>
+              <MenuItem onClick={(e)=>props.search("Picked up")}>Picked up</MenuItem>
+              <MenuItem onClick={(e)=>props.search("On the way")}>On the way</MenuItem>
+              <MenuItem onClick={(e)=>props.search("Cancel")}>Cancel</MenuItem>
             </>
           );
         } else if (props.userDeliveryHistorySortBusinessType) {
-          return (
-            <>
-              <MenuItem onClick={handleClose}>Individual</MenuItem>
-              <MenuItem onClick={handleClose}>Business 1</MenuItem>
-              <MenuItem onClick={handleClose}>Business 2</MenuItem>
-              <MenuItem onClick={handleClose}>Business 3</MenuItem>
-            </>
-          );
+          return getAllBusinessResponseInfo?.data?.map((value) => (
+            <MenuItem onClick={(e)=>props.search(value.businessname)}>{value.businessname}</MenuItem>
+          ));
         } else if (props.bulktabel) {
           return (
             <>

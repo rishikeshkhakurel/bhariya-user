@@ -153,22 +153,24 @@ Row.propTypes = {
 };
 
 const rows = [];
-for (let i = 0; i < 5; i++) {
-  rows.push(
-    createData(
-      `${i}`,
-      3,
-      "Nov 1, 2021",
-      "Rs 12000",
-      "1200",
-      "1150",
-      "Cash",
-      "Rs 600",
-      "Remaining..."
-    )
-  );
-}
-export default function CollapsTable() {
+export default function CollapsTable(props) {
+  console.log("tabledataaaaaaaaaaaaaa",props.tabledata)
+  props.tabledata.map((data, index)=> {
+    rows.push(
+      createData(
+        `${index+1}`,
+        3,
+        "Nov 1, 2021",
+        "Rs 12000",
+        "1200",
+        "1150",
+        "Cash",
+        "Rs 600",
+        "Remaining..."
+      )
+    );
+  })
+  console.log("table data",props.tabledata)
   return (
     <>
       <TableContainer component={Paper}>

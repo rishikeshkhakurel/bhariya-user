@@ -227,6 +227,192 @@ export const FetchApis = createApi({
         };
       },
     }),
+    patchEnteredValue: builder.mutation({
+      query: (value) => {
+        const { id, data } = value;
+        return {
+          url: `saveasdraft/${id}/`,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+        };
+      },
+    }),
+    getsaveasdraft: builder.query({
+      query: () => {
+        return {
+          url: "saveasdraft/",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+    }),
+    saveasdraft: builder.mutation({
+      query: (value) => {
+        return {
+          url: "saveasdraft/",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: value,
+        };
+      },
+    }),
+    deletesaveasdraftbyid: builder.mutation({
+      query: (id) => {
+        return {
+          url: `saveasdraft/${id}/`,
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+    }),
+    onConfirmDelivey: builder.mutation({
+      query: (value) => {
+        return {
+          url: `confirmalldraft/`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: value,
+        };
+      },
+    }),
+    getDeliveryHistoryDataByid: builder.query({
+      query: (userId) => {
+        return {
+          url: `/postrude/${userId}/`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+      providesTags: ["deliveryHistory"],
+    }),
+    updateDeliveryHistoryDataByid: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/postrude/${id}/`,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+        };
+      },
+      invalidatesTags: ["deliveryHistory"],
+    }),
+    getDeliveryNotes: builder.query({
+      query: () => {
+        return {
+          url: `internalnote/`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+      providesTags: ["deliveryHistory"],
+    }),
+    addDeliveryNote: builder.mutation({
+      query: (data) => {
+        return {
+          url: `internalnote/`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+        };
+      },
+      invalidatesTags: ["deliveryHistory"],
+    }),
+    postDeliveryComment: builder.mutation({
+      query: (data) => {
+        return {
+          url: `externalnote/`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+        };
+      },
+      invalidatesTags: ["deliveryHistory"],
+    }),
+    getBusinessFormById: builder.query({
+      query: (id) => {
+        return {
+          url: `businessform/${id}/`,
+          method: "GET",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+      providesTags: ["business"],
+    }),
+    getPendingPayment: builder.query({
+      query: (id) => {
+        return {
+          url: `userpending/`,
+          method: "GET",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+      providesTags: ["business"],
+    }),
+    getPaymentHistory: builder.query({
+      query: (id) => {
+        return {
+          url: `userhistory/`,
+          method: "GET",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+      providesTags: ["business"],
+    }),
+    updateBusinessFormById: builder.mutation({
+      query: (value) => {
+        const { id, data } = value;
+        return {
+          url: `businessform/${id}/`,
+          method: "PATCH",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+        };
+      },
+      invalidatesTags: ["business"],
+    }),
   }),
 });
 
@@ -248,4 +434,18 @@ export const {
   useChangePasswordUserMutation,
   useAddBusinessFormMutation,
   useLoginMutation,
+  usePatchEnteredValueMutation,
+  useGetsaveasdraftQuery,
+  useSaveasdraftMutation,
+  useDeletesaveasdraftbyidMutation,
+  useOnConfirmDeliveyMutation,
+  useGetDeliveryHistoryDataByidQuery,
+  useUpdateDeliveryHistoryDataByidMutation,
+  useGetDeliveryNotesQuery,
+  useAddDeliveryNoteMutation,
+  usePostDeliveryCommentMutation,
+  useGetBusinessFormByIdQuery,
+  useUpdateBusinessFormByIdMutation,
+  useGetPendingPaymentQuery,
+  useGetPaymentHistoryQuery,
 } = FetchApis;

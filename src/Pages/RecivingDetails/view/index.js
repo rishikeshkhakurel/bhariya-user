@@ -13,7 +13,7 @@ import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 import TersaryButton from "../../../common/Components/Button/TersaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
 import NothingToShow from "../../../common/Components/NothingToShow";
-import UserRecivingTabel from "./UserRecivingTabel"
+import UserRecivingTabel from "./UserRecivingTabel";
 const UserRecivingDetails = () => {
   const [filterDate, setFilterDate] = React.useState("2021-01");
   const [customizeTable, setCustomizeTable] = useState(false);
@@ -80,6 +80,53 @@ const UserRecivingDetails = () => {
   const usersId = useSelector((state) => state.authentiaction.userid);
   const [userdeliveryData, setuserdeliveryData] = useState();
   const userDeliveryHistoryResponseInfo = useGetRecivingDetailsQuery();
+  const [rows, setRows] = useState(userDeliveryHistoryResponseInfo?.data);
+
+  const requestSearch = async (searchedVal) => {
+    const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return (
+          row.deliverybranch
+            .toLowerCase()
+            .includes(searchedVal.toLowerCase()) ||
+          row.business.toLowerCase().includes(searchedVal.toLowerCase()) ||
+          row.deliveryto.toLowerCase().includes(searchedVal.toLowerCase())
+        );
+      }
+    );
+    setRows(filteredRows);
+  };
+
+  const requestSearchBranch = (searchedVal) => {
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return row.deliverybranch
+          .toLowerCase()
+          .includes(searchedVal.toLowerCase());
+      }
+    );
+    setRows(filteredRows);
+  };
+
+  const requestSearchBusiness = (searchedVal) => {
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return row.business.toLowerCase().includes(searchedVal.toLowerCase());
+      }
+    );
+    setRows(filteredRows);
+  };
+  const requestSearchstatus = async (searchedVal) => {
+    console.log(searchedVal);
+    const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return row.order_status
+          .toLowerCase()
+          .includes(searchedVal.toLowerCase());
+      }
+    );
+    setRows(filteredRows);
+  };
   useEffect(() => {
     userDeliveryHistoryResponseInfo.refetch();
   }, []);
@@ -138,25 +185,42 @@ const UserRecivingDetails = () => {
             <div className="userAdmin-Deliveryhistory-table-top">
               <div className="userAdmin-Deliveryhistory-table-top_left">
                 <AiOutlineSearch />
-                <input type="text" placeholder="Search Branch, Order ID.." />
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    requestSearch(e.target.value);
+                  }}
+                  placeholder="Search Branch, Order ID.."
+                />
               </div>
               <div className="userAdmin-Deliveryhistory-table-top_right">
-                <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
-                  Sort By
-                </button>
+                <MenuComp
+                  userDeliveryHistorySortBranch
+                  // search={requestSearchBranch}
+                >
+                  <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
+                    <span> Sort By</span> <IoIosArrowDown />
+                  </button>
+                </MenuComp>
 
-                <MenuComp userDeliveryHistorySortBranch>
+                <MenuComp BranchList search={requestSearchBranch}>
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
                     <span> Branch</span> <IoIosArrowDown />
                   </button>
                 </MenuComp>
-                <MenuComp userDeliveryHistorySortStatus>
+                <MenuComp
+                  userDeliveryHistorySortStatus
+                  search={requestSearchstatus}
+                >
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
                     <span> Delivery Status</span>
                     <IoIosArrowDown />
                   </button>
                 </MenuComp>
-                <MenuComp userDeliveryHistorySortBusinessType>
+                <MenuComp
+                  userDeliveryHistorySortBusinessType
+                  search={requestSearchBusiness}
+                >
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
                     <span> Business Type</span>
                     <IoIosArrowDown />
@@ -166,7 +230,7 @@ const UserRecivingDetails = () => {
             </div>
             <div className="userAdmin-Deliveryhistory-table-bottom">
               <UserRecivingTabel
-                tabelData={userDeliveryHistoryResponseInfo?.data?.results}
+                tabelData={rows}
                 columData={showColumDataValue.reverse()}
                 onTableRowCLick="recivingdetails"
               />

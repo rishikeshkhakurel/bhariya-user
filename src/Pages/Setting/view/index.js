@@ -39,7 +39,11 @@ const Settings = () => {
     <div className="userAdmin-Settings">
       <div className="userAdmin--header">
         <h2>
-          User Settings
+          {userState === "user"
+            ? "User Settings"
+            : userState === "rider"
+            ? "Rider Settings"
+            : null}
           <br />
           <p>
             Here, you can edit your profile, change your preferences and log in

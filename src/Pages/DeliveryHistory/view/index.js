@@ -12,6 +12,8 @@ import Loading from "../../../common/Components/loading/LoadingComp";
 import UserDeliveryHistoryTabel from "./UserDeliveryHistoryTabel";
 import DailogComp from "../../../common/Components/Dailog/DailogComp";
 import { useGetUserDeliveryDataQuery } from "../../../Redux/Services/FetchApi";
+import MenuComp from "../../../common/Components/MenuComp";
+import { RiKeyLine } from "react-icons/ri";
 const DeliveryHistory = () => {
   const [filterDate, setFilterDate] = React.useState("2021-01");
   const [customizeTable, setCustomizeTable] = useState(false);
@@ -76,14 +78,59 @@ const DeliveryHistory = () => {
   };
 
   const userDeliveryHistoryResponseInfo = useGetUserDeliveryDataQuery();
+  const [rows, setRows] = useState(userDeliveryHistoryResponseInfo.isSuccess ? userDeliveryHistoryResponseInfo?.data: []);
+  console.log(userDeliveryHistoryResponseInfo)
+
+  const requestSearch = (searchedVal) => {
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter((row) => {
+      return (
+        row.deliverybranch.toLowerCase().includes(searchedVal.toLowerCase()) ||
+        row.business.toLowerCase().includes(searchedVal.toLowerCase()) ||
+        row.deliveryto.toLowerCase().includes(searchedVal.toLowerCase())
+      );
+    });
+    setRows(filteredRows);
+  };
+
+  const requestSearchBranch = (searchedVal) => {
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter((row) => {
+      return (
+        row.deliverybranch.toLowerCase().includes(searchedVal.toLowerCase())
+      );
+    });
+    setRows(filteredRows);
+  };
+
+  const requestSearchBusiness = (searchedVal) => {
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter((row) => {
+      return (
+        row.business.toLowerCase().includes(searchedVal.toLowerCase())
+      );
+    });
+    setRows(filteredRows);
+  };
+
+  const requestSearchstatus = async (searchedVal) => {
+    console.log(searchedVal)
+    const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter((row) => {
+      return (
+        row.order_status.toLowerCase().includes(searchedVal.toLowerCase())
+      );
+    });
+    setRows(filteredRows);
+  };
   useEffect(() => {
     userDeliveryHistoryResponseInfo.refetch();
   }, []);
 
+  useEffect(() => {
+    setRows(userDeliveryHistoryResponseInfo?.data)
+  }, [userDeliveryHistoryResponseInfo]);
+
   return (
     <>
       {userDeliveryHistoryResponseInfo.isLoading && <Loading />}
-      {userDeliveryHistoryResponseInfo?.data?.length !== 0 ? (
+      {userDeliveryHistoryResponseInfo?.data?.length >= 0 ? (
         <div className="userAdmin-Deliveryhistory">
           <DailogComp
             dailogHandeller={customizeTableHandeller}
@@ -118,7 +165,8 @@ const DeliveryHistory = () => {
           </DailogComp>
           <div className="userAdmin--header">
             <h2>Delivery History</h2>
-            <div className="userAdmin--header_buttonGroup">
+            <div className="usearch={requestSearchBranch}
+                serAdmin--header_buttonGroup">
               <Link to="/deliveryhistory/requestdeliveryform">
                 <PrimaryButton>Request delivery</PrimaryButton>
               </Link>
@@ -141,7 +189,11 @@ const DeliveryHistory = () => {
             <div className="userAdmin-Deliveryhistory-table-top">
               <div className="userAdmin-Deliveryhistory-table-top_left">
                 <AiOutlineSearch />
-                <input type="text" placeholder="Search Branch, Order ID.." />
+                <input
+                  type="text"
+                  onChange={(e) => requestSearch(e.target.value)}
+                  placeholder="Search Branch, Order ID.."
+                />
               </div>
               <div className="userAdmin-Deliveryhistory-table-top_right">
                 <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
@@ -149,27 +201,34 @@ const DeliveryHistory = () => {
                 </button>
 
                 {/* <MenuComp userDeliveryHistorySortBranch> */}
-                <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
-                  <span> Branch</span> <IoIosArrowDown />
-                </button>
+                <MenuComp BranchList search={requestSearchBranch}>
+                  <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
+                    <span > Branch</span>{" "}
+                    <IoIosArrowDown />
+                  </button>
+                </MenuComp>
                 {/* </MenuComp> */}
                 {/* <MenuComp userDeliveryHistorySortStatus> */}
-                <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
-                  <span> Delivery Status</span>
-                  <IoIosArrowDown />
-                </button>
+                <MenuComp userDeliveryHistorySortStatus search={requestSearchstatus}>
+                  <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
+                    <span> Delivery Status</span>
+                    <IoIosArrowDown />
+                  </button>
+                </MenuComp>
                 {/* </MenuComp> */}
                 {/* <MenuComp userDeliveryHistorySortBusinessType> */}
-                <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
-                  <span> Business Type</span>
-                  <IoIosArrowDown />
-                </button>
+                <MenuComp userDeliveryHistorySortBusinessType search={requestSearchBusiness}>
+                  <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
+                    <span> Business Type</span>
+                    <IoIosArrowDown />
+                  </button>
+                </MenuComp>
                 {/* </MenuComp> */}
               </div>
             </div>
             <div className="userAdmin-Deliveryhistory-table-bottom">
               <UserDeliveryHistoryTabel
-                tabelData={userDeliveryHistoryResponseInfo?.data?.results}
+                tabelData={rows}
                 columData={showColumDataValue.reverse()}
                 onTableRowCLick="deliveryhistory"
               />

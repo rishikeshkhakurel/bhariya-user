@@ -1,31 +1,28 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiShareBoxFill } from "react-icons/ri";
+import { Row, Col, Form } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
-import { Tooltip, Button, MenuItem, Select, Checkbox } from "@material-ui/core";
+import {
+  Tooltip,
+  Button,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import { BiPencil } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import LableCom from "../../../common/Components/LableCom";
-import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
-import InputFeildComponent from "../../../common/Components/InputFeildComponent";
-import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
-import DailogComp from "../../../common/Components/Dailog/DailogComp";
-import Loading from "../../../common/Components/loading/LoadingComp";
-import AlertBox from "../../../common/AlertBox";
-import { arrayOfLocation } from "../../../common/utils/LocationObject";
-import AutocompleteSetting from "../../../common/Components/AutoComplete";
 import { FacebookShareButton } from "react-share";
-import {
-  useSendbulkdataMutation,
-  useSendRequestDeliveryFormMutation,
-  useGetBusinessFormQuery,
-  useGetBranchDetailsQuery,
-  useGetuserSettingQuery,
-  useSetSearchUserQuery,
-} from "../../../Redux/Services/FetchApi";
-import { Col, Form, Row } from "react-bootstrap";
+import {  useParams } from "react-router-dom";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { useGetBranchDetailsQuery, useGetBusinessFormQuery, useGetDeliveryHistoryDataByidQuery, useUpdateDeliveryHistoryDataByidMutation } from "../../../Redux/Services/FetchApi";
+import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
+import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
+import LableCom from "../../../common/Components/LableCom";
+import InputFeildComponent from "../../../common/Components/InputFeildComponent";
+import AutocompleteSetting from "../../../common/Components/AutoComplete";
+import DailogComp from "../../../common/Components/Dailog/DailogComp";
+import { arrayOfLocation } from "../../../common/utils/LocationObject";
+import AlertBox from "../../../common/AlertBox";
+import Loading from "../../../common/Components/loading/LoadingComp";
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
     color: "#28bb46",
@@ -41,12 +38,16 @@ function BootstrapTooltip(props) {
   return <Tooltip arrow classes={classes} {...props} />;
 }
 const buttonRef = React.createRef();
-const RequestDeliveryForm = () => {
+
+const RequestDeliveryFormEdit = () => {
   const getAllBranchResponseInfo = useGetBranchDetailsQuery();
   const listOfBranches = getAllBranchResponseInfo?.data?.map(
     (value) => value.branchname
   );
-  console.log("list of branch",listOfBranches)
+  const { id: deliveryId } = useParams();
+
+  const getDeliveryHistoryDataByidResponseInfo =
+    useGetDeliveryHistoryDataByidQuery(deliveryId);
 
   const [getPosition, setGetPosition] = useState({
     showDailog: true,
@@ -75,9 +76,48 @@ const RequestDeliveryForm = () => {
   const [pickupBranch, setPickUpBranch] = useState("");
   const [pickupLiveLocation, setPickUpLiveLocation] = useState("");
 
+  const setAllDataToDefault = () => {
+    setBusiness(getDeliveryHistoryDataByidResponseInfo.data.business);
+    setProductname(getDeliveryHistoryDataByidResponseInfo.data.productname);
+    setPackagedetail(getDeliveryHistoryDataByidResponseInfo.data.packagedetail);
+    setPackageValue(getDeliveryHistoryDataByidResponseInfo.data.packagevalue);
+    setCod(getDeliveryHistoryDataByidResponseInfo.data.cod);
+    setDeliveryto(getDeliveryHistoryDataByidResponseInfo.data.deliveryto);
+    setPhoneNumber(getDeliveryHistoryDataByidResponseInfo.data.phone);
+    setEmail(getDeliveryHistoryDataByidResponseInfo.data.email);
+    setDeliveryBranch(
+      getDeliveryHistoryDataByidResponseInfo.data.deliverybranch
+    );
+    setLiveLocation(getDeliveryHistoryDataByidResponseInfo.data.livelocation);
+    setAddress(getDeliveryHistoryDataByidResponseInfo.data.deliverylocation);
+    setRequestPickUp(getDeliveryHistoryDataByidResponseInfo.data.requestpickup);
+    setPickUpName(getDeliveryHistoryDataByidResponseInfo.data.order[0].name);
+    setPickUpEmail(
+      getDeliveryHistoryDataByidResponseInfo.data.order[0].senderemail
+    );
+    setPickUpContact(
+      getDeliveryHistoryDataByidResponseInfo.data.order[0].sendercontact
+    );
+    setPickUpLocation(
+      getDeliveryHistoryDataByidResponseInfo.data.order[0].senderlocation
+    );
+    setPickUpBranch(
+      getDeliveryHistoryDataByidResponseInfo.data.order[0].recievingbranch
+    );
+    setPickUpLiveLocation(
+      getDeliveryHistoryDataByidResponseInfo.data.order[0].senderlivelocation
+    );
+  };
+  useEffect(() => {
+    if (getDeliveryHistoryDataByidResponseInfo.isSuccess) {
+      setAllDataToDefault();
+    }
+  }, [getDeliveryHistoryDataByidResponseInfo]);
+
   useEffect(() => {
     fetchUserLiveLocation();
   }, []);
+
   const fetchUserLiveLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setPickUpLiveLocation(
@@ -93,37 +133,7 @@ const RequestDeliveryForm = () => {
       );
     });
   };
-
-  const getuserSettingResponseInfo = useGetuserSettingQuery();
-
-  const [searchUser, setSearchUser] = useState("");
-
-  const searchUserDataResponseInfo = useSetSearchUserQuery(searchUser);
-  
-  const fillValueOfData = (id) => {
-    searchUserDataResponseInfo?.data?.map((value) => {
-      console.log("search",value)
-      if (value.id === id) {
-        setDeliveryto(value.fullname);
-        setPhoneNumber(value.phonenumber);
-        setEmail(value.email);
-        setAddress(value.address);
-      }
-    });
-    setSearchUser("");
-  };
-
-  useEffect(() => {
-    console.log("dataaaaaaaaaaaaaaaa", getuserSettingResponseInfo);
-    if (getuserSettingResponseInfo.isSuccess) {
-      setPickUpName(getuserSettingResponseInfo.data[0].fullname);
-      setPickUpContact(getuserSettingResponseInfo.data[0].phonenumber);
-      console.log("pickkuppppppppppp", pickupContact);
-      setPickUpEmail(getuserSettingResponseInfo.data[0].email);
-      setPickUpLocation(getuserSettingResponseInfo.data[0].address);
-    }
-  }, [getuserSettingResponseInfo.isSuccess]);
-  const getUserDetails = () => {};
+  const [fetchOrAdd, setFetchOrAdd] = useState(true);
   const [value, setValueTime] = React.useState("time");
 
   const handleChange = (event) => {
@@ -136,6 +146,7 @@ const RequestDeliveryForm = () => {
   const ShareDailogOpenHandeller = () => {
     setShareDailogOpen(!ShareDailogOpen);
   };
+
   const [pickUpInformationDailog, setPickUpInformationDailog] = useState(false);
   const pickUpinformationDailogHandeller = () => {
     setPickUpInformationDailog(!pickUpInformationDailog);
@@ -160,50 +171,25 @@ const RequestDeliveryForm = () => {
     const urlValue = window.location.href;
     navigator.clipboard.writeText(urlValue);
   };
+
   const [writingState, setWritingState] = useState(1);
   const changeWritingStateHandeller = (state) => {
     setWritingState(state);
   };
 
-  const [bulkuploaddailog, setBulkuploaddailog] = useState(false);
-  const bulkuploaddailoghandeller = () => {
-    setBulkuploaddailog(!bulkuploaddailog);
-  };
-  const handleOpenDialogBulkUpload = (e) => {
-    // Note that the ref is set async, so it might be null at some point
-    if (buttonRef.current) {
-      buttonRef.current.open(e);
-    }
-  };
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [sendCsvFile, sendCsvFileResponseInfo] = useSendbulkdataMutation();
-
-  const sendfiletobackend = (e) => {
-    const files = e.target.files;
-
-    const file = files[0];
-    if (file) {
-      const formdata = new FormData();
-      formdata.append("file_name", file);
-      sendCsvFile(formdata);
-    }
-  };
-
-  const gotoBulkOption = () => {
-    navigate("/deliveryhistory/requestdeliveryform/bulktabel");
-  };
-  const [sendRequestDelivery, sendRequestDeliveryResponseInfo] =
-    useSendRequestDeliveryFormMutation();
+  const [sendRequestDeliveryUpdate, sendRequestDeliveryResponseInfo] =
+    useUpdateDeliveryHistoryDataByidMutation();
 
   // const branchOption = ["pokhara", "kathmandu", "janakpur"];
 
   const getBranchListResponseInfo = useGetBranchDetailsQuery();
+  const fetchOrAddHandeller = () => {
+    setFetchOrAdd(!fetchOrAdd);
+  };
   const [branchOption, setBranchOption] = useState([]);
   useEffect(() => {
     if (getBranchListResponseInfo.isSuccess) {
-      const newArray = getBranchListResponseInfo.data?.map((value) => {
+      const newArray = getBranchListResponseInfo.data.map((value) => {
         return value.branchname;
       });
       setBranchOption(newArray);
@@ -211,54 +197,34 @@ const RequestDeliveryForm = () => {
   }, [getBranchListResponseInfo.isSuccess]);
 
   const onSubmitForm = () => {
-    if (phoneNumber.includes("977")) {
-      setPhoneNumber(phoneNumber);
-    } else {
-      setPhoneNumber(Number(`977${phoneNumber}`));
-    }
-    sendRequestDelivery({
-      business: business,
-      cod: cod,
-      deliveryto: deliveryTo,
-      packagedetail: packagedetail,
-      deliverybranch: deliveryBranch,
-      deliverylocation: address,
-      email: email,
-      livelocation: fetchOrAdd ? livelocation : customLocation.label,
-      packagevalue: packagevalue,
-      phone: phoneNumber,
-      productname: productname,
-      requestpickup: requestPickUp,
-      name: pickupName,
-      sendercontact: pickupContact,
-      senderemail: pickupEmail,
-      senderlocation: pickupLocation,
-      recievingbranch: pickupBranch,
-      senderlivelocation: pickupLiveLocation,
+    sendRequestDeliveryUpdate({
+      id: deliveryId,
+      data: {
+        business: business,
+        cod: cod,
+        packagedetail: packagedetail,
+        deliverybranch: deliveryBranch,
+        deliveryto: deliveryTo,
+        deliverylocation: address,
+        email: email,
+        livelocation: fetchOrAdd ? livelocation : customLocation.label,
+        packagevalue: packagevalue,
+        phone: phoneNumber,
+        productname: productname,
+        requestpickup: requestPickUp,
+        name: pickupName,
+        sendercontact: pickupContact,
+        senderemail: pickupEmail,
+        senderlocation: pickupLocation,
+        senderlivelocation: pickupLiveLocation,
+        recievingbranch: pickupBranch,
+      },
     });
   };
 
   useEffect(() => {
-    if (sendCsvFileResponseInfo.isSuccess) {
-      setBulkuploaddailog(false);
-    }
-  }, [sendCsvFileResponseInfo.isSuccess]);
-
-  useEffect(() => {
     if (sendRequestDeliveryResponseInfo.isSuccess) {
-      setBusiness("none");
-      setCod("");
-      setDeliveryBranch("");
-      setDeliveryto("");
-      setEmail("");
-      setLiveLocation("");
-      setPackageValue("");
-      setPackagedetail("");
-      setPhoneNumber("");
-      setAddress("");
-      setProductname("");
-      setRequestPickUp(false);
-      setRequestSucess(true);
+      setAllDataToDefault();
     }
   }, [sendRequestDeliveryResponseInfo.isSuccess]);
 
@@ -269,30 +235,15 @@ const RequestDeliveryForm = () => {
 
   const getBusinessForm = useGetBusinessFormQuery();
   const [openAddCustomDailog, setopenAddCustomDailog] = useState(false);
-
-  const [fetchOrAdd, setFetchOrAdd] = useState(true);
-
-  const fetchOrAddHandeller = () => {
-    setFetchOrAdd(!fetchOrAdd);
-  };
   const openAddCustomDailogHandeller = () => {
     setopenAddCustomDailog(!openAddCustomDailog);
   };
-
-  const [toCheckDetailsEnteredState, setToCheckDetailsEnteredState] = useState({
-    packagedetail: false,
-    deliveryInformation: false,
-    pickUpInformation: false,
-  });
-
   return (
     <>
-      {sendCsvFileResponseInfo.isLoading ||
-        (sendRequestDeliveryResponseInfo.isLoading && <Loading />)}
-      {sendCsvFileResponseInfo.isSuccess ||
-        (sendRequestDeliveryResponseInfo.isSuccess && (
-          <AlertBox AlertMessage={"your Order is placed"} />
-        ))}
+      {sendRequestDeliveryResponseInfo.isLoading && <Loading />}
+      {sendRequestDeliveryResponseInfo.isSuccess && (
+        <AlertBox AlertMessage={"your Order is Edited"} />
+      )}
       <div className="userhomepage">
         <DailogComp
           dailogHandeller={requestSucessHandeller}
@@ -317,40 +268,6 @@ const RequestDeliveryForm = () => {
           </div>
         </DailogComp>
         <DailogComp
-          open={bulkuploaddailog}
-          dailogHandeller={bulkuploaddailoghandeller}
-          title="Bulk File"
-        >
-          <div className="bulkfileupload">
-            <div className="bulkfileupload__box">
-              <div className="bulkfileupload__box__imgcontainer">
-                <img src="/assets/copylink.svg" alt="svg" />
-              </div>
-              <div className="bulkfileupload__box__title">
-                <label className="bulkfileupload__box__title" for="file">
-                  Choose file from your device
-                </label>
-                <input
-                  type="file"
-                  name="file"
-                  id="file"
-                  style={{ display: "none" }}
-                  placeholder="Choose file from your device"
-                  onChange={(e) => sendfiletobackend(e)}
-                />
-              </div>
-            </div>
-            {/* <div className="bulkfileupload__box">
-            <div className="bulkfileupload__box__imgcontainer">
-              <img src="/assets/copydocument.svg" alt="svg" />
-            </div>
-            <div className="bulkfileupload__box__title">
-              <h2>Attach file frm goofle excel/CSB files</h2>
-            </div>
-          </div> */}
-          </div>
-        </DailogComp>
-        <DailogComp
           dailogHandeller={openAddCustomDailogHandeller}
           open={openAddCustomDailog}
         >
@@ -358,26 +275,25 @@ const RequestDeliveryForm = () => {
             <h2>Add Custom Location</h2>
             <AutocompleteSetting
               name="Region"
-              arrayofoption={arrayOfLocation.region}
+              arrayOfOption={arrayOfLocation.region}
               placeholder="Please Chose your region"
               onChange={(e, v) => setRegion(v)}
               value={region}
             />
             <AutocompleteSetting
               name="City"
-              arrayofoption={arrayOfLocation.region}
+              arrayOfOption={arrayOfLocation.region}
               placeholder="Please Chose your city"
               onChange={(e, v) => setCity(v)}
               value={city}
             />
             <AutocompleteSetting
               name="Area"
-              arrayofoption={arrayOfLocation.region}
+              arrayOfOption={arrayOfLocation.region}
               placeholder="Please Chose your area"
               onChange={(e, v) => setArea(v)}
               value={area}
             />
-
             <InputFeildComponent
               placeholder="Address"
               value={customAddress}
@@ -385,7 +301,6 @@ const RequestDeliveryForm = () => {
               onChang={(e) => setCustomAddress(e.target.value)}
               type="text"
             />
-
             <PrimaryButton>Save Change</PrimaryButton>
           </div>
         </DailogComp>
@@ -407,12 +322,12 @@ const RequestDeliveryForm = () => {
               label="Contact"
               value={pickupContact}
               onChange={(e) => setPickUpContact(e.target.value)}
-              type="phonenumber"
+              type="text"
             />
             <InputFeildComponent
               placeholder="Email"
               label="Email"
-              type="email"
+              type="Email"
               value={pickupEmail}
               onChange={(e) => setPickUpEmail(e.target.value)}
             />
@@ -426,7 +341,7 @@ const RequestDeliveryForm = () => {
             <InputFeildComponent
               placeholder="Location"
               label="Location"
-              type="text"
+              type="Text"
               value={pickupLocation}
               onChange={(e) => setPickUpLocation(e.target.value)}
             />
@@ -446,7 +361,7 @@ const RequestDeliveryForm = () => {
         </DailogComp>
         <div className="userhomepage_banner">
           <div className="userhomepage_banner-imgcontainer">
-            <img src="/assets/happydeliveryMan.png" alt="img" />
+            <img src="/assets/happydeliveryman.png" alt="img" />
           </div>
           <div className="userhomepage_banner-caption">
             <h2>Delivery service that is always next to you</h2>
@@ -616,7 +531,7 @@ const RequestDeliveryForm = () => {
                   ))}
                 </Select>
               </div>
-              <div className="userhomepage_form-details__bulksection">
+              {/* <div className="userhomepage_form-details__bulksection">
                 <span> for uploadingrequest in large amount</span>
                 <SecondaryButton onClick={bulkuploaddailoghandeller}>
                   Bulk Upload
@@ -624,13 +539,13 @@ const RequestDeliveryForm = () => {
                 <SecondaryButton onClick={gotoBulkOption}>
                   Bulk option
                 </SecondaryButton>
-                {/* <SecondaryButton>One by one view</SecondaryButton> */}
-              </div>
+                <SecondaryButton>One by one view</SecondaryButton>
+              </div> */}
               <div className="userhomepage_form-details-form">
                 <div className="userhomepage_form-details-form-heading">
                   <LableCom name="Package Information" />
                 </div>
-                <div>
+                <div onClick={() => changeWritingStateHandeller(1)}>
                   <Row>
                     <Col>
                       <InputFeildComponent
@@ -656,7 +571,7 @@ const RequestDeliveryForm = () => {
                       <InputFeildComponent
                         placeholder="Eg: Rs 1300"
                         label="Package Value"
-                        type="number"
+                        type="text"
                         value={packagevalue}
                         onChange={(e) => setPackageValue(e.target.value)}
                       />
@@ -665,7 +580,7 @@ const RequestDeliveryForm = () => {
                       <InputFeildComponent
                         placeholder="Eg: Rs1200"
                         label="COD"
-                        type="number"
+                        type="text"
                         value={cod}
                         onChange={(e) => setCod(e.target.value)}
                       />
@@ -674,57 +589,17 @@ const RequestDeliveryForm = () => {
                   <div className="userhomepage_form-details-form-search">
                     <div className="userhomepage_form-details-form-search-input">
                       <input
-                        value={searchUser}
-                        onChange={(e) => setSearchUser(e.target.value)}
                         type="text"
-                        placeholder="Search User by Phone number/Email"
+                        placeholder="Seacrh User by Phone number/Email"
                       />
                       <BsSearch className="userhomepage_form-details-form-search-input-icon" />
-                    </div>
-                    <div
-                      className={
-                        searchUser.length > 0
-                          ? "userhomepage_form-details-form-search__container"
-                          : "userhomepage_form-details-form-search__container isOverFlowed"
-                      }
-                    >
-                      {searchUser.length > 0 &&
-                        searchUserDataResponseInfo.data.map((value) => {
-                          if (value.user_role === "user") {
-                            if (
-                              value.id != getuserSettingResponseInfo.data[0].id
-                            ) {
-                              return (
-                                <div
-                                  onClick={() => fillValueOfData(value.id)}
-                                  key={value.id}
-                                  className="userhomepage_form-details-form-search__box"
-                                >
-                                  <h3>{value.fullname}</h3>
-                                  <p>
-                                    {value.phonenumber
-                                      ? value.phonenumber
-                                      : value.email}{" "}
-                                    | {value.address}
-                                  </p>
-                                </div>
-                              );
-                            } else {
-                              return (
-                                <div className="userhomepage_form-details-form-search__box">
-                                  No details Found
-                                </div>
-                              );
-                            }
-                          }
-                        })}
                     </div>
                   </div>
                 </div>
                 <div className="userhomepage_form-details-form-heading">
                   <LableCom name="Delivery Information" />
                 </div>
-                <div>
+                <div onClick={() => changeWritingStateHandeller(2)}>
                   <Row>
                     <Col>
                       <InputFeildComponent
@@ -739,7 +614,7 @@ const RequestDeliveryForm = () => {
                       <InputFeildComponent
                         placeholder="Number"
                         label="Phone Number"
-                        type="phonenumber"
+                        type="Number"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                       />
@@ -771,7 +646,6 @@ const RequestDeliveryForm = () => {
                         name="Delivery Branch"
                         arrayOfOption={branchOption}
                         placeholder="Eg: Kathmandu"
-                        type="text"
                         onChange={(e, v) => setDeliveryBranch(v)}
                         value={deliveryBranch}
                       />
@@ -822,7 +696,7 @@ const RequestDeliveryForm = () => {
                     </Col>
                   </Row>
                 </div>
-                <div>
+                <div onClick={() => changeWritingStateHandeller(3)}>
                   {/* <LableCom name="When Would You like to Place A Delivery Order?" />
                   <FormControl component="fieldset">
                     <RadioGroup
@@ -907,9 +781,11 @@ const RequestDeliveryForm = () => {
                 </div>
                 <div className="userhomepage_form-details-form_buttonGrop">
                   <PrimaryButton onClick={onSubmitForm} type="submit">
-                    Request Order
+                    Save
                   </PrimaryButton>
-                  <SecondaryButton>Save As Draft</SecondaryButton>
+                  <SecondaryButton onClick={setAllDataToDefault}>
+                    Reset
+                  </SecondaryButton>
                 </div>
               </div>
             </div>
@@ -920,4 +796,4 @@ const RequestDeliveryForm = () => {
   );
 };
 
-export default RequestDeliveryForm;
+export default RequestDeliveryFormEdit;

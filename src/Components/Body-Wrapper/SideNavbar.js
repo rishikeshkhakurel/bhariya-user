@@ -9,13 +9,23 @@ import {
 import { IoMdSettings } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import AdminNavigationButton from "../../common/Components/AdminNavigationButton";
+import { useGetBusinessFormQuery } from "../../Redux/Services/FetchApi";
+import DynamicDropDownTabs from "../../common/Components/DynamicDropDownTabs";
 const SideNavbar = () => {
   const { pathname: location } = useLocation();
+  let business = [{name:"+ Business",id:""}];
+  const getBusinessFormResponse = useGetBusinessFormQuery();
+  if (getBusinessFormResponse.isSuccess) {
+    for (let i = 0; i < getBusinessFormResponse.data.length; i++) {
+      business.push({ name: getBusinessFormResponse.data[i].businessname, id:getBusinessFormResponse.data[i].id });
+    }
+  }
+  console.log("location",location)
   return (
     <>
       <div className="adminNavigation">
         <AdminNavigationButton
-          link="/dashboard"
+          link="/dasboard"
           isActive={location === "/dashboard" && "true"}
           title="Dashboard"
         >
@@ -23,7 +33,7 @@ const SideNavbar = () => {
         </AdminNavigationButton>
         <AdminNavigationButton
           link="/deliveryhistory"
-          isActive={location.includes("/deliveryhistory") && "true"}
+          isActive={location==="/deliveryhistory" && "true"}
           title="Delivery History"
         >
           <MdDateRange />
@@ -36,14 +46,22 @@ const SideNavbar = () => {
           <MdSystemUpdateAlt />
         </AdminNavigationButton>
 
-        <AdminNavigationButton
-          dropdown={location.includes("/business") && "true"}
+        <DynamicDropDownTabs
           isActive={location.includes("/business") && "true"}
+          link="business"
           title="Business"
-          link="/business"
+          dropdown={location.includes("/business") && "true"}
+          arryOfList={business}
         >
+          {/* <AdminNavigationButton
+            dropdown={location.includes("/business") && "true"}
+            isActive={location.includes("/business") && "true"}
+            title="Business"
+            link="/business"
+          > */}
           <MdOutlineBusinessCenter />
-        </AdminNavigationButton>
+          {/* </AdminNavigationButton> */}
+        </DynamicDropDownTabs>
         <AdminNavigationButton
           isActive={location === "/payment" && "true"}
           title="Payment"

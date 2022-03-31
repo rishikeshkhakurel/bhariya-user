@@ -13,6 +13,7 @@ import PrimaryButton from "./Button/PrimaryButton";
 import SecondaryButton from "./Button/SecondaryButton";
 import InputFeildComponent from "./InputFeildComponent";
 import { useChangePasswordUserMutation, useGetuserSettingQuery, useSetUserSettingsMutation } from "../../Redux/Services/FetchApi";
+import { Col, Row } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -174,434 +175,434 @@ export default function AccordionForSetting(props) {
   }, [changePasswordUserResponseInfo.isSuccess]);
   return (
     <>
-      {setUserSettingsResponseInfo.isSuccess && (
-        <AlertBox AlertMessage={"Your Changes Are Sucessfully Done"} />
-      )}
-      {changePasswordUserResponseInfo.isSuccess && (
-        <AlertBox AlertMessage={"Password Changed Suessfully"} />
-      )}
-      {changePasswordUserResponseInfo.isError && (
-        <AlertBox isError AlertMessage={"something is Wrong"} />
-      )}
-      <div className={`${classes.root} accordionSetting`}>
-        {props.forSecurity ? (
-          <>
-            <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
+    {setUserSettingsResponseInfo.isSuccess && (
+      <AlertBox AlertMessage={"Your Changes Are Sucessfully Done"} />
+    )}
+    {changePasswordUserResponseInfo.isSuccess && (
+      <AlertBox AlertMessage={"Password Changed Suessfully"} />
+    )}
+    {changePasswordUserResponseInfo.isError && (
+      <AlertBox isError AlertMessage={"something is Wrong"} />
+    )}
+    <div className={`${classes.root} accordionSetting`}>
+      {props.forSecurity ? (
+        <>
+          <Accordion
+            expanded={expanded === "panel1"}
+            onChange={handleChange("panel1")}
+          >
+            <AccordionSummary
+              expandIcon={
+                expanded === "panel1" ? (
+                  <p className="accordionedit">Close</p>
+                ) : (
+                  <p className="accordionedit">Edit</p>
+                )
+              }
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
             >
-              <AccordionSummary
-                expandIcon={
-                  expanded === "panel1" ? (
-                    <p className="accordionedit">Close</p>
-                  ) : (
-                    <p className="accordionedit">Edit</p>
-                  )
-                }
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">Password</h3>
-                </div>
-                <div></div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="accordion__details">
-                  <div>
-                    <div>
-                      <InputFeildComponent
-                        type="password"
-                        label="Current Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <InputFeildComponent
-                        type="password"
-                        label="New Password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <InputFeildComponent
-                        type="password"
-                        label="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                      />
-                    </div>
+              <Col xs={2}>
+                <h3 className="accordionTitle">Password</h3>
+              </Col>
+              <Col></Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="accordion__details">
+                <Row>
+                  <Col>
+                    <InputFeildComponent
+                      type="password"
+                      label="Current Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Col>
+                  <Col>
+                    <InputFeildComponent
+                      type="password"
+                      label="New Password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                  </Col>
+                  <Col>
+                    <InputFeildComponent
+                      type="password"
+                      label="Confirm Password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <div className="accordion__details-button">
+                    <PrimaryButton onClick={sendToChangePassword}>
+                      Save Change{" "}
+                    </PrimaryButton>
+                    <SecondaryButton onClick={clearPasswordFeilds}>
+                      Cancel
+                    </SecondaryButton>
                   </div>
-                  <div>
+                </Row>
+              </div>
+            </AccordionDetails>
+          </Accordion>
+          {/* <h3 className="accordingheader">Active Log</h3>
+          <div className="accordingdetails">
+            <Row>
+              <Col xs={2}>Dec 16</Col>
+              <Col xs={8}>192.168.1.2</Col>
+              <Col style={{ paddingRight: "0px" }}>
+                <p className="accordionedit">Delete</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={2}>Dec 15</Col>
+              <Col xs={8}>192.168.1.2</Col>
+              <Col style={{ paddingRight: "0px" }}>
+                <p className="accordionedit">Delete</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={2}>Dec 14</Col>
+              <Col xs={8}>192.168.1.2</Col>
+              <Col style={{ paddingRight: "0px" }}>
+                <p className="accordionedit">Delete</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={2}>Dec 13</Col>
+              <Col xs={8}>192.168.1.254</Col>
+              <Col style={{ paddingRight: "0px" }}>
+                <p className="accordionedit">Delete</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={2}>Dec 12</Col>
+              <Col xs={8}>192.168.1.254</Col>
+              <Col style={{ paddingRight: "0px" }}>
+                <p className="accordionedit">Delete</p>
+              </Col>
+            </Row>
+          </div> */}
+        </>
+      ) : (
+        <>
+          <Accordion
+            expanded={expanded === "panel1"}
+            onChange={handleChange("panel1")}
+          >
+            <AccordionSummary
+              expandIcon={<p className="accordionedit">Edit</p>}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Col xs={2}>
+                <h3 className="accordionTitle">Name</h3>
+              </Col>
+              <Col>
+                <h4 className="accordionDiscription">{name}</h4>
+              </Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="accordion__details__name">
+                <div className="accordion__details__name__feild">
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                        type="Name"
+                        label="Name"
+                        required={false}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="accordion__details__name__buttons">
+                  <Row>
                     <div className="accordion__details-button">
-                      <PrimaryButton onClick={sendToChangePassword}>
+                      <PrimaryButton
+                        onClick={() => onSaveChangeHandeller("name")}
+                      >
                         Save Change{" "}
                       </PrimaryButton>
-                      <SecondaryButton onClick={clearPasswordFeilds}>
+                      <SecondaryButton
+                        onClick={() => changeCancelHandeller("name")}
+                      >
                         Cancel
                       </SecondaryButton>
                     </div>
-                  </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            {/* <h3 className="accordingheader">Active Log</h3>
-            <div className="accordingdetails">
-              <div>
-                <div xs={2}>Dec 16</div>
-                <div xs={8}>192.168.1.2</div>
-                <div style={{ paddingRight: "0px" }}>
-                  <p className="accordionedit">Delete</p>
+                  </Row>
                 </div>
               </div>
-              <div>
-                <div xs={2}>Dec 15</div>
-                <div xs={8}>192.168.1.2</div>
-                <div style={{ paddingRight: "0px" }}>
-                  <p className="accordionedit">Delete</p>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel2"}
+            onChange={handleChange("panel2")}
+          >
+            <AccordionSummary
+              expandIcon={null}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Col xs={2}>
+                <h3 className="accordionTitle">User ID</h3>
+              </Col>
+              <Col>
+                <h4 className="accordionDiscription">#{userId}</h4>
+              </Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>This cannot be changed</Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel3"}
+            onChange={handleChange("panel3")}
+          >
+            <AccordionSummary
+              expandIcon={<p className="accordionedit">Edit</p>}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Col xs={2}>
+                <h3 className="accordionTitle">Email</h3>
+              </Col>
+              <Col>
+                <h4 className="accordionDiscription">{email}</h4>
+              </Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="accordion__details__name">
+                <div className="accordion__details__name__feild">
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        onChange={(e) => setemail(e.target.value)}
+                        value={email}
+                        type="email"
+                        required={false}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="accordion__details__name__buttons">
+                  <Row>
+                    <div className="accordion__details-button">
+                      <PrimaryButton
+                        onClick={() => onSaveChangeHandeller("email")}
+                      >
+                        Save Change{" "}
+                      </PrimaryButton>
+                      <SecondaryButton
+                        onClick={() => changeCancelHandeller("email")}
+                      >
+                        Cancel
+                      </SecondaryButton>
+                    </div>
+                  </Row>
                 </div>
               </div>
-              <div>
-                <div xs={2}>Dec 14</div>
-                <div xs={8}>192.168.1.2</div>
-                <div style={{ paddingRight: "0px" }}>
-                  <p className="accordionedit">Delete</p>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel4"}
+            onChange={handleChange("panel4")}
+          >
+            <AccordionSummary
+              expandIcon={<p className="accordionedit">Edit</p>}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Col xs={2}>
+                <h3 className="accordionTitle">Phone number</h3>
+              </Col>
+              <Col>
+                <h4 className="accordionDiscription">{phoneNumber}</h4>
+              </Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="accordion__details__name ">
+                <div className="accordion__details__name__feild">
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        onChange={(e) => setPhoneNUmber(e.target.value)}
+                        value={phoneNumber}
+                        type="text"
+                        required={false}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="accordion__details__name__buttons">
+                  <Row>
+                    <div className="accordion__details-button">
+                      <PrimaryButton
+                        onClick={() => onSaveChangeHandeller("phone")}
+                      >
+                        Save Change{" "}
+                      </PrimaryButton>
+                      <SecondaryButton
+                        onClick={() => changeCancelHandeller("phone")}
+                      >
+                        Cancel
+                      </SecondaryButton>
+                    </div>
+                  </Row>
                 </div>
               </div>
-              <div>
-                <div xs={2}>Dec 13</div>
-                <div xs={8}>192.168.1.254</div>
-                <div style={{ paddingRight: "0px" }}>
-                  <p className="accordionedit">Delete</p>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel5"}
+            onChange={handleChange("panel5")}
+          >
+            <AccordionSummary
+              expandIcon={<p className="accordionedit">Edit</p>}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Col xs={2}>
+                <h3 className="accordionTitle">Address</h3>
+              </Col>
+              <Col>
+                <h4 className="accordionDiscription">{address}</h4>
+              </Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="accordion__details__name">
+                <div className="accordion__details__name__feild">
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        onChange={(e) => setAddress(e.target.value)}
+                        value={address}
+                        type="text"
+                        required={false}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="accordion__details__name__buttons">
+                  <Row>
+                    <div className="accordion__details-button">
+                      <PrimaryButton
+                        onClick={() => onSaveChangeHandeller("address")}
+                      >
+                        Save Change{" "}
+                      </PrimaryButton>
+                      <SecondaryButton
+                        onClick={() => changeCancelHandeller("address")}
+                      >
+                        Cancel
+                      </SecondaryButton>
+                    </div>
+                  </Row>
                 </div>
               </div>
-              <div>
-                <div xs={2}>Dec 12</div>
-                <div xs={8}>192.168.1.254</div>
-                <div style={{ paddingRight: "0px" }}>
-                  <p className="accordionedit">Delete</p>
-                </div>
-              </div>
-            </div> */}
-          </>
-        ) : (
-          <>
-            <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel6"}
+            onChange={handleChange("panel6")}
+          >
+            <AccordionSummary
+              expandIcon={<p className="accordionedit">Edit</p>}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
             >
-              <AccordionSummary
-                expandIcon={<p className="accordionedit">Edit</p>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">Name</h3>
-                </div>
-                <div>
-                  <h4 className="accordionDiscription">{name}</h4>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="accordion__details__name">
-                  <div className="accordion__details__name__feild">
-                    <div>
+              <Col xs={2}>
+                <h3 className="accordionTitle">Citizenship</h3>
+              </Col>
+              <Col>
+                <h4 className="accordionDiscription">CitizenShip Images</h4>
+              </Col>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="accordion__details__name accordion__details__name__citizen">
+                <div className="accordion__details__name__feild">
+                  <Row>
+                    <Col>
                       <div>
-                        <InputFeildComponent
-                          onChange={(e) => setName(e.target.value)}
-                          value={name}
-                          type="Name"
-                          label="Name"
-                          required={false}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion__details__name__buttons">
-                    <div>
-                      <div className="accordion__details-button">
-                        <PrimaryButton
-                          onClick={() => onSaveChangeHandeller("name")}
+                        <ImageUploading
+                          multiple
+                          value={citizenShip}
+                          onChange={onChange}
+                          maxNumber={maxNumber}
+                          dataURLKey="data_url"
                         >
-                          Save Change{" "}
-                        </PrimaryButton>
-                        <SecondaryButton
-                          onClick={() => changeCancelHandeller("name")}
-                        >
-                          Cancel
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
-            >
-              <AccordionSummary
-                expandIcon={null}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">User ID</h3>
-                </div>
-                <div>
-                  <h4 className="accordionDiscription">#{userId}</h4>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>This cannot be changed</Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel3"}
-              onChange={handleChange("panel3")}
-            >
-              <AccordionSummary
-                expandIcon={<p className="accordionedit">Edit</p>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">Email</h3>
-                </div>
-                <div>
-                  <h4 className="accordionDiscription">{email}</h4>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="accordion__details__name">
-                  <div className="accordion__details__name__feild">
-                    <div>
-                      <div>
-                        <InputFeildComponent
-                          onChange={(e) => setemail(e.target.value)}
-                          value={email}
-                          type="email"
-                          required={false}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion__details__name__buttons">
-                    <div>
-                      <div className="accordion__details-button">
-                        <PrimaryButton
-                          onClick={() => onSaveChangeHandeller("email")}
-                        >
-                          Save Change{" "}
-                        </PrimaryButton>
-                        <SecondaryButton
-                          onClick={() => changeCancelHandeller("email")}
-                        >
-                          Cancel
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel4"}
-              onChange={handleChange("panel4")}
-            >
-              <AccordionSummary
-                expandIcon={<p className="accordionedit">Edit</p>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">Phone number</h3>
-                </div>
-                <div>
-                  <h4 className="accordionDiscription">{phoneNumber}</h4>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="accordion__details__name ">
-                  <div className="accordion__details__name__feild">
-                    <div>
-                      <div>
-                        <InputFeildComponent
-                          onChange={(e) => setPhoneNUmber(e.target.value)}
-                          value={phoneNumber}
-                          type="text"
-                          required={false}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion__details__name__buttons">
-                    <div>
-                      <div className="accordion__details-button">
-                        <PrimaryButton
-                          onClick={() => onSaveChangeHandeller("phone")}
-                        >
-                          Save Change{" "}
-                        </PrimaryButton>
-                        <SecondaryButton
-                          onClick={() => changeCancelHandeller("phone")}
-                        >
-                          Cancel
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel5"}
-              onChange={handleChange("panel5")}
-            >
-              <AccordionSummary
-                expandIcon={<p className="accordionedit">Edit</p>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">Address</h3>
-                </div>
-                <div>
-                  <h4 className="accordionDiscription">{address}</h4>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="accordion__details__name">
-                  <div className="accordion__details__name__feild">
-                    <div>
-                      <div>
-                        <InputFeildComponent
-                          onChange={(e) => setAddress(e.target.value)}
-                          value={address}
-                          type="text"
-                          required={false}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion__details__name__buttons">
-                    <div>
-                      <div className="accordion__details-button">
-                        <PrimaryButton
-                          onClick={() => onSaveChangeHandeller("address")}
-                        >
-                          Save Change{" "}
-                        </PrimaryButton>
-                        <SecondaryButton
-                          onClick={() => changeCancelHandeller("address")}
-                        >
-                          Cancel
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={expanded === "panel6"}
-              onChange={handleChange("panel6")}
-            >
-              <AccordionSummary
-                expandIcon={<p className="accordionedit">Edit</p>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <div xs={2}>
-                  <h3 className="accordionTitle">Citizenship</h3>
-                </div>
-                <div>
-                  <h4 className="accordionDiscription">CitizenShip Images</h4>
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="accordion__details__name accordion__details__name__citizen">
-                  <div className="accordion__details__name__feild">
-                    <div>
-                      <div>
-                        <div>
-                          <ImageUploading
-                            multiple
-                            value={citizenShip}
-                            onChange={onChange}
-                            maxNumber={maxNumber}
-                            dataURLKey="data_url"
-                          >
-                            {({
-                              imageList,
-                              onImageUpload,
-                              onImageRemoveAll,
-                              onImageUpdate,
-                              onImageRemove,
-                              isDragging,
-                              dragProps,
-                            }) => (
-                              <>
-                                <div className="businessformAddDocuments__imgsection">
-                                  <div className="businessformAddDocuments__imgupload">
-                                    <button onClick={onImageUpload}>
-                                      <IoMdAdd />
-                                    </button>
-                                  </div>
-                                  <div className="businessformAddDocuments__images">
-                                    {citizenShip?.map((value, index) => {
-                                      return (
-                                        <div
-                                          key={index}
-                                          className="businessformAddDocuments__images__imgcontainer"
-                                        >
-                                          <span>
-                                            <MdOutlineCancel
-                                              onClick={() =>
-                                                onImageRemove(index)
-                                              }
-                                            />
-                                          </span>
-                                          <img
-                                            src={value?.data_url}
-                                            alt="img"
-                                          />
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
+                          {({
+                            imageList,
+                            onImageUpload,
+                            onImageRemoveAll,
+                            onImageUpdate,
+                            onImageRemove,
+                            isDragging,
+                            dragProps,
+                          }) => (
+                            <>
+                              <div className="businessformAddDocuments__imgsection">
+                                <div className="businessformAddDocuments__imgupload">
+                                  <button onClick={onImageUpload}>
+                                    <IoMdAdd />
+                                  </button>
                                 </div>
-                              </>
-                            )}
-                          </ImageUploading>
-                        </div>
+                                <div className="businessformAddDocuments__images">
+                                  {citizenShip?.map((value, index) => {
+                                    return (
+                                      <div
+                                        key={index}
+                                        className="businessformAddDocuments__images__imgcontainer"
+                                      >
+                                        <span>
+                                          <MdOutlineCancel
+                                            onClick={() =>
+                                              onImageRemove(index)
+                                            }
+                                          />
+                                        </span>
+                                        <img
+                                          src={value?.data_url}
+                                          alt="img"
+                                        />
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </ImageUploading>
                       </div>
-                    </div>
-                  </div>
-                  <div className="accordion__details__name__buttons">
-                    <div>
-                      <div className="accordion__details-button">
-                        <PrimaryButton
-                          onClick={() => onSaveChangeHandeller("citizen")}
-                        >
-                          Save Change{" "}
-                        </PrimaryButton>
-                        <SecondaryButton
-                          onClick={() => changeCancelHandeller("citizen")}
-                        >
-                          Cancel
-                        </SecondaryButton>
-                      </div>
-                    </div>
-                  </div>
+                    </Col>
+                  </Row>
                 </div>
-              </AccordionDetails>
-            </Accordion>
-          </>
-        )}
-      </div>
-    </>
+                <div className="accordion__details__name__buttons">
+                  <Row>
+                    <div className="accordion__details-button">
+                      <PrimaryButton
+                        onClick={() => onSaveChangeHandeller("citizen")}
+                      >
+                        Save Change{" "}
+                      </PrimaryButton>
+                      <SecondaryButton
+                        onClick={() => changeCancelHandeller("citizen")}
+                      >
+                        Cancel
+                      </SecondaryButton>
+                    </div>
+                  </Row>
+                </div>
+              </div>
+            </AccordionDetails>
+          </Accordion>
+        </>
+      )}
+    </div>
+  </>
   );
 }

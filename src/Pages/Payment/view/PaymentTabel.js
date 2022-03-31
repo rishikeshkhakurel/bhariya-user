@@ -12,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
-// import MenuComp from "../../../common/Components/MenuComp";
+import MenuComp from "../../../common/Components/MenuComp";
+import CsvDownload from "react-json-to-csv";
 
 const useStyles = makeStyles({
   root: {
@@ -26,46 +27,67 @@ const useStyles = makeStyles({
 });
 
 export default function PaymentTable(props) {
+  console.log(props.tabelData)
+  const { tabelData } = props;
   const columns = [
     { id: "sn", label: "S.N", align: "left" },
     {
-      id: "DateAndTime",
-      label: "Date & Time",
+      id: "OrderId",
+      label: "Order ID",
       minWidth: 140,
       align: "left",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
-      id: "TotalOrder",
-      label: "Total Order",
+      id: "RefId",
+      label: "Ref ID",
       minWidth: 140,
       align: "center",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
-      id: "PaymentMethod",
-      label: <span>Payment Method</span>,
+      id: "Business",
+      label: <span>Business</span>,
       minWidth: 140,
       align: "left",
       format: (value) => value.toLocaleString("en-US"),
     },
     {
-      id: "Amount",
-      label: <span>Amount</span>,
+      id: "Branch",
+      label: <span>Branch</span>,
       minWidth: 140,
       align: "left",
       format: (value) => value.toLocaleString("en-US"),
     },
 
     {
-      id: "Note",
-      label: <span>Note</span>,
+      id: "Receiver",
+      label: <span>Receiver</span>,
       minWidth: 140,
       align: "left",
       format: (value) => value.toLocaleString("en-US"),
     },
-
-    
+    {
+      id: "Phone",
+      label: <span>Phone</span>,
+      minWidth: 140,
+      align: "left",
+      format: (value) => value.toLocaleString("en-US"),
+    },
+    {
+      id: "Address",
+      label: <span>Address</span>,
+      minWidth: 140,
+      align: "left",
+      format: (value) => value.toLocaleString("en-US"),
+    },
+    {
+      id: "Edit",
+      label: "Edit",
+      minWidth: 0,
+      align: "center",
+      format: (value) => value.toLocaleString("en-US"),
+    },
   ];
   let navigate = useNavigate();
   const tableClickHandeller = (id) => {
@@ -73,19 +95,25 @@ export default function PaymentTable(props) {
   };
   function createData(
     sn,
-    DateAndTime,
-    TotalOrder,
-    PaymentMethod,
-    Amount,
-    Note,
+    OrderId,
+    RefId,
+    Business,
+    Branch,
+    Receiver,
+    Phone,
+    Address,
+    Edit
   ) {
     return {
       sn,
-      DateAndTime,
-      TotalOrder,
-      PaymentMethod,
-      Amount,
-      Note,
+      OrderId,
+      RefId,
+      Business,
+      Branch,
+      Receiver,
+      Phone,
+      Address,
+      Edit,
     };
   }
   const verifiedStyle = (value) => {
@@ -94,37 +122,61 @@ export default function PaymentTable(props) {
     }
   };
   const rows = [];
-  for (let i = 1; i <= 15; i++) {
-    rows.push(
+
+  let lengthOfData = tabelData?.length;
+  tabelData?.map((value, index) => {
+    rows.unshift(
       createData(
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{i}</span>
+          <span>{lengthOfData--}</span>
         </div>,
 
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>Date & Time</span>
+          <span>{value.order[0].id}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>3</span>
+          <span>{value.RefId}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
           <span>
-            Esewa
-            <br />
-            <span>9841123456</span>
+          {value.business}
           </span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>1000</span>
+          <span>{value.recievingbranch}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-        <span>All ok</span>
-      </div>,
-
-        
+          <span>{value.deliveryto}</span>
+        </div>,
+        <div className="rowHandeller" onClick={tableClickHandeller}>
+          <span>{value.phone}</span>
+        </div>,
+        <div className="rowHandeller" onClick={tableClickHandeller}>
+          <span>{value.deliverylocation}</span>
+        </div>,
+        <div className="tableCellbutton">
+          <MenuComp>
+            <BsThreeDotsVertical fontSize="20px" />
+          </MenuComp>
+        </div>
       )
     );
-  }
+  });
+
+  const exportData = tabelData?.map((value) => {
+    return {
+      "Date Time": value.deliverytime,
+      "Business": value.business,
+      "Branch": value.deliverybranch,
+      "Receiver": value.deliveryto,
+      "Phone": value.phone,
+      "Address": value.deliverylocation,
+      "Email": value.email,
+      "ProductValue": value.packagevalue,
+      "DeliveryStatus": value.order_status,
+    };
+  });
+  
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -197,7 +249,21 @@ export default function PaymentTable(props) {
 
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-          <PrimaryButton>Export</PrimaryButton>
+        <PrimaryButton>
+            <CsvDownload
+              filename="Franchise form.csv"
+              style={{
+                background: "transparent",
+                color: "white",
+                fontWeight: "600",
+                border: "none",
+                outline: "none",
+              }}
+              data={exportData}
+            >
+              Export
+            </CsvDownload>
+          </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">
           {/* <TablePagination
