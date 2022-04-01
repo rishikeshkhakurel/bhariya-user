@@ -15,6 +15,12 @@ const PaymentHistory = () => {
 
   const getPaymentHistoryResponse=useGetPaymentHistoryQuery()
 
+  // let rows={ totalcod:0, totalcodrecived:0, totaldeliverycharge:0, totalpickupcharge:0, data:[]}
+
+  // getPaymentHistoryResponse?.data?.map((data)=>{
+
+  // })
+
   return getPaymentHistoryResponse.isLoading ? (
     <Loading />
   ) : (

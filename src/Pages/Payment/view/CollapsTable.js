@@ -154,11 +154,11 @@ Row.propTypes = {
 
 export default function CollapsTable(props) {
   const rows = [];
-  props.tabledata.map((data, index)=> {
+  props.tabledata.map((data, index) => {
     rows.unshift(
       createData(
-        `${index+1}`,
-        3,
+        `${index + 1}`,
+        props.tabledata.length,
         "Nov 1, 2021",
         "Rs 12000",
         "1200",
@@ -168,7 +168,7 @@ export default function CollapsTable(props) {
         "Remaining..."
       )
     );
-  })
+  });
   return (
     <>
       <TableContainer component={Paper}>
@@ -190,7 +190,7 @@ export default function CollapsTable(props) {
           <TableBody>
             {rows.map((row) => (
               <Row key={row.name} row={row} />
-              ))}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -217,21 +217,3 @@ export default function CollapsTable(props) {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

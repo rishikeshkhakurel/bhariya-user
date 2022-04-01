@@ -14,10 +14,10 @@ export function ImageUploadReact() {
 
   useEffect(() => {
     if (sendgetuserSettingResponseInfo.isSuccess) {
-      if (sendgetuserSettingResponseInfo.data.results) {
+      if (sendgetuserSettingResponseInfo.data) {
         setImages([
           {
-            data_url: sendgetuserSettingResponseInfo.data.results[0].profilepicture,
+            data_url: sendgetuserSettingResponseInfo.data[0].profilepicture,
           },
         ]);
       }
@@ -27,14 +27,14 @@ export function ImageUploadReact() {
   const onChange = (imageList, addUpdateIndex) => {
     if (imageList[0]) {
       setUserSettings({
-        id: sendgetuserSettingResponseInfo.data.results[0].id,
+        id: sendgetuserSettingResponseInfo.data[0].id,
         data: {
           profilepicture: imageList[0].data_url,
         },
       });
     } else {
       setUserSettings({
-        id: sendgetuserSettingResponseInfo.data.results[0].id,
+        id: sendgetuserSettingResponseInfo.data[0].id,
         data: {
           profilepicture: "",
         },
