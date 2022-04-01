@@ -48,7 +48,6 @@ export default function AccordionForSetting(props) {
 
   const addFetchDataToState = () => {
     if(sendgetuserSettingResponseInfo.data){
-      console.log("hello",sendgetuserSettingResponseInfo)
       setName(sendgetuserSettingResponseInfo.data[0].fullname);
       setemail(sendgetuserSettingResponseInfo.data[0].email);
       setPhoneNUmber(sendgetuserSettingResponseInfo.data[0].phonenumber);

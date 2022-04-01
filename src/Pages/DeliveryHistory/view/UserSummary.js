@@ -21,7 +21,6 @@ const UserSummary = () => {
     useGetDeliveryHistoryDataByidQuery(orderId);
 
   const data = getAssignedOrderByIdResponseInfo?.data;
-  console.log("data", getAssignedOrderByIdResponseInfo)
 
   const [addDeliveryNoteState, setAddDeliveryNoteState] = useState(false);
 

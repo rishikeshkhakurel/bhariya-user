@@ -152,11 +152,10 @@ Row.propTypes = {
   }).isRequired,
 };
 
-const rows = [];
 export default function CollapsTable(props) {
-  console.log("tabledataaaaaaaaaaaaaa",props.tabledata)
+  const rows = [];
   props.tabledata.map((data, index)=> {
-    rows.push(
+    rows.unshift(
       createData(
         `${index+1}`,
         3,
@@ -170,7 +169,6 @@ export default function CollapsTable(props) {
       )
     );
   })
-  console.log("table data",props.tabledata)
   return (
     <>
       <TableContainer component={Paper}>
@@ -219,3 +217,21 @@ export default function CollapsTable(props) {
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

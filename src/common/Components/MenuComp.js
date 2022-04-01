@@ -101,28 +101,34 @@ export default function MenuComp(props) {
               <MenuItem onClick={handleClose}>Dhamak</MenuItem>
             </>
           );
-        } else if (props.BranchList) {
-          return getAllBranchResponseInfo?.data?.map((value) => (
-            <MenuItem
-              onClick={(e)=>
-                props.search(value.branchname)
-              }
-            >
-              {value.branchname}
-            </MenuItem>
-          ));
         } else if (props.userDeliveryHistorySortStatus) {
           return (
             <>
-              <MenuItem onClick={(e)=>props.search("delivered")}>Delivered</MenuItem>
-              <MenuItem onClick={(e)=>props.search("Picked up")}>Picked up</MenuItem>
-              <MenuItem onClick={(e)=>props.search("On the way")}>On the way</MenuItem>
-              <MenuItem onClick={(e)=>props.search("Cancel")}>Cancel</MenuItem>
+              <MenuItem onClick={(e) => props.search("delivered")}>
+                Delivered
+              </MenuItem>
+              <MenuItem onClick={(e) => props.search("Assigned")}>
+                Assigned
+              </MenuItem>
+              <MenuItem onClick={(e) => props.search("Pending")}>
+                Pending
+              </MenuItem>
+              <MenuItem onClick={(e) => props.search("Picked up")}>
+                Picked up
+              </MenuItem>
+              <MenuItem onClick={(e) => props.search("On the way")}>
+                On the way
+              </MenuItem>
+              <MenuItem onClick={(e) => props.search("Cancel")}>
+                Cancel
+              </MenuItem>
             </>
           );
         } else if (props.userDeliveryHistorySortBusinessType) {
           return getAllBusinessResponseInfo?.data?.map((value) => (
-            <MenuItem onClick={(e)=>props.search(value.businessname)}>{value.businessname}</MenuItem>
+            <MenuItem onClick={(e) => props.search(value.businessname)}>
+              {value.businessname}
+            </MenuItem>
           ));
         } else if (props.bulktabel) {
           return (
@@ -146,6 +152,16 @@ export default function MenuComp(props) {
               </MenuItem> */}
             </>
           );
+        } else if (props.BranchList) {
+          return getAllBranchResponseInfo?.data?.map((value) => (
+            <MenuItem onClick={(e) => props.search(value.branchname)}>
+              {value.branchname}
+            </MenuItem>
+          ));
+        } else if (props.sorting) {
+          return props?.data?.map((sortinglist) => (
+            <MenuItem onClick={(e) => props.sortinglist(sortinglist)}>{sortinglist}</MenuItem>
+          ));
         }
         break;
     }

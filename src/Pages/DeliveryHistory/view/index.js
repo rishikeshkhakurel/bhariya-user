@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiCustomize } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
@@ -15,7 +15,6 @@ import { useGetUserDeliveryDataQuery } from "../../../Redux/Services/FetchApi";
 import MenuComp from "../../../common/Components/MenuComp";
 import { RiKeyLine } from "react-icons/ri";
 const DeliveryHistory = () => {
-  const [filterDate, setFilterDate] = React.useState("2021-01");
   const [customizeTable, setCustomizeTable] = useState(false);
   const customizeTableHandeller = () => {
     setCustomizeTable(!customizeTable);
@@ -78,45 +77,56 @@ const DeliveryHistory = () => {
   };
 
   const userDeliveryHistoryResponseInfo = useGetUserDeliveryDataQuery();
-  const [rows, setRows] = useState(userDeliveryHistoryResponseInfo.isSuccess ? userDeliveryHistoryResponseInfo?.data: []);
-  console.log(userDeliveryHistoryResponseInfo)
+  const [rows, setRows] = useState(
+    userDeliveryHistoryResponseInfo.isSuccess
+      ? userDeliveryHistoryResponseInfo?.data
+      : []
+  );
 
   const requestSearch = (searchedVal) => {
-    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter((row) => {
-      return (
-        row.deliverybranch.toLowerCase().includes(searchedVal.toLowerCase()) ||
-        row.business.toLowerCase().includes(searchedVal.toLowerCase()) ||
-        row.deliveryto.toLowerCase().includes(searchedVal.toLowerCase())
-      );
-    });
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return (
+          row.deliverybranch
+            .toLowerCase()
+            .includes(searchedVal.toLowerCase()) ||
+          row.business.toLowerCase().includes(searchedVal.toLowerCase()) ||
+          row.deliverytime.toLowerCase().includes(searchedVal.toLowerCase()) ||
+          row.deliveryto.toLowerCase().includes(searchedVal.toLowerCase())
+        );
+      }
+    );
     setRows(filteredRows);
   };
 
   const requestSearchBranch = (searchedVal) => {
-    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter((row) => {
-      return (
-        row.deliverybranch.toLowerCase().includes(searchedVal.toLowerCase())
-      );
-    });
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return row.deliverybranch
+          .toLowerCase()
+          .includes(searchedVal.toLowerCase());
+      }
+    );
     setRows(filteredRows);
   };
 
   const requestSearchBusiness = (searchedVal) => {
-    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter((row) => {
-      return (
-        row.business.toLowerCase().includes(searchedVal.toLowerCase())
-      );
-    });
+    const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return row.business.toLowerCase().includes(searchedVal.toLowerCase());
+      }
+    );
     setRows(filteredRows);
   };
 
   const requestSearchstatus = async (searchedVal) => {
-    console.log(searchedVal)
-    const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter((row) => {
-      return (
-        row.order_status.toLowerCase().includes(searchedVal.toLowerCase())
-      );
-    });
+    const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
+      (row) => {
+        return row.order_status
+          .toLowerCase()
+          .includes(searchedVal.toLowerCase());
+      }
+    );
     setRows(filteredRows);
   };
   useEffect(() => {
@@ -124,8 +134,48 @@ const DeliveryHistory = () => {
   }, []);
 
   useEffect(() => {
-    setRows(userDeliveryHistoryResponseInfo?.data)
+    setRows(userDeliveryHistoryResponseInfo?.data);
   }, [userDeliveryHistoryResponseInfo]);
+
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function getComparator(order, orderBy) {
+    return order === "desc"
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  // This method is created for cross-browser compatibility, if you don't
+  // need to support IE11, you can use Array.prototype.sort() directly
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+  const orderby = useRef(1);
+  const sorting = (data) => {
+    if (orderby.current) {
+      setRows(stableSort(rows, getComparator("asc", data)));
+      orderby.current=false;
+    } else {
+      setRows(stableSort(rows, getComparator("desc", data)));
+      orderby.current=true;
+    }
+  };
 
   return (
     <>
@@ -165,8 +215,10 @@ const DeliveryHistory = () => {
           </DailogComp>
           <div className="userAdmin--header">
             <h2>Delivery History</h2>
-            <div className="usearch={requestSearchBranch}
-                serAdmin--header_buttonGroup">
+            <div
+              className="usearch={requestSearchBranch}
+                serAdmin--header_buttonGroup"
+            >
               <Link to="/deliveryhistory/requestdeliveryform">
                 <PrimaryButton>Request delivery</PrimaryButton>
               </Link>
@@ -179,8 +231,7 @@ const DeliveryHistory = () => {
               <TersaryButton>
                 <input
                   type="month"
-                  value={filterDate}
-                  onChange={(e) => setFilterDate(e.target.value)}
+                  onChange={(e) => requestSearch(e.target.value)}
                 />
               </TersaryButton>
             </div>
@@ -196,20 +247,24 @@ const DeliveryHistory = () => {
                 />
               </div>
               <div className="userAdmin-Deliveryhistory-table-top_right">
-                <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
-                  Sort By
-                </button>
+                <MenuComp data={["business"]} sorting sortinglist={sorting}>
+                  <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
+                    <span> Sort By</span> <IoIosArrowDown />
+                  </button>
+                </MenuComp>
 
                 {/* <MenuComp userDeliveryHistorySortBranch> */}
                 <MenuComp BranchList search={requestSearchBranch}>
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
-                    <span > Branch</span>{" "}
-                    <IoIosArrowDown />
+                    <span> Branch</span> <IoIosArrowDown />
                   </button>
                 </MenuComp>
                 {/* </MenuComp> */}
                 {/* <MenuComp userDeliveryHistorySortStatus> */}
-                <MenuComp userDeliveryHistorySortStatus search={requestSearchstatus}>
+                <MenuComp
+                  userDeliveryHistorySortStatus
+                  search={requestSearchstatus}
+                >
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
                     <span> Delivery Status</span>
                     <IoIosArrowDown />
@@ -217,7 +272,10 @@ const DeliveryHistory = () => {
                 </MenuComp>
                 {/* </MenuComp> */}
                 {/* <MenuComp userDeliveryHistorySortBusinessType> */}
-                <MenuComp userDeliveryHistorySortBusinessType search={requestSearchBusiness}>
+                <MenuComp
+                  userDeliveryHistorySortBusinessType
+                  search={requestSearchBusiness}
+                >
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton">
                     <span> Business Type</span>
                     <IoIosArrowDown />

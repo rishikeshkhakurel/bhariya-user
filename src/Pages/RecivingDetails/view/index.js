@@ -117,7 +117,6 @@ const UserRecivingDetails = () => {
     setRows(filteredRows);
   };
   const requestSearchstatus = async (searchedVal) => {
-    console.log(searchedVal);
     const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
         return row.order_status
@@ -196,7 +195,6 @@ const UserRecivingDetails = () => {
               <div className="userAdmin-Deliveryhistory-table-top_right">
                 <MenuComp
                   userDeliveryHistorySortBranch
-                  // search={requestSearchBranch}
                 >
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
                     <span> Sort By</span> <IoIosArrowDown />

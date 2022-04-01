@@ -20,7 +20,6 @@ const SideNavbar = () => {
       business.push({ name: getBusinessFormResponse.data[i].businessname, id:getBusinessFormResponse.data[i].id });
     }
   }
-  console.log("location",location)
   return (
     <>
       <div className="adminNavigation">

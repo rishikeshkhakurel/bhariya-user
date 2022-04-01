@@ -27,7 +27,6 @@ const useStyles = makeStyles({
 });
 
 export default function PaymentTable(props) {
-  console.log(props.tabelData)
   const { tabelData } = props;
   const columns = [
     { id: "sn", label: "S.N", align: "left" },

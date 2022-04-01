@@ -10,6 +10,7 @@ import PendingPayment from "./PendingPayment";
 import PaymentMethod from "./PaymentMethod";
 import CollapsTable from "./CollapsTable";
 import { useGetPaymentHistoryQuery, useGetPendingPaymentQuery } from "../../../Redux/Services/FetchApi";
+import PaymentHistory from "./PaymentHistory";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,8 +64,6 @@ const UserPayment = (props) => {
     setValue(newValue);
   };
 
-  const getPaymentHistoryResponse=useGetPaymentHistoryQuery()
-
   return (
     <div className="userAdmin-payment">
       <div className="userAdmin--header">
@@ -91,7 +90,7 @@ const UserPayment = (props) => {
             </TabPanel>
             <TabPanel value={value} index={1}>
               <div className="paymentHistory">
-                <CollapsTable tabledata={getPaymentHistoryResponse?.data}/>
+                <PaymentHistory/>
               </div>
             </TabPanel>
             <TabPanel value={value} index={2}>

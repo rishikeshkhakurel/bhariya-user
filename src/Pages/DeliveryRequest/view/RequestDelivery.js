@@ -46,7 +46,6 @@ const RequestDeliveryForm = () => {
   const listOfBranches = getAllBranchResponseInfo?.data?.map(
     (value) => value.branchname
   );
-  console.log("list of branch",listOfBranches)
 
   const [getPosition, setGetPosition] = useState({
     showDailog: true,
@@ -99,10 +98,9 @@ const RequestDeliveryForm = () => {
   const [searchUser, setSearchUser] = useState("");
 
   const searchUserDataResponseInfo = useSetSearchUserQuery(searchUser);
-  
+
   const fillValueOfData = (id) => {
     searchUserDataResponseInfo?.data?.map((value) => {
-      console.log("search",value)
       if (value.id === id) {
         setDeliveryto(value.fullname);
         setPhoneNumber(value.phonenumber);
@@ -114,11 +112,9 @@ const RequestDeliveryForm = () => {
   };
 
   useEffect(() => {
-    console.log("dataaaaaaaaaaaaaaaa", getuserSettingResponseInfo);
     if (getuserSettingResponseInfo.isSuccess) {
       setPickUpName(getuserSettingResponseInfo.data[0].fullname);
       setPickUpContact(getuserSettingResponseInfo.data[0].phonenumber);
-      console.log("pickkuppppppppppp", pickupContact);
       setPickUpEmail(getuserSettingResponseInfo.data[0].email);
       setPickUpLocation(getuserSettingResponseInfo.data[0].address);
     }
@@ -293,6 +289,10 @@ const RequestDeliveryForm = () => {
         (sendRequestDeliveryResponseInfo.isSuccess && (
           <AlertBox AlertMessage={"your Order is placed"} />
         ))}
+      {sendCsvFileResponseInfo.isError ||
+        (sendRequestDeliveryResponseInfo.isError && (
+          <AlertBox isError AlertMessage={"Please Enter valid Data"} />
+        ))}
       <div className="userhomepage">
         <DailogComp
           dailogHandeller={requestSucessHandeller}
@@ -416,12 +416,14 @@ const RequestDeliveryForm = () => {
               value={pickupEmail}
               onChange={(e) => setPickUpEmail(e.target.value)}
             />
+
             <AutocompleteSetting
-              name="Pick Up Branch"
-              arrayOfOption={listOfBranches}
-              placeholder="Please Chose branch You want to pickup"
-              onChange={(e, v) => setPickUpBranch(v)}
-              value={pickupBranch}
+              name="Delivery Branch"
+              arrayOfOption={branchOption}
+              placeholder="Eg: Kathmandu"
+              type="text"
+              onChange={(e, v) => setDeliveryBranch(v)}
+              value={deliveryBranch}
             />
             <InputFeildComponent
               placeholder="Location"
@@ -768,12 +770,11 @@ const RequestDeliveryForm = () => {
                   <Row style={{ marginBottom: "0px" }}>
                     <Col>
                       <AutocompleteSetting
-                        name="Delivery Branch"
+                        name="Pick Up Branch"
                         arrayOfOption={branchOption}
-                        placeholder="Eg: Kathmandu"
-                        type="text"
-                        onChange={(e, v) => setDeliveryBranch(v)}
-                        value={deliveryBranch}
+                        placeholder="Please Chose branch You want to pickup"
+                        onChange={(e, v) => setPickUpBranch(v)}
+                        value={pickupBranch}
                       />
                     </Col>
                     <Col>
