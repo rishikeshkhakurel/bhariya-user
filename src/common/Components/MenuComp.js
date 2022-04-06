@@ -160,7 +160,7 @@ export default function MenuComp(props) {
           ));
         } else if (props.sorting) {
           return props?.data?.map((sortinglist) => (
-            <MenuItem onClick={(e) => props.sortinglist(sortinglist)}>{sortinglist}</MenuItem>
+            <MenuItem onClick={(e) => props.sortinglist(sortinglist.value)}>{sortinglist.label}</MenuItem>
           ));
         }
         break;

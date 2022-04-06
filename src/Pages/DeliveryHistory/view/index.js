@@ -247,7 +247,7 @@ const DeliveryHistory = () => {
                 />
               </div>
               <div className="userAdmin-Deliveryhistory-table-top_right">
-                <MenuComp data={["business"]} sorting sortinglist={sorting}>
+                <MenuComp data={[{label:"Business",value:"business"},{label:"Date",value:"deliverytime"}]} sorting sortinglist={sorting}>
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
                     <span> Sort By</span> <IoIosArrowDown />
                   </button>
