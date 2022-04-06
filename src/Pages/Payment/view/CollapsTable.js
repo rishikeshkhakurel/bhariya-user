@@ -45,17 +45,17 @@ function createData(
     PaymentMode,
     Payout,
     Note,
-    history: [
-      {
-        SN: 1,
-        ProductDetails: "Hello World",
-        DateTime: "2021-22-10",
-        Business: "Hello World",
-        ProductValue: "Rs. 2020",
-        CODAmount: "Rs 2020",
-        PickupCharge: "20202",
-      },
-    ],
+    // history: [
+    //   {
+    //     SN: 1,
+    //     ProductDetails: "Hello World",
+    //     DateTime: "2021-22-10",
+    //     Business: "Hello World",
+    //     ProductValue: "Rs. 2020",
+    //     CODAmount: "Rs 2020",
+    //     PickupCharge: "20202",
+    //   },
+    // ],
   };
 }
 
@@ -67,7 +67,7 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
-        <TableCell>
+        {/* <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -75,8 +75,8 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
+        </TableCell> */}
+        <TableCell align="right" component="th" scope="row">
           {row.SN}
         </TableCell>
         <TableCell align="right">{row.TotalOrder}</TableCell>
@@ -88,7 +88,7 @@ function Row(props) {
         <TableCell align="right">{row.Payout}</TableCell>
         <TableCell align="right">{row.Note}</TableCell>
       </TableRow>
-      <TableRow>
+      {/* <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
@@ -129,7 +129,7 @@ function Row(props) {
             </Box>
           </Collapse>
         </TableCell>
-      </TableRow>
+      </TableRow> */}
     </React.Fragment>
   );
 }
@@ -175,8 +175,8 @@ export default function CollapsTable(props) {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell>S.N</TableCell>
+              {/* <TableCell /> */}
+              <TableCell align="right">S.N</TableCell>
               <TableCell align="right">Total&nbsp;order</TableCell>
               <TableCell align="right">Date&nbsp;&&nbsp;Time</TableCell>
               <TableCell align="right">COD&nbsp;Amount</TableCell>
