@@ -361,7 +361,7 @@ const RequestDeliveryFormEdit = () => {
         </DailogComp>
         <div className="userhomepage_banner">
           <div className="userhomepage_banner-imgcontainer">
-            <img src="/assets/happydeliveryman.png" alt="img" />
+            <img src="/assets/happydeliveryMan.png" alt="img" />
           </div>
           <div className="userhomepage_banner-caption">
             <h2>Delivery service that is always next to you</h2>

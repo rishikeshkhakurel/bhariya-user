@@ -72,6 +72,7 @@ const RequestDeliveryForm = () => {
   const [pickupEmail, setPickUpEmail] = useState("");
   const [pickupLocation, setPickUpLocation] = useState("");
   const [pickupBranch, setPickUpBranch] = useState("");
+  const [weight, setWeight] = useState("");
   const [pickupLiveLocation, setPickUpLiveLocation] = useState("");
 
   useEffect(() => {
@@ -231,6 +232,7 @@ const RequestDeliveryForm = () => {
       senderlocation: pickupLocation,
       recievingbranch: pickupBranch,
       senderlivelocation: pickupLiveLocation,
+      weight: weight,
     });
   };
 
@@ -255,6 +257,7 @@ const RequestDeliveryForm = () => {
       setProductname("");
       setRequestPickUp(false);
       setRequestSucess(true);
+      setWeight("");
     }
   }, [sendRequestDeliveryResponseInfo.isSuccess]);
 
@@ -672,6 +675,18 @@ const RequestDeliveryForm = () => {
                         onChange={(e) => setCod(e.target.value)}
                       />
                     </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        placeholder="Eg: 10 kg"
+                        label="Weight"
+                        type="number"
+                        value={cod}
+                        onChange={(e) => setWeight(e.target.value)}
+                      />
+                    </Col>
+                    <Col/>
                   </Row>
                   <div className="userhomepage_form-details-form-search">
                     <div className="userhomepage_form-details-form-search-input">

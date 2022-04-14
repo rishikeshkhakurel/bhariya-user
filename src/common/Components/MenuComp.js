@@ -82,7 +82,7 @@ export default function MenuComp(props) {
         if (props.userDeliveryHistory) {
           return (
             <>
-              <MenuItem onClick={handleClose}>Cancel</MenuItem>
+              <MenuItem onClick={()=>props.onClickCancel()}>Cancel</MenuItem>
               <MenuItem onClick={handleClose}>Cancel & Return</MenuItem>
               <MenuItem onClick={handleClose}>Cancel & Detach</MenuItem>
               <MenuItem onClick={handleClose}>Fund</MenuItem>

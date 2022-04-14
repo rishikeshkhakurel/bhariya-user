@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -14,6 +14,9 @@ import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
 import moment from "moment";
 import CsvDownload from "react-json-to-csv";
+import AreYouSure from "../../../common/Components/AreYousureComp/AreYouSure";
+import { useUpdateDeliveryHistoryDataByidMutation } from "../../../Redux/Services/FetchApi";
+import AlertBox from "../../../common/AlertBox";
 
 const useStyles = makeStyles({
   root: {
@@ -40,6 +43,9 @@ export default function UserDeliveryHistoryTabel({
       format: (value) => value.toLocaleString("en-US"),
     },
   ];
+
+  const [EditDeliveryHistory, DeliveryHistoryResponse] =
+    useUpdateDeliveryHistoryDataByidMutation();
 
   columData.map((value) =>
     columns.unshift({
@@ -108,14 +114,14 @@ export default function UserDeliveryHistoryTabel({
   const exportData = tabelData?.map((value) => {
     return {
       "Date Time": value.deliverytime,
-      "Business": value.business,
-      "Branch": value.deliverybranch,
-      "Receiver": value.deliveryto,
-      "Phone": value.phone,
-      "Address": value.deliverylocation,
-      "Email": value.email,
-      "ProductValue": value.packagevalue,
-      "DeliveryStatus": value.order_status,
+      Business: value.business,
+      Branch: value.deliverybranch,
+      Receiver: value.deliveryto,
+      Phone: value.phone,
+      Address: value.deliverylocation,
+      Email: value.email,
+      ProductValue: value.packagevalue,
+      DeliveryStatus: value.order_status,
     };
   });
 
@@ -290,6 +296,7 @@ export default function UserDeliveryHistoryTabel({
         <div className="tableCellbutton">
           <MenuComp
             onClickToEditUserDelivery={() => navigateToEditPage(value.id)}
+            onClickCancel={() => setCancel(value.id)}
             userDeliveryHistory
           >
             <BsThreeDotsVertical fontSize="20px" />
@@ -311,8 +318,31 @@ export default function UserDeliveryHistoryTabel({
     setPage(0);
   };
 
+  const [cancel, setCancel] = useState("");
+
+  const CancelDeliveryHandler = () => {
+    setCancel("");
+  };
+  const onConfirmCancelDelivery = (id) => {
+    EditDeliveryHistory({
+      id: cancel,
+      data: {
+        order_status: "Cancel",
+      },
+    });
+  };
+
   return (
     <>
+    {DeliveryHistoryResponse.isSuccess && <AlertBox isError AlertMessage="Order is Cancled" />}
+      <AreYouSure
+        title={"Are you sure, you want to Cancel Delivery"}
+        open={cancel}
+        dailogHandeller={CancelDeliveryHandler}
+        onConform={onConfirmCancelDelivery}
+        img="/assets/cancel.png"
+        error
+      />
       <div className="userTable">
         <div>
           <Paper style={{ padding: 0 }} className={classes.root}>
