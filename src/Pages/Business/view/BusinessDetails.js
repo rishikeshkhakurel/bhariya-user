@@ -8,9 +8,11 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LableCom from "../../../common/Components/LableCom";
 import InputFeildComponent from "../../../common/Components/InputFeildComponent";
-import AlertBox from "../../../common/AlertBox";
+import AlertBox from "../../../common/Components/AlertBox";
 import Loading from "../../../common/Components/loading/LoadingComp";
 import { useGetBusinessFormByIdQuery, useUpdateBusinessFormByIdMutation } from "../../../Redux/Services/FetchApi";
+import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
+import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 const BusinessDetails = () => {
   const { id } = useParams();
   const getBusinessFormByIdResponseInfo = useGetBusinessFormByIdQuery(id);
@@ -25,6 +27,8 @@ const BusinessDetails = () => {
   const [monthlyVolume, setMonthlyVolume] = useState("");
   const [pan, setPan] = useState("");
   const [images, setImages] = useState([]);
+
+  console.log("..............",contactNumber)
 
   const [businessform, businessFormResponseInfo] =
     useUpdateBusinessFormByIdMutation();
@@ -46,12 +50,12 @@ const BusinessDetails = () => {
     });
   };
   const clearAllValue = () => {
-    setBusinessname(getBusinessFormByIdResponseInfo.data.businessname);
-    setMonthlyVolume(getBusinessFormByIdResponseInfo.data.monthlyvolume);
-    setContactNumber(getBusinessFormByIdResponseInfo.data.contactnumber);
-    setContactpersion(getBusinessFormByIdResponseInfo.data.contactperson);
-    setPan(getBusinessFormByIdResponseInfo.data.pan);
-    setContactEmail(getBusinessFormByIdResponseInfo.data.contactemail);
+    setBusinessname(getBusinessFormByIdResponseInfo?.data?.businessname);
+    setMonthlyVolume(getBusinessFormByIdResponseInfo?.data?.monthlyvolume);
+    setContactNumber(getBusinessFormByIdResponseInfo?.data?.contactnumber);
+    setContactpersion(getBusinessFormByIdResponseInfo?.data?.contactperson);
+    setPan(getBusinessFormByIdResponseInfo?.data?.pan);
+    setContactEmail(getBusinessFormByIdResponseInfo?.data?.contactemail);
     const imageList = getBusinessFormByIdResponseInfo.data.business.map(
       (value) => value.addfile
     );
@@ -69,12 +73,12 @@ const BusinessDetails = () => {
   }, [id]);
 
   const onChange = (imageList, addUpdateIndex) => {
-    const newImage = imageList.map((value) => {
+    const newImage = imageList?.map((value) => {
       if (value.data_url) {
         return value.data_url;
       } else return value;
     });
-    // setImages(newImage);
+    setImages(newImage);
   };
 
   return (
@@ -102,7 +106,7 @@ const BusinessDetails = () => {
                   placeholder="Local Dealier"
                   value={businessname}
                   type="text"
-                  // onChange={(e) => setBusinessname(e.target.value)}
+                  onChange={(e) => setBusinessname(e.target.value)}
                 />
               </Col>
               <Col>
@@ -111,7 +115,7 @@ const BusinessDetails = () => {
                   placeholder="Sushmita Limbu"
                   value={contactperson}
                   type="text"
-                  // onChange={(e) => setContactpersion(e.target.value)}
+                  onChange={(e) => setContactpersion(e.target.value)}
                 />
               </Col>
             </Row>
@@ -122,7 +126,7 @@ const BusinessDetails = () => {
                   placeholder="ex-9823213213"
                   value={contactNumber}
                   type="phonenumber"
-                  // onChange={(e) => setContactNumber(e.target.value)}
+                  onChange={(e) => setContactNumber(e.target.value)}
                 />
               </Col>
               <Col>
@@ -131,7 +135,7 @@ const BusinessDetails = () => {
                   placeholder="example@gmail.com"
                   value={contactEmail}
                   type="email"
-                  // onChange={(e) => setContactEmail(e.target.value)}
+                  onChange={(e) => setContactEmail(e.target.value)}
                 />
               </Col>
             </Row>
@@ -139,7 +143,7 @@ const BusinessDetails = () => {
               <Col>
                 <InputFeildComponent
                   value={monthlyVolume}
-                  // onChange={(e) => setMonthlyVolume(e.target.value)}
+                  onChange={(e) => setMonthlyVolume(e.target.value)}
                   label="Monthly Volume"
                   placeholder="Ex-40"
                   type="number"
@@ -151,7 +155,7 @@ const BusinessDetails = () => {
                   placeholder="Ex-423143218"
                   type="number"
                   value={pan}
-                  // onChange={(e) => setPan(e.target.value)}
+                  onChange={(e) => setPan(e.target.value)}
                 />
               </Col>
             </Row>
@@ -211,8 +215,8 @@ const BusinessDetails = () => {
               </div>
             </div>
             <div className="businessformAddDocuments-button">
-              {/* <PrimaryButton onClick={sendBusinessForm}>Save</PrimaryButton>
-              <SecondaryButton onClick={clearAllValue}>Clear</SecondaryButton> */}
+              <PrimaryButton onClick={sendBusinessForm}>Update</PrimaryButton>
+              <SecondaryButton onClick={clearAllValue}>Clear</SecondaryButton>
             </div>
           </div>
         </div>

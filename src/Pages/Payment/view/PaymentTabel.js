@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -14,6 +14,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
 import CsvDownload from "react-json-to-csv";
+import DailogComp from "../../../common/Components/Dailog/DailogComp";
 
 const useStyles = makeStyles({
   root: {
@@ -28,6 +29,29 @@ const useStyles = makeStyles({
 
 export default function PaymentTable(props) {
   const { tabelData } = props;
+
+  const [startdate, setStartDate] = useState("");
+  const [enddate, setEndDate] = useState("");
+  const [exportDataPopUp, setExportDataPopUp] = React.useState(false);
+
+  const exportData = tabelData?.map((value) => {
+    const date = value.deliverytime.split("T")[0];
+    if (date < enddate && date > startdate) {
+      return {
+        OrderId: value.id,
+        ReferenceId: value.reference_id,
+        Business: value.business,
+        Branch: value.deliverybranch,
+        Receiver: value.deliveryto,
+        Receiver: value.deliveryto,
+        Phone: value.phone,
+        Address: value.deliverylocation,
+      };
+    } else {
+      return {};
+    }
+  });
+
   const columns = [
     { id: "sn", label: "S.N", align: "left" },
     {
@@ -134,12 +158,10 @@ export default function PaymentTable(props) {
           <span>{value.order[0].id}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.RefId}</span>
+          <span>{value.reference_id}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>
-          {value.business}
-          </span>
+          <span>{value.business}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
           <span>{value.recievingbranch}</span>
@@ -162,20 +184,6 @@ export default function PaymentTable(props) {
     );
   });
 
-  const exportData = tabelData?.map((value) => {
-    return {
-      "Date Time": value.deliverytime,
-      "Business": value.business,
-      "Branch": value.deliverybranch,
-      "Receiver": value.deliveryto,
-      "Phone": value.phone,
-      "Address": value.deliverylocation,
-      "Email": value.email,
-      "ProductValue": value.packagevalue,
-      "DeliveryStatus": value.order_status,
-    };
-  });
-  
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -191,6 +199,38 @@ export default function PaymentTable(props) {
 
   return (
     <>
+      <DailogComp
+        open={exportDataPopUp}
+        dailogHandeller={() => setExportDataPopUp(false)}
+        title="Export Date Select"
+      >
+        <div className="RiderDaillyReciving_callender-inputs">
+          <div className="RiderDaillyReciving_callender-inputs-1">
+            <h4>Start</h4>
+            <input type="Date" onChange={(e) => setStartDate(e.target.value)} />
+          </div>
+          <div className="RiderDaillyReciving_callender-inputs-2">
+            <h4>End</h4>
+            <input type="Date" onChange={(e) => setEndDate(e.target.value)} />
+          </div>
+        </div>
+        <br />
+        <PrimaryButton>
+          <CsvDownload
+            filename="Franchise form.csv"
+            style={{
+              background: "transparent",
+              color: "white",
+              fontWeight: "600",
+              border: "none",
+              outline: "none",
+            }}
+            data={exportData}
+          >
+            Export
+          </CsvDownload>
+        </PrimaryButton>
+      </DailogComp>
       <div className="userTable">
         <div>
           <Paper style={{ padding: 0 }} className={classes.root}>
@@ -248,24 +288,12 @@ export default function PaymentTable(props) {
 
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-        <PrimaryButton>
-            <CsvDownload
-              filename="Franchise form.csv"
-              style={{
-                background: "transparent",
-                color: "white",
-                fontWeight: "600",
-                border: "none",
-                outline: "none",
-              }}
-              data={exportData}
-            >
+          <PrimaryButton onClick={()=>setExportDataPopUp(true)}>            
               Export
-            </CsvDownload>
           </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">
-          {/* <TablePagination
+          <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
             count={rows.length}
@@ -273,11 +301,11 @@ export default function PaymentTable(props) {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-          /> */}
-          <h2>Showing out of 200</h2>
+          />
+          {/* <h2>Showing out of 200</h2>
           <button>
             View 6 <ExpandMoreIcon />
-          </button>
+          </button> */}
         </div>
       </div>
     </>

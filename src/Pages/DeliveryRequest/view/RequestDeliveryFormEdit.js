@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { RiShareBoxFill } from "react-icons/ri";
 import { Row, Col, Form } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Tooltip,
-  Button,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
+import { Tooltip, Button, MenuItem, Select } from "@material-ui/core";
 import { BiPencil } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { FacebookShareButton } from "react-share";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { useGetBranchDetailsQuery, useGetBusinessFormQuery, useGetDeliveryHistoryDataByidQuery, useUpdateDeliveryHistoryDataByidMutation } from "../../../Redux/Services/FetchApi";
+import {
+  useGetBranchDetailsQuery,
+  useGetBusinessFormQuery,
+  useGetDeliveryHistoryDataByidQuery,
+  useUpdateDeliveryHistoryDataByidMutation,
+} from "../../../Redux/Services/FetchApi";
 import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import LableCom from "../../../common/Components/LableCom";
@@ -21,7 +21,7 @@ import InputFeildComponent from "../../../common/Components/InputFeildComponent"
 import AutocompleteSetting from "../../../common/Components/AutoComplete";
 import DailogComp from "../../../common/Components/Dailog/DailogComp";
 import { arrayOfLocation } from "../../../common/utils/LocationObject";
-import AlertBox from "../../../common/AlertBox";
+import AlertBox from "../../../common/Components/AlertBox";
 import Loading from "../../../common/Components/loading/LoadingComp";
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -75,16 +75,20 @@ const RequestDeliveryFormEdit = () => {
   const [pickupLocation, setPickUpLocation] = useState("");
   const [pickupBranch, setPickUpBranch] = useState("");
   const [pickupLiveLocation, setPickUpLiveLocation] = useState("");
+  const [LandMark, setLandMark] = useState("");
+  const [weight, setWeight] = useState();
 
   const setAllDataToDefault = () => {
     setBusiness(getDeliveryHistoryDataByidResponseInfo.data.business);
     setProductname(getDeliveryHistoryDataByidResponseInfo.data.productname);
     setPackagedetail(getDeliveryHistoryDataByidResponseInfo.data.packagedetail);
     setPackageValue(getDeliveryHistoryDataByidResponseInfo.data.packagevalue);
+    setWeight(getDeliveryHistoryDataByidResponseInfo.data.weight);
     setCod(getDeliveryHistoryDataByidResponseInfo.data.cod);
     setDeliveryto(getDeliveryHistoryDataByidResponseInfo.data.deliveryto);
     setPhoneNumber(getDeliveryHistoryDataByidResponseInfo.data.phone);
     setEmail(getDeliveryHistoryDataByidResponseInfo.data.email);
+    setLandMark(getDeliveryHistoryDataByidResponseInfo.data.nearestlandmark);
     setDeliveryBranch(
       getDeliveryHistoryDataByidResponseInfo.data.deliverybranch
     );
@@ -218,6 +222,8 @@ const RequestDeliveryFormEdit = () => {
         senderlocation: pickupLocation,
         senderlivelocation: pickupLiveLocation,
         recievingbranch: pickupBranch,
+        weight: weight,
+        nearestlandmark:LandMark,
       },
     });
   };
@@ -331,12 +337,13 @@ const RequestDeliveryFormEdit = () => {
               value={pickupEmail}
               onChange={(e) => setPickUpEmail(e.target.value)}
             />
+
             <AutocompleteSetting
-              name="Pick Up Branch"
-              arrayOfOption={listOfBranches}
-              placeholder="Please Chose branch You want to pickup"
-              onChange={(e, v) => setPickUpBranch(v)}
-              value={pickupBranch}
+              name="Delivery Branch"
+              arrayOfOption={branchOption}
+              placeholder="Eg: Kathmandu"
+              onChange={(e, v) => setDeliveryBranch(v)}
+              value={deliveryBranch}
             />
             <InputFeildComponent
               placeholder="Location"
@@ -586,6 +593,18 @@ const RequestDeliveryFormEdit = () => {
                       />
                     </Col>
                   </Row>
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        placeholder="Eg: 10 kg"
+                        label="Weight"
+                        type="number"
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
+                      />
+                    </Col>
+                    <Col />
+                  </Row>
                   <div className="userhomepage_form-details-form-search">
                     <div className="userhomepage_form-details-form-search-input">
                       <input
@@ -642,14 +661,25 @@ const RequestDeliveryFormEdit = () => {
                   </Row>
                   <Row style={{ marginBottom: "0px" }}>
                     <Col>
-                      <AutocompleteSetting
-                        name="Delivery Branch"
-                        arrayOfOption={branchOption}
-                        placeholder="Eg: Kathmandu"
-                        onChange={(e, v) => setDeliveryBranch(v)}
-                        value={deliveryBranch}
+                      <InputFeildComponent
+                        placeholder="Eg: Bank, Chowk"
+                        label="Nearest LandMark"
+                        type="text"
+                        value={LandMark}
+                        onChange={(e) => setLandMark(e.target.value)}
                       />
                     </Col>
+                    <Col>
+                      <AutocompleteSetting
+                        name="Pick Up Branch"
+                        arrayOfOption={listOfBranches}
+                        placeholder="Please Chose branch You want to pickup"
+                        onChange={(e, v) => setPickUpBranch(v)}
+                        value={pickupBranch}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
                     <Col>
                       {fetchOrAdd ? (
                         <InputFeildComponent
@@ -694,6 +724,7 @@ const RequestDeliveryFormEdit = () => {
                         </button>
                       </div>
                     </Col>
+                    <Col />
                   </Row>
                 </div>
                 <div onClick={() => changeWritingStateHandeller(3)}>

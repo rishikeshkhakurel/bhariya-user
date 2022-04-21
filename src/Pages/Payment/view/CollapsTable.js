@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -16,6 +16,8 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
+import DailogComp from "../../../common/Components/Dailog/DailogComp";
+import CsvDownload from "react-json-to-csv";
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
@@ -154,7 +156,30 @@ Row.propTypes = {
 
 export default function CollapsTable(props) {
   const rows = [];
-  props.tabledata.map((data, index) => {
+  const [startdate, setStartDate] = useState("");
+  const [enddate, setEndDate] = useState("");
+  const [exportDataPopUp, setExportDataPopUp] = React.useState(false);
+
+  const exportData = props.tabelData?.map((value) => {
+    const date = value.deliverytime.split("T")[0];
+    console.log(enddate, startdate);
+    if (date < enddate && date > startdate) {
+      return {
+        TotalOrder: value.TotalOrder,
+        DateTime: value.DateTime,
+        CODAmount: value.CODAmount,
+        DeliveryCharge: value.DeliveryCharge,
+        PaymentReceive: value.PaymentReceive,
+        PaymentMode: value.PaymentMode,
+        Payout: value.Payout,
+        Note: value.Note,
+      };
+    } else {
+      return {};
+    }
+  });
+
+  props?.tabledata?.map((data, index) => {
     rows.unshift(
       createData(
         `${index + 1}`,
@@ -171,6 +196,38 @@ export default function CollapsTable(props) {
   });
   return (
     <>
+      <DailogComp
+        open={exportDataPopUp}
+        dailogHandeller={() => setExportDataPopUp(false)}
+        title="Export Date Select"
+      >
+        <div className="RiderDaillyReciving_callender-inputs">
+          <div className="RiderDaillyReciving_callender-inputs-1">
+            <h4>Start</h4>
+            <input type="Date" onChange={(e) => setStartDate(e.target.value)} />
+          </div>
+          <div className="RiderDaillyReciving_callender-inputs-2">
+            <h4>End</h4>
+            <input type="Date" onChange={(e) => setEndDate(e.target.value)} />
+          </div>
+        </div>
+        <br />
+        <PrimaryButton>
+          <CsvDownload
+            filename="Franchise form.csv"
+            style={{
+              background: "transparent",
+              color: "white",
+              fontWeight: "600",
+              border: "none",
+              outline: "none",
+            }}
+            data={exportData}
+          >
+            Export
+          </CsvDownload>
+        </PrimaryButton>
+      </DailogComp>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
@@ -196,7 +253,9 @@ export default function CollapsTable(props) {
       </TableContainer>
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-          <PrimaryButton>Export</PrimaryButton>
+          <PrimaryButton onClick={() => setExportDataPopUp(true)}>
+            Export
+          </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">
           {/* <TablePagination

@@ -2,15 +2,18 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { changingId, changingRole } from "../../Redux/Services/authSlice";
+import { useOnLogoutMutation } from "../../Redux/Services/FetchApi";
 import Header from "./Header";
 import SideNavbar from "./SideNavbar";
 
 const BodyWrapper = () => {
-
+  const [logout, LogOutResponse] = useOnLogoutMutation();
   const dispatch = useDispatch();
   const userid = useSelector((state) => state.authentiaction.userid);
   const changeRoleOfTheUser = (role) => {
     dispatch(changingRole(role));
+    logout();
+
     if (localStorage.getItem("token")) {
       localStorage.removeItem("token");
     }

@@ -3,7 +3,6 @@ import { BiCustomize } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import TersaryButton from "../../../common/Components/Button/TersaryButton";
@@ -13,7 +12,7 @@ import UserDeliveryHistoryTabel from "./UserDeliveryHistoryTabel";
 import DailogComp from "../../../common/Components/Dailog/DailogComp";
 import { useGetUserDeliveryDataQuery } from "../../../Redux/Services/FetchApi";
 import MenuComp from "../../../common/Components/MenuComp";
-import { RiKeyLine } from "react-icons/ri";
+import NothingToShow from "../../../common/Components/NothingToShow";
 const DeliveryHistory = () => {
   const [customizeTable, setCustomizeTable] = useState(false);
   const customizeTableHandeller = () => {
@@ -22,7 +21,7 @@ const DeliveryHistory = () => {
 
   const [state, setState] = React.useState({
     Sn: true,
-    OrderId: false,
+    OrderId: true,
     DateTime: true,
     RefID: false,
     PickupID: false,
@@ -36,11 +35,6 @@ const DeliveryHistory = () => {
     WeigntDimension: false,
     ProductValue: true,
     CODAmount: true,
-    PickupCharge: false,
-    Deliverycharge: false,
-    CODReceived: false,
-    PaymentReceived: false,
-    Balance: false,
     DeliveryStatus: true,
   });
   const row = [
@@ -59,11 +53,6 @@ const DeliveryHistory = () => {
     "WeigntDimension",
     "ProductValue",
     "CODAmount",
-    "PickupCharge",
-    "Deliverycharge",
-    "CODReceived",
-    "PaymentReceived",
-    "Balance",
     "DeliveryStatus",
   ];
 
@@ -77,11 +66,7 @@ const DeliveryHistory = () => {
   };
 
   const userDeliveryHistoryResponseInfo = useGetUserDeliveryDataQuery();
-  const [rows, setRows] = useState(
-    userDeliveryHistoryResponseInfo.isSuccess
-      ? userDeliveryHistoryResponseInfo?.data
-      : []
-  );
+  const [rows, setRows] = useState();
 
   const requestSearch = (searchedVal) => {
     const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
@@ -170,10 +155,10 @@ const DeliveryHistory = () => {
   const sorting = (data) => {
     if (orderby.current) {
       setRows(stableSort(rows, getComparator("asc", data)));
-      orderby.current=false;
+      orderby.current = false;
     } else {
       setRows(stableSort(rows, getComparator("desc", data)));
-      orderby.current=true;
+      orderby.current = true;
     }
   };
 
@@ -247,7 +232,14 @@ const DeliveryHistory = () => {
                 />
               </div>
               <div className="userAdmin-Deliveryhistory-table-top_right">
-                <MenuComp data={[{label:"Business",value:"business"},{label:"Date",value:"deliverytime"}]} sorting sortinglist={sorting}>
+                <MenuComp
+                  data={[
+                    { label: "Business", value: "business" },
+                    { label: "Date", value: "deliverytime" },
+                  ]}
+                  sorting
+                  sortinglist={sorting}
+                >
                   <button className="userAdmin-Deliveryhistory-table-top_right_sortbutton sortbuttonone">
                     <span> Sort By</span> <IoIosArrowDown />
                   </button>
@@ -270,8 +262,6 @@ const DeliveryHistory = () => {
                     <IoIosArrowDown />
                   </button>
                 </MenuComp>
-                {/* </MenuComp> */}
-                {/* <MenuComp userDeliveryHistorySortBusinessType> */}
                 <MenuComp
                   userDeliveryHistorySortBusinessType
                   search={requestSearchBusiness}
@@ -281,7 +271,6 @@ const DeliveryHistory = () => {
                     <IoIosArrowDown />
                   </button>
                 </MenuComp>
-                {/* </MenuComp> */}
               </div>
             </div>
             <div className="userAdmin-Deliveryhistory-table-bottom">
@@ -294,9 +283,10 @@ const DeliveryHistory = () => {
           </div>
         </div>
       ) : (
-        <div>{/* <NothingToShow /> */}</div>
+        <div>
+          <NothingToShow />
+        </div>
       )}
-      {/* <NothingToShow /> */}
     </>
   );
 };

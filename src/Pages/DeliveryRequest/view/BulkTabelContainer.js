@@ -10,11 +10,16 @@ import Paper from "@material-ui/core/Paper";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useRef } from "react";
 import MenuComp from "../../../common/Components/MenuComp";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
-import { useDeletesaveasdraftbyidMutation, useGetsaveasdraftQuery, useOnConfirmDeliveyMutation, usePatchEnteredValueMutation, useSaveasdraftMutation } from "../../../Redux/Services/FetchApi";
+import {
+  useDeletesaveasdraftbyidMutation,
+  useGetsaveasdraftQuery,
+  useOnConfirmDeliveyMutation,
+  usePatchEnteredValueMutation,
+  useSaveasdraftMutation,
+} from "../../../Redux/Services/FetchApi";
 
 const useStyles = makeStyles({
   table: {},
@@ -46,8 +51,6 @@ export default function BulkTabelContainer() {
       Edit,
     };
   }
-
-  const [enteredValue, setEnteredValue] = useState();
 
   const [patchEnteredvalueMutation, patchEnteredvalueMutationResponseInfo] =
     usePatchEnteredValueMutation();

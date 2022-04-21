@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiShareBoxFill } from "react-icons/ri";
 import { makeStyles } from "@material-ui/core/styles";
-import { Tooltip, Button, MenuItem, Select, Checkbox } from "@material-ui/core";
+import { Tooltip, Button, MenuItem, Select } from "@material-ui/core";
 import { BiPencil } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import LableCom from "../../../common/Components/LableCom";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
@@ -13,7 +12,7 @@ import InputFeildComponent from "../../../common/Components/InputFeildComponent"
 import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 import DailogComp from "../../../common/Components/Dailog/DailogComp";
 import Loading from "../../../common/Components/loading/LoadingComp";
-import AlertBox from "../../../common/AlertBox";
+import AlertBox from "../../../common/Components/AlertBox";
 import { arrayOfLocation } from "../../../common/utils/LocationObject";
 import AutocompleteSetting from "../../../common/Components/AutoComplete";
 import { FacebookShareButton } from "react-share";
@@ -24,6 +23,7 @@ import {
   useGetBranchDetailsQuery,
   useGetuserSettingQuery,
   useSetSearchUserQuery,
+  useGetDeliveryHistoryDataByidQuery,
 } from "../../../Redux/Services/FetchApi";
 import { Col, Form, Row } from "react-bootstrap";
 const useStylesBootstrap = makeStyles((theme) => ({
@@ -42,6 +42,7 @@ function BootstrapTooltip(props) {
 }
 const buttonRef = React.createRef();
 const RequestDeliveryForm = () => {
+  const location = useLocation();
   const getAllBranchResponseInfo = useGetBranchDetailsQuery();
   const listOfBranches = getAllBranchResponseInfo?.data?.map(
     (value) => value.branchname
@@ -72,8 +73,29 @@ const RequestDeliveryForm = () => {
   const [pickupEmail, setPickUpEmail] = useState("");
   const [pickupLocation, setPickUpLocation] = useState("");
   const [pickupBranch, setPickUpBranch] = useState("");
-  const [weight, setWeight] = useState("");
+  const [weight, setWeight] = useState();
   const [pickupLiveLocation, setPickUpLiveLocation] = useState("");
+  const [LandMark, setLandMark] = useState("");
+
+  const getDeliveryHistoryDataByidResponseInfo =
+    useGetDeliveryHistoryDataByidQuery(location?.state?.id);
+    console.log(getDeliveryHistoryDataByidResponseInfo)
+  const setAllDataToDefault = () => {
+    setBusiness(getDeliveryHistoryDataByidResponseInfo.data.business);
+    setProductname(getDeliveryHistoryDataByidResponseInfo.data.productname);
+    setPackagedetail(getDeliveryHistoryDataByidResponseInfo.data.packagedetail);
+    setPackageValue(getDeliveryHistoryDataByidResponseInfo.data.packagevalue);
+    setCod(getDeliveryHistoryDataByidResponseInfo.data.cod);
+    setWeight(getDeliveryHistoryDataByidResponseInfo.data.weight);
+  }
+
+  useEffect(() => {
+    if (getDeliveryHistoryDataByidResponseInfo.isSuccess) {
+      setAllDataToDefault();
+    }
+  }, [getDeliveryHistoryDataByidResponseInfo]);  
+
+
 
   useEffect(() => {
     fetchUserLiveLocation();
@@ -120,12 +142,12 @@ const RequestDeliveryForm = () => {
       setPickUpLocation(getuserSettingResponseInfo.data[0].address);
     }
   }, [getuserSettingResponseInfo.isSuccess]);
-  const getUserDetails = () => {};
-  const [value, setValueTime] = React.useState("time");
+  // const getUserDetails = () => {};
+  // const [value, setValueTime] = React.useState("time");
 
-  const handleChange = (event) => {
-    setValueTime(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setValueTime(event.target.value);
+  // };
 
   const shareUrl = window.location.href;
 
@@ -157,10 +179,10 @@ const RequestDeliveryForm = () => {
     const urlValue = window.location.href;
     navigator.clipboard.writeText(urlValue);
   };
-  const [writingState, setWritingState] = useState(1);
-  const changeWritingStateHandeller = (state) => {
-    setWritingState(state);
-  };
+  // const [writingState, setWritingState] = useState(1);
+  // const changeWritingStateHandeller = (state) => {
+  //   setWritingState(state);
+  // };
 
   const [bulkuploaddailog, setBulkuploaddailog] = useState(false);
   const bulkuploaddailoghandeller = () => {
@@ -172,7 +194,6 @@ const RequestDeliveryForm = () => {
       buttonRef.current.open(e);
     }
   };
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [sendCsvFile, sendCsvFileResponseInfo] = useSendbulkdataMutation();
@@ -233,6 +254,7 @@ const RequestDeliveryForm = () => {
       recievingbranch: pickupBranch,
       senderlivelocation: pickupLiveLocation,
       weight: weight,
+      nearestlandmark: LandMark,
     });
   };
 
@@ -278,11 +300,11 @@ const RequestDeliveryForm = () => {
     setopenAddCustomDailog(!openAddCustomDailog);
   };
 
-  const [toCheckDetailsEnteredState, setToCheckDetailsEnteredState] = useState({
-    packagedetail: false,
-    deliveryInformation: false,
-    pickUpInformation: false,
-  });
+  // const [toCheckDetailsEnteredState, setToCheckDetailsEnteredState] = useState({
+  //   packagedetail: false,
+  //   deliveryInformation: false,
+  //   pickUpInformation: false,
+  // });
 
   return (
     <>
@@ -682,11 +704,11 @@ const RequestDeliveryForm = () => {
                         placeholder="Eg: 10 kg"
                         label="Weight"
                         type="number"
-                        value={cod}
+                        value={weight}
                         onChange={(e) => setWeight(e.target.value)}
                       />
                     </Col>
-                    <Col/>
+                    <Col />
                   </Row>
                   <div className="userhomepage_form-details-form-search">
                     <div className="userhomepage_form-details-form-search-input">
@@ -706,10 +728,10 @@ const RequestDeliveryForm = () => {
                       }
                     >
                       {searchUser.length > 0 &&
-                        searchUserDataResponseInfo.data.map((value) => {
-                          if (value.user_role === "user") {
+                        searchUserDataResponseInfo?.data?.map((value) => {
+                          if (value?.user_role === "user") {
                             if (
-                              value.id != getuserSettingResponseInfo.data[0].id
+                              value?.id != getuserSettingResponseInfo?.data[0]?.id
                             ) {
                               return (
                                 <div
@@ -782,7 +804,16 @@ const RequestDeliveryForm = () => {
                       />
                     </Col>
                   </Row>
-                  <Row style={{ marginBottom: "0px" }}>
+                  <Row>
+                    <Col>
+                      <InputFeildComponent
+                        placeholder="Eg: Bank, Chowk"
+                        label="Nearest LandMark"
+                        type="text"
+                        value={LandMark}
+                        onChange={(e) => setLandMark(e.target.value)}
+                      />
+                    </Col>
                     <Col>
                       <AutocompleteSetting
                         name="Pick Up Branch"
@@ -792,6 +823,8 @@ const RequestDeliveryForm = () => {
                         value={pickupBranch}
                       />
                     </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "0px" }}>
                     <Col>
                       {fetchOrAdd ? (
                         <InputFeildComponent
@@ -836,6 +869,7 @@ const RequestDeliveryForm = () => {
                         </button>
                       </div>
                     </Col>
+                    <Col />
                   </Row>
                 </div>
                 <div>

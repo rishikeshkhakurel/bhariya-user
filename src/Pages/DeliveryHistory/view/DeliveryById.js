@@ -12,7 +12,7 @@ import {
 } from "../../../Redux/Services/FetchApi";
 import Loading from "../../../common/Components/loading/LoadingComp";
 import CommentBox from "../../../common/Components/CommentBox";
-const UserSummary = () => {
+const DeliveryById = () => {
   const { id: orderId } = useParams();
 
   const getUserSettingResponseInfo = useGetuserSettingQuery();
@@ -161,28 +161,28 @@ const UserSummary = () => {
                     <h4> Delivery Details</h4>
                     <li>
                       Sender :{" "}
-                      {data.order.map((data) => {
-                        <span>{data.name} </span>;
+                      {data?.order?.map((value) => {
+                        <span>{value?.name} </span>;
                       })}
                     </li>
                     <li>
-                      Order ID : <span>{data.id}</span>
+                      Order ID : <span>{data?.id}</span>
                     </li>
                     <li>
-                      Address : <span>{data.order[0].senderlocation}</span>
+                      Address : <span>{data?.order[0]?.senderlocation}</span>
                     </li>
                     <li>
-                      Brach : <span>{data.order[0].recievingbranch}</span>
+                      Brach : <span>{data.order[0]?.recievingbranch}</span>
                     </li>
                     <li>
                       Phone Number :{" "}
-                      <span> {data.order[0].sendercontact} </span>
+                      <span> {data?.order[0]?.sendercontact} </span>
                     </li>
                     <li>
-                      Email : <span> {data.order[0].senderemail} </span>
+                      Email : <span> {data?.order[0]?.senderemail} </span>
                     </li>
                     <li>
-                      COD charge : <span> Rs. {data.cod}</span>
+                      COD charge : <span> Rs. {data?.cod}</span>
                     </li>
                     <li>
                       Payment Mode :{" "}
@@ -193,26 +193,26 @@ const UserSummary = () => {
                       </span>
                     </li>
                     <li>
-                      Delivery Status : <span> {data.order_status}</span>
+                      Delivery Status : <span> {data?.order_status}</span>
                     </li>
                   </div>
                   <div className="deliverySummery-container-left-status">
                     <h4>Receiver Details</h4>
                     <li>
-                      Receiver: <span> {data.deliveryto}</span>
+                      Receiver: <span> {data?.deliveryto}</span>
                     </li>
                     <li>
-                      Branch: <span>{data.recievingbranch}</span>
+                      Branch: <span>{data?.recievingbranch}</span>
                     </li>
                     <li>
-                      Contact: <span>{data.phone}</span>
+                      Contact: <span>{data?.phone}</span>
                     </li>
                     <li>
-                      Address: <span> {data.deliverylocation}</span>
+                      Address: <span> {data?.deliverylocation}</span>
                     </li>
 
                     <li>
-                      Live Location: <span>{data.livelocation}</span>
+                      Live Location: <span>{data?.livelocation}</span>
                     </li>
                   </div>
                 </div>
@@ -222,7 +222,7 @@ const UserSummary = () => {
                   <Row>
                     <div className="deliverySummery-container-right_discription">
                       <h4>Delivery Description</h4>
-                      <p>{data.packagedetail}</p>
+                      <p>{data?.packagedetail}</p>
                     </div>
                   </Row>
                   <Row>
@@ -282,16 +282,16 @@ const UserSummary = () => {
                       </div>
                       <div className="deliverycommentcontainer">
                         {allNotes.reverse().map((value) => {
-                          const date = moment(value.addon).format(
+                          const date = moment(value?.addon).format(
                             "ddd Do MMM YYYY h:mm A"
                           );
                           return (
                             <div className="deliverySummery-container-right_Comments-box">
                               <div className="deliverySummery-container-right_Comments-box-left">
-                                {value.noteAdder}
+                                {value?.noteAdder}
                               </div>
                               <div className="deliverySummery-container-right_Comments-box-right">
-                                {value.notes}
+                                {value?.notes}
                                 <div className="deliverySummery-container-right_Comments-box-bttom">
                                   {date}
                                 </div>
@@ -312,4 +312,4 @@ const UserSummary = () => {
   );
 };
 
-export default UserSummary;
+export default DeliveryById;

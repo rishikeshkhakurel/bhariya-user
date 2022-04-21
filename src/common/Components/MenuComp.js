@@ -28,7 +28,9 @@ import {
   useGetBranchDetailsQuery,
   useGetBusinessFormQuery,
   useGetRiderDetailsQuery,
+  useReturnRefundMutation,
 } from "../../Redux/Services/FetchApi";
+import AlertBox from "./AlertBox";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -82,13 +84,62 @@ export default function MenuComp(props) {
         if (props.userDeliveryHistory) {
           return (
             <>
-              <MenuItem onClick={()=>props.onClickCancel()}>Cancel</MenuItem>
+              <MenuItem onClick={() => props.onClickCancel()}>Cancel</MenuItem>
               <MenuItem onClick={handleClose}>Cancel & Return</MenuItem>
               <MenuItem onClick={handleClose}>Cancel & Detach</MenuItem>
               <MenuItem onClick={handleClose}>Fund</MenuItem>
-              <MenuItem onClick={handleClose}>Detach</MenuItem>
+              <MenuItem onClick={props.onClickDuplicate()}>Duplicate</MenuItem>
+              <MenuItem onClick={handleClose}>Exchange</MenuItem>
               <MenuItem onClick={() => props.onClickToEditUserDelivery()}>
                 Edit
+              </MenuItem>
+            </>
+          );
+        } else if (props.value == "Pending") {
+          return (
+            <>
+              <MenuItem onClick={() => props.onClickCancel()}>Cancel</MenuItem>
+              <MenuItem onClick={() => props.onClickDuplicate()}>
+                Duplicate
+              </MenuItem>
+              <MenuItem onClick={() => props.onClickToEditUserDelivery()}>
+                Edit
+              </MenuItem>
+            </>
+          );
+        } else if (props.value == "Delivered") {
+          return (
+            <>
+              <MenuItem onClick={() => props.onClickCancel()}>
+                Exchange
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  props.onClickReturn();
+                }}
+              >
+                Return
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  props.onClickReturnRefund();
+                }}
+              >
+                Return & Refund
+              </MenuItem>
+              <MenuItem onClick={() => props.onClickDuplicate()}>
+                Duplicate
+              </MenuItem>
+            </>
+          );
+        } else if (props.value) {
+          return (
+            <>
+              <MenuItem onClick={() => props.onClickDuplicate()}>
+                Cancel
+              </MenuItem>
+              <MenuItem onClick={() => props.onClickDuplicate()}>
+                Duplicate
               </MenuItem>
             </>
           );
@@ -160,7 +211,9 @@ export default function MenuComp(props) {
           ));
         } else if (props.sorting) {
           return props?.data?.map((sortinglist) => (
-            <MenuItem onClick={(e) => props.sortinglist(sortinglist.value)}>{sortinglist.label}</MenuItem>
+            <MenuItem onClick={(e) => props.sortinglist(sortinglist.value)}>
+              {sortinglist.label}
+            </MenuItem>
           ));
         }
         break;
@@ -391,369 +444,374 @@ export default function MenuComp(props) {
   };
 
   return (
-    <div className={classes.root}>
-      <div>
-        <CommentBox
-          open={riderSuspendComment}
-          dailogHandeller={riderSuspendCommentHandellerClose}
-        />
-        <DailogComp
-          open={branchRiderAddPayment}
-          dailogHandeller={branchRiderAddPaymentCloseHandeller}
-          title="Add Payment"
-        >
-          <div className="branchRiderPayment">
-            <div className="branchRiderPayment-heading">
-              <div className="addCommentDailog--switch">
-                <span>
-                  Add Salary
-                  <SwitchMode label={"Add Payment"} />
-                </span>
+    <>
+      
+      <div className={classes.root}>
+        <div>
+          <CommentBox
+            open={riderSuspendComment}
+            dailogHandeller={riderSuspendCommentHandellerClose}
+          />
+          <DailogComp
+            open={branchRiderAddPayment}
+            dailogHandeller={branchRiderAddPaymentCloseHandeller}
+            title="Add Payment"
+          >
+            <div className="branchRiderPayment">
+              <div className="branchRiderPayment-heading">
+                <div className="addCommentDailog--switch">
+                  <span>
+                    Add Salary
+                    <SwitchMode label={"Add Payment"} />
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </DailogComp>
-        <DailogComp
-          open={branchTransactionEdit}
-          dailogHandeller={branchTransactionEditHandeller}
-          title="Edit Drivers"
-        >
-          <div className="BranchTransactionEdit">
-            <div>
+          </DailogComp>
+          <DailogComp
+            open={branchTransactionEdit}
+            dailogHandeller={branchTransactionEditHandeller}
+            title="Edit Drivers"
+          >
+            <div className="BranchTransactionEdit">
               <div>
-                <InputFeildComponent label="Order Id" />
+                <div>
+                  <InputFeildComponent label="Order Id" />
+                </div>
+                <div>
+                  <InputFeildComponent label="Ref Id" />
+                </div>
               </div>
               <div>
-                <InputFeildComponent label="Ref Id" />
+                <div>
+                  <LableCom name="Payment Type" />
+                  <SelectAndSearch placeholder="Payment Type" />
+                </div>
+                <div>
+                  <LableCom name="Payment Mode" />
+                  <SelectAndSearch placeholder="Payment Mode" />
+                </div>
+              </div>
+              <div>
+                <div>
+                  <InputFeildComponent label="Amount" />
+                </div>
+                <div>
+                  <InputFeildComponent label="Note" required={false} />
+                </div>
+              </div>
+              <div className="BranchTransactionEdit__buttons">
+                <PrimaryButton>Save Change</PrimaryButton>
+                <SecondaryButton>Cancel</SecondaryButton>
               </div>
             </div>
-            <div>
-              <div>
-                <LableCom name="Payment Type" />
-                <SelectAndSearch placeholder="Payment Type" />
-              </div>
-              <div>
-                <LableCom name="Payment Mode" />
-                <SelectAndSearch placeholder="Payment Mode" />
-              </div>
-            </div>
-            <div>
-              <div>
-                <InputFeildComponent label="Amount" />
-              </div>
-              <div>
-                <InputFeildComponent label="Note" required={false} />
-              </div>
-            </div>
-            <div className="BranchTransactionEdit__buttons">
-              <PrimaryButton>Save Change</PrimaryButton>
-              <SecondaryButton>Cancel</SecondaryButton>
-            </div>
-          </div>
-        </DailogComp>
+          </DailogComp>
 
-        <DailogComp
-          open={searchRiderDailog}
-          dailogHandeller={searchRiderDailogCloseHandeller}
-          title="Search Rider"
-        >
-          <div className="branchDeliveryOrdersRiderSearchDailog">
-            <div className="branchDeliveryOrdersRiderSearchDailog__inputs">
-              <input
-                value={autoCompleteShow}
-                onChange={(e) => setAutoCompleteShow(e.target.value)}
-                type="text"
-              />
-              <IoIosArrowDown />
-            </div>
-            {autoCompleteShow.length !== 0 && (
-              <>
-                {riderDetailsState.map((value) => {
-                  return (
-                    <div className="branchDeliveryOrdersRiderSearchDailog__dropdown">
-                      <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box">
-                        <Accordion defaultActiveKey="no">
-                          <Accordion.Item>
-                            <Accordion.Header>
-                              <div
-                                onClick={() =>
-                                  RiderListingViewPageOpenHandeller(
-                                    value.id,
-                                    props.itemIdConfirm
-                                  )
-                                }
-                                className="branchDeliveryOrdersRiderSearchDailog__dropdown-box_top"
-                              >
-                                <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box_top-imgcontainer">
-                                  <img
-                                    src={value.rider.profilepicture}
-                                    alt="hero"
-                                  />
+          <DailogComp
+            open={searchRiderDailog}
+            dailogHandeller={searchRiderDailogCloseHandeller}
+            title="Search Rider"
+          >
+            <div className="branchDeliveryOrdersRiderSearchDailog">
+              <div className="branchDeliveryOrdersRiderSearchDailog__inputs">
+                <input
+                  value={autoCompleteShow}
+                  onChange={(e) => setAutoCompleteShow(e.target.value)}
+                  type="text"
+                />
+                <IoIosArrowDown />
+              </div>
+              {autoCompleteShow.length !== 0 && (
+                <>
+                  {riderDetailsState.map((value) => {
+                    return (
+                      <div className="branchDeliveryOrdersRiderSearchDailog__dropdown">
+                        <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box">
+                          <Accordion defaultActiveKey="no">
+                            <Accordion.Item>
+                              <Accordion.Header>
+                                <div
+                                  onClick={() =>
+                                    RiderListingViewPageOpenHandeller(
+                                      value.id,
+                                      props.itemIdConfirm
+                                    )
+                                  }
+                                  className="branchDeliveryOrdersRiderSearchDailog__dropdown-box_top"
+                                >
+                                  <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box_top-imgcontainer">
+                                    <img
+                                      src={value.rider.profilepicture}
+                                      alt="hero"
+                                    />
+                                  </div>
+                                  <h3>
+                                    {value.rider.fullname} <br />{" "}
+                                    <span>#{value.rider.id}</span>
+                                  </h3>
                                 </div>
-                                <h3>
-                                  {value.rider.fullname} <br />{" "}
-                                  <span>#{value.rider.id}</span>
-                                </h3>
-                              </div>
-                            </Accordion.Header>
-                            <Accordion.Body>
-                              <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom">
-                                <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom-left">
+                              </Accordion.Header>
+                              <Accordion.Body>
+                                <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom">
+                                  <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom-left">
+                                    <h4>
+                                      Today’s Delivered <br /> 4
+                                    </h4>
+                                  </div>
+                                  <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom-right"></div>
                                   <h4>
-                                    Today’s Delivered <br /> 4
+                                    Today’s Pending <br /> 4
                                   </h4>
                                 </div>
-                                <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom-right"></div>
-                                <h4>
-                                  Today’s Pending <br /> 4
-                                </h4>
-                              </div>
-                            </Accordion.Body>
-                          </Accordion.Item>
-                        </Accordion>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </>
-            )}
-          </div>
-        </DailogComp>
-        <DailogComp
-          dailogHandeller={RiderListingViewPageCloseHandeller}
-          open={riderListingViewPage}
-          title={
-            <>
-              <div className="riderListingViewPagetitle">
-                <div className="riderListingViewPagetitle_icon">
-                  <BsArrowLeftShort
-                    onClick={clickOnBackHandeller}
-                    fontSize="30px"
-                  />
-                </div>
-                <div className="riderListingViewPagetitle_title">
-                  {getRiderDetailsResonseInfo.data?.results?.map((value) => {
-                    if (value.id === riderSelectClickState.assignedId) {
-                      return `${value.rider.fullname + " #" + value.rider.id}`;
-                    }
+                    );
                   })}
+                </>
+              )}
+            </div>
+          </DailogComp>
+          <DailogComp
+            dailogHandeller={RiderListingViewPageCloseHandeller}
+            open={riderListingViewPage}
+            title={
+              <>
+                <div className="riderListingViewPagetitle">
+                  <div className="riderListingViewPagetitle_icon">
+                    <BsArrowLeftShort
+                      onClick={clickOnBackHandeller}
+                      fontSize="30px"
+                    />
+                  </div>
+                  <div className="riderListingViewPagetitle_title">
+                    {getRiderDetailsResonseInfo.data?.results?.map((value) => {
+                      if (value.id === riderSelectClickState.assignedId) {
+                        return `${
+                          value.rider.fullname + " #" + value.rider.id
+                        }`;
+                      }
+                    })}
+                  </div>
                 </div>
-              </div>
-            </>
-          }
-        >
-          <div className="riderListingViewPagetitle__box">
-            <div className="riderListingViewPagetitle__box-top">
-              <div className="riderListingViewPagetitle__box-top-imgcontainer">
+              </>
+            }
+          >
+            <div className="riderListingViewPagetitle__box">
+              <div className="riderListingViewPagetitle__box-top">
+                <div className="riderListingViewPagetitle__box-top-imgcontainer">
+                  {getRiderDetailsResonseInfo?.data?.results &&
+                    getRiderDetailsResonseInfo.data?.results?.map((value) => {
+                      if (value.id === riderSelectClickState.assignedId) {
+                        return (
+                          <img src={value.rider.profilepicture} alt="hero" />
+                        );
+                      }
+                    })}
+                </div>
                 {getRiderDetailsResonseInfo?.data?.results &&
-                  getRiderDetailsResonseInfo.data?.results?.map((value) => {
+                  getRiderDetailsResonseInfo.data?.results.map((value) => {
                     if (value.id === riderSelectClickState.assignedId) {
                       return (
-                        <img src={value.rider.profilepicture} alt="hero" />
+                        <h3>
+                          Kotheshowr, Kathmandu <br />{" "}
+                          <span>{value.rider.phonenumber}</span>
+                        </h3>
                       );
                     }
                   })}
+                <div className="riderListingViewPagetitle__box-top-buttons">
+                  <TextButton>Available Now</TextButton>
+                </div>
               </div>
-              {getRiderDetailsResonseInfo?.data?.results &&
-                getRiderDetailsResonseInfo.data?.results.map((value) => {
-                  if (value.id === riderSelectClickState.assignedId) {
-                    return (
-                      <h3>
-                        Kotheshowr, Kathmandu <br />{" "}
-                        <span>{value.rider.phonenumber}</span>
-                      </h3>
-                    );
-                  }
-                })}
-              <div className="riderListingViewPagetitle__box-top-buttons">
-                <TextButton>Available Now</TextButton>
+              <div className="riderListingViewPagetitle__box-details">
+                <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom">
+                  <h4>
+                    Today’s Delivered <br /> 4
+                  </h4>
+                  <h4>
+                    Today’s Pending <br /> 4
+                  </h4>
+                  <h4>
+                    Today’s Delivered <br /> 4
+                  </h4>
+                </div>
               </div>
-            </div>
-            <div className="riderListingViewPagetitle__box-details">
-              <div className="branchDeliveryOrdersRiderSearchDailog__dropdown-box-bottom">
-                <h4>
-                  Today’s Delivered <br /> 4
-                </h4>
-                <h4>
-                  Today’s Pending <br /> 4
-                </h4>
-                <h4>
-                  Today’s Delivered <br /> 4
-                </h4>
+              <div className="riderListingViewPagetitle__box-buttons">
+                <PrimaryButton onClick={riderViewAddAnoteOpenHandeller}>
+                  Assigne Now
+                </PrimaryButton>
+                <SecondaryButton onClick={RiderListingViewPageCloseHandeller}>
+                  Cancel
+                </SecondaryButton>
               </div>
             </div>
-            <div className="riderListingViewPagetitle__box-buttons">
-              <PrimaryButton onClick={riderViewAddAnoteOpenHandeller}>
-                Assigne Now
-              </PrimaryButton>
-              <SecondaryButton onClick={RiderListingViewPageCloseHandeller}>
-                Cancel
-              </SecondaryButton>
-            </div>
-          </div>
-        </DailogComp>
-        <CommentBox
-          open={riderViewAddAnote}
-          value={riderConfirmNote}
-          dailogHandeller={riderViewAddAnoteCloseHandeller}
-          onChange={(e) => setRiderConfirmNote(e.target.value)}
-          onConfirm={(data) => onConfirmAssigneRider(data)}
-          switchLabel
-        />
-        <CommentBox
-          open={assigneBranchComment}
-          dailogHandeller={assigneBranchCommentCloseHandeller}
-        />
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? "menu-list-grow" : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        >
-          {props.children}
-        </Button>
+          </DailogComp>
+          <CommentBox
+            open={riderViewAddAnote}
+            value={riderConfirmNote}
+            dailogHandeller={riderViewAddAnoteCloseHandeller}
+            onChange={(e) => setRiderConfirmNote(e.target.value)}
+            onConfirm={(data) => onConfirmAssigneRider(data)}
+            switchLabel
+          />
+          <CommentBox
+            open={assigneBranchComment}
+            dailogHandeller={assigneBranchCommentCloseHandeller}
+          />
+          <Button
+            ref={anchorRef}
+            aria-controls={open ? "menu-list-grow" : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+          >
+            {props.children}
+          </Button>
 
-        <DailogComp
-          open={assigneBranch}
-          dailogHandeller={assigneBranchHandellerCloseHandeller}
-          title="Assign Branch"
-        >
-          <div className="branchAssigneDailog">
-            <SelectAndSearch placeholder="Search Branch" />
-            <SelectAndSearch placeholder="Search Courier" />
-            <div className="branchAssigneDailog__customBranch">
-              <input type="text" placeholder="Custome Courier" />
-              <GrAdd />
+          <DailogComp
+            open={assigneBranch}
+            dailogHandeller={assigneBranchHandellerCloseHandeller}
+            title="Assign Branch"
+          >
+            <div className="branchAssigneDailog">
+              <SelectAndSearch placeholder="Search Branch" />
+              <SelectAndSearch placeholder="Search Courier" />
+              <div className="branchAssigneDailog__customBranch">
+                <input type="text" placeholder="Custome Courier" />
+                <GrAdd />
+              </div>
+              <PrimaryButton onClick={areYouSureAssigneOpenHandeller}>
+                Assigne Branch
+              </PrimaryButton>
             </div>
-            <PrimaryButton onClick={areYouSureAssigneOpenHandeller}>
-              Assigne Branch
-            </PrimaryButton>
-          </div>
-        </DailogComp>
-        <AreYouSure
-          title={"Are you sure, you want to suspend this rider"}
-          discription="Once you suspend this rider, all the rider’s details will be
+          </DailogComp>
+          <AreYouSure
+            title={"Are you sure, you want to suspend this rider"}
+            discription="Once you suspend this rider, all the rider’s details will be
           deleted form the bhariya system"
-          open={riderSuspend}
-          dailogHandeller={riderSuspendHandellerClose}
-          onConform={riderSuspendCommentHandellerOpen}
-          img="/assets/cancel.png"
-          error
-        />
-        <AreYouSure
-          title={"Are you sure you want to assign the dharan Courier"}
-          discription="Once you conformed the delivery, we will move forward or the further
+            open={riderSuspend}
+            dailogHandeller={riderSuspendHandellerClose}
+            onConform={riderSuspendCommentHandellerOpen}
+            img="/assets/cancel.png"
+            error
+          />
+          <AreYouSure
+            title={"Are you sure you want to assign the dharan Courier"}
+            discription="Once you conformed the delivery, we will move forward or the further
           procedures."
-          open={areYouSureAssigne}
-          dailogHandeller={areYouSureAssigneCloseHandeller}
-          onConform={assigneBranchCommentOpenHandeller}
-          img="/assets/iconareyouasure.png"
-        />
-        <AreYouSure
-          title={"Are you sure you want to Assigne the Delevery"}
-          discription="Once you conformed the delivery, we will move forward or the further
+            open={areYouSureAssigne}
+            dailogHandeller={areYouSureAssigneCloseHandeller}
+            onConform={assigneBranchCommentOpenHandeller}
+            img="/assets/iconareyouasure.png"
+          />
+          <AreYouSure
+            title={"Are you sure you want to Assigne the Delevery"}
+            discription="Once you conformed the delivery, we will move forward or the further
           procedures."
-          open={AssigneDelivery}
-          dailogHandeller={AssigneDeliveryCloseHandeller}
-          onConform={assigneBrancOpenhHandeller}
-          img="/assets/Iconareyouasure.png"
-        />
-        <AreYouSure
-          title={"Are you sure you want to conform the Delevery"}
-          discription="Once you conformed the delivery, we will move forward or the further
+            open={AssigneDelivery}
+            dailogHandeller={AssigneDeliveryCloseHandeller}
+            onConform={assigneBrancOpenhHandeller}
+            img="/assets/Iconareyouasure.png"
+          />
+          <AreYouSure
+            title={"Are you sure you want to conform the Delevery"}
+            discription="Once you conformed the delivery, we will move forward or the further
           procedures."
-          open={dailogOpen}
-          dailogHandeller={dailogCloseHandeller}
-          onConform={paymentOpenHandeller}
-          img="/assets/iconareyouasure.png"
-        />
-        <AreYouSure
-          title={"Are you sure you want to conform the Pickup"}
-          discription="Once you conformed the delivery, we will move forward or the further
+            open={dailogOpen}
+            dailogHandeller={dailogCloseHandeller}
+            onConform={paymentOpenHandeller}
+            img="/assets/iconareyouasure.png"
+          />
+          <AreYouSure
+            title={"Are you sure you want to conform the Pickup"}
+            discription="Once you conformed the delivery, we will move forward or the further
           procedures."
-          open={ConformPickUp}
-          dailogHandeller={ConformPickUpHandeller}
-          onConform={onConformPickup}
-          img="/assets/Iconareyouasure.png"
-        />
-        <AreYouSure
-          title={"Are you sure, you want to cancel this delivery"}
-          discription="Once you cancel this delivery, your all details will be
+            open={ConformPickUp}
+            dailogHandeller={ConformPickUpHandeller}
+            onConform={onConformPickup}
+            img="/assets/Iconareyouasure.png"
+          />
+          <AreYouSure
+            title={"Are you sure, you want to cancel this delivery"}
+            discription="Once you cancel this delivery, your all details will be
           freezed from your delivery history"
-          open={cancelDelivery}
-          dailogHandeller={handelcancelDeliveryclose}
-          onConform={openCancelNoteHandeller}
-          img="/assets/cancel.png"
-          error
-        />
-        <CommentBox
-          open={openCancelNote}
-          dailogHandeller={closeCancelNoteHandeller}
-          label="Show to receiver"
-        />
-        <CommentBox
-          open={openDispatchedNote}
-          dailogHandeller={handellCloseDispatchedNote}
-          label="Show to receiver"
-        />
-        <RiderPaymentConformationDailog
-          open={paymentOpen}
-          dailogHandeller={paymentCloseHandeller}
-          onConform={deliveryNoteOpenHandeller}
-        />
-        <DeliveryConfirmNote
-          dailogHandeller={deliveryNoteCloseHandeller}
-          open={deliveryNote}
-          title={"Your delivery has been conformed"}
-        />
-        {/* pickedup one */}
-        <RiderPaymentConformationDailog
-          open={openPickedUpDailog}
-          dailogHandeller={handellClosePickedUpDailog}
-          onConform={handellopenPickedUpDailogComment}
-        />
-        <DeliveryConfirmNote
-          dailogHandeller={handellClosePickedUpDailogComment}
-          open={openPickedUpDailogComment}
-          title={"Your Picked Up has been conformed"}
-        />
-        {/* /onthe way */}
-        <CommentBox
-          open={openOnTheWayDailog}
-          dailogHandeller={handelOpenOnTheWayDailog}
-          label="Show to receiver"
-        />
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-          style={{ zIndex: 10 }}
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom",
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList
-                    autoFocusItem={open}
-                    id="menu-list-grow"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    {dynamicEditMenu()}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+            open={cancelDelivery}
+            dailogHandeller={handelcancelDeliveryclose}
+            onConform={openCancelNoteHandeller}
+            img="/assets/cancel.png"
+            error
+          />
+          <CommentBox
+            open={openCancelNote}
+            dailogHandeller={closeCancelNoteHandeller}
+            label="Show to receiver"
+          />
+          <CommentBox
+            open={openDispatchedNote}
+            dailogHandeller={handellCloseDispatchedNote}
+            label="Show to receiver"
+          />
+          <RiderPaymentConformationDailog
+            open={paymentOpen}
+            dailogHandeller={paymentCloseHandeller}
+            onConform={deliveryNoteOpenHandeller}
+          />
+          <DeliveryConfirmNote
+            dailogHandeller={deliveryNoteCloseHandeller}
+            open={deliveryNote}
+            title={"Your delivery has been conformed"}
+          />
+          {/* pickedup one */}
+          <RiderPaymentConformationDailog
+            open={openPickedUpDailog}
+            dailogHandeller={handellClosePickedUpDailog}
+            onConform={handellopenPickedUpDailogComment}
+          />
+          <DeliveryConfirmNote
+            dailogHandeller={handellClosePickedUpDailogComment}
+            open={openPickedUpDailogComment}
+            title={"Your Picked Up has been conformed"}
+          />
+          {/* /onthe way */}
+          <CommentBox
+            open={openOnTheWayDailog}
+            dailogHandeller={handelOpenOnTheWayDailog}
+            label="Show to receiver"
+          />
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            transition
+            disablePortal
+            style={{ zIndex: 10 }}
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="menu-list-grow"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      {dynamicEditMenu()}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

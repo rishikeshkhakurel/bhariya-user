@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import InputFeildComponent from "../../../common/Components/InputFeildComponent";
-import LableCom from "../../../common/Components/LableCom";
-import AutocompleteSetting from "../../../common/Components/AutoComplete";
 import AccordionForSetting from "../../../common/Components/AccordionForSetting";
 import { ImageUploadReact } from "../../../common/Components/ImageUploadReact";
 import { Col, Row } from "react-bootstrap";

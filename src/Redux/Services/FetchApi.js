@@ -413,6 +413,33 @@ export const FetchApis = createApi({
       },
       invalidatesTags: ["business"],
     }),
+    ReturnRefund: builder.mutation({
+      query: (value) => {
+        const { id, data } = value;
+        return {
+          url: `refundreturn/${id}/`,
+          method: "POST",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+        };
+      },
+    }),
+
+    onLogout: builder.mutation({
+      query: () => {
+        return {
+          url: `logout/`,
+          method: "POST",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -448,4 +475,6 @@ export const {
   useUpdateBusinessFormByIdMutation,
   useGetPendingPaymentQuery,
   useGetPaymentHistoryQuery,
+  useReturnRefundMutation,
+  useOnLogoutMutation,
 } = FetchApis;

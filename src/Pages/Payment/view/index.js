@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,8 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import PendingPayment from "./PendingPayment";
 import PaymentMethod from "./PaymentMethod";
-import CollapsTable from "./CollapsTable";
-import { useGetPaymentHistoryQuery, useGetPendingPaymentQuery } from "../../../Redux/Services/FetchApi";
 import PaymentHistory from "./PaymentHistory";
 
 function TabPanel(props) {
@@ -65,51 +63,53 @@ const UserPayment = (props) => {
   };
 
   return (
-    <div className="userAdmin-payment">
-      <div className="userAdmin--header">
-        <h2>Payment</h2>
-      </div>
-      <div className="userAdmin-payment-box">
-        <div className="userAdmin-payment-box-tabs">
-          <div className={classes.root}>
-            <AppBar position="static">
-              <Tabs
-                className={classes.tabs}
-                value={value}
-                scrollButtons="on"
-                onChange={handleChange}
-                aria-label="simple tabs example"
-              >
-                <Tab label="Pendings" {...a11yProps(0)} />
-                <Tab label="History" {...a11yProps(1)} />
-                <Tab label="Options" {...a11yProps(2)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <PendingPayment />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <div className="paymentHistory">
-                <PaymentHistory/>
-              </div>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <PaymentMethod />
-            </TabPanel>
+    <>
+      <div className="userAdmin-payment">
+        <div className="userAdmin--header">
+          <h2>Payment</h2>
+        </div>
+        <div className="userAdmin-payment-box">
+          <div className="userAdmin-payment-box-tabs">
+            <div className={classes.root}>
+              <AppBar position="static">
+                <Tabs
+                  className={classes.tabs}
+                  value={value}
+                  scrollButtons="on"
+                  onChange={handleChange}
+                  aria-label="simple tabs example"
+                >
+                  <Tab label="Pendings" {...a11yProps(0)} />
+                  <Tab label="History" {...a11yProps(1)} />
+                  <Tab label="Options" {...a11yProps(2)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={value} index={0}>
+                <PendingPayment />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <div className="paymentHistory">
+                  <PaymentHistory />
+                </div>
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <PaymentMethod />
+              </TabPanel>
+            </div>
           </div>
         </div>
-      </div>
-      {/* {value === 1 && (
+        {/* {value === 1 && (
         <div className="userTable__paginatin">
-          <div className="userTable__paginatin-1">
-            <PrimaryButton>Export</PrimaryButton>
+        <div className="userTable__paginatin-1">
+        <PrimaryButton>Export</PrimaryButton>
           </div>
           <div className="userTable__paginatin-2">
-            <TablePaginationEdit />
+          <TablePaginationEdit />
           </div>
-        </div>
-      )} */}
-    </div>
+          </div>
+        )} */}
+      </div>
+    </>
   );
 };
 

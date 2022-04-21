@@ -1,8 +1,9 @@
 import React from 'react'
+import Loading from '../../../common/Components/loading/LoadingComp'
 
 function DashBoard() {
   return (
-    <div>DashBoard</div>
+    <div>Dashboard</div>
   )
 }
 

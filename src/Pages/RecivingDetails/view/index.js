@@ -23,7 +23,7 @@ const UserRecivingDetails = () => {
 
   const [state, setState] = React.useState({
     Sn: true,
-    OrderId: false,
+    OrderId: true,
     DateTime: true,
     RefID: false,
     PickupID: false,
@@ -80,7 +80,11 @@ const UserRecivingDetails = () => {
   const usersId = useSelector((state) => state.authentiaction.userid);
   const [userdeliveryData, setuserdeliveryData] = useState();
   const userDeliveryHistoryResponseInfo = useGetRecivingDetailsQuery();
-  const [rows, setRows] = useState(userDeliveryHistoryResponseInfo?.data);
+  const [rows, setRows] = useState();
+
+  useEffect(()=>{
+    setRows(userDeliveryHistoryResponseInfo?.data)
+  },[userDeliveryHistoryResponseInfo.isSuccess])
 
   const requestSearch = async (searchedVal) => {
     const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(

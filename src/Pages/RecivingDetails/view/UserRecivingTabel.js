@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -13,6 +13,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
 import CsvDownload from "react-json-to-csv";
+import DailogComp from "../../../common/Components/Dailog/DailogComp";
 
 const useStyles = makeStyles({
   root: {
@@ -278,23 +279,12 @@ export default function UserRecivingTabel({
     );
   });
 
-  const exportData = tabelData?.map((value) => {
-    return {
-      "Date Time": value.deliverytime,
-      "Business": value.business,
-      "Branch": value.deliverybranch,
-      "Receiver": value.deliveryto,
-      "Phone": value.phone,
-      "Address": value.deliverylocation,
-      "Email": value.email,
-      "ProductValue": value.packagevalue,
-      "DeliveryStatus": value.order_status,
-    };
-  });
-  
+  const [startdate, setStartDate] = useState("");
+  const [enddate, setEndDate] = useState("");
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [exportDataPopUp, setExportDataPopUp] = React.useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -305,8 +295,62 @@ export default function UserRecivingTabel({
     setPage(0);
   };
 
+  const exportData = tabelData?.map((value) => {
+    const date = value.deliverytime.split("T")[0];
+    if (date < enddate && date > startdate) {
+      return {
+        OrderId: value.id,
+        OrderName: value.productname,
+        DateTime: value.deliverytime,
+        Business: value.business,
+        Branch: value.deliverybranch,
+        Receiver: value.deliveryto,
+        Phone: value.phone,
+        Address: value.deliverylocation,
+        Email: value.email,
+        ProductValue: value.packagevalue,
+        CODAmount: value.cod,
+        DeliveryStatus: value.order_status,
+      };
+    } else {
+      return {};
+    }
+  });
+
   return (
     <>
+      <DailogComp
+        open={exportDataPopUp}
+        dailogHandeller={() => setExportDataPopUp(false)}
+        title="Export Date Select"
+      >
+        <div className="RiderDaillyReciving_callender-inputs">
+          <div className="RiderDaillyReciving_callender-inputs-1">
+            <h4>Start</h4>
+            <input type="Date" onChange={(e) => setStartDate(e.target.value)} />
+          </div>
+          <div className="RiderDaillyReciving_callender-inputs-2">
+            <h4>End</h4>
+            <input type="Date" onChange={(e) => setEndDate(e.target.value)} />
+          </div>
+        </div>
+        <br />
+        <PrimaryButton>
+          <CsvDownload
+            filename="Franchise form.csv"
+            style={{
+              background: "transparent",
+              color: "white",
+              fontWeight: "600",
+              border: "none",
+              outline: "none",
+            }}
+            data={exportData}
+          >
+            Export
+          </CsvDownload>
+        </PrimaryButton>
+      </DailogComp>
       <div className="userTable">
         <div>
           <Paper style={{ padding: 0 }} className={classes.root}>
@@ -364,20 +408,8 @@ export default function UserRecivingTabel({
 
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-          <PrimaryButton>
-            <CsvDownload
-              filename="Franchise form.csv"
-              style={{
-                background: "transparent",
-                color: "white",
-                fontWeight: "600",
-                border: "none",
-                outline: "none",
-              }}
-              data={exportData}
-            >
-              Export
-            </CsvDownload>
+          <PrimaryButton onClick={() => setExportDataPopUp(true)}>
+            Export
           </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">

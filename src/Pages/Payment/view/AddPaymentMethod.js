@@ -13,7 +13,7 @@ import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 import TersaryButton from "../../../common/Components/Button/TersaryButton";
 import Loading from "../../../common/Components/loading/LoadingComp";
 import InputFeildComponent from "../../../common/Components/InputFeildComponent";
-import AlertBox from "../../../common/AlertBox";
+import AlertBox from "../../../common/Components/AlertBox";
 import {
   useAddPaymentMethodMutation,
   useGetPaymentMethodQuery,

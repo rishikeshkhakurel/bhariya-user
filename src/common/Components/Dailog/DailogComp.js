@@ -2,8 +2,6 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import { AiOutlineClose } from "react-icons/ai";
 const DailogComp = (props) => {

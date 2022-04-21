@@ -8,7 +8,7 @@ import ImageUploading from "react-images-uploading";
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineCancel } from "react-icons/md";
 import { useEffect } from "react";
-import AlertBox from "../AlertBox";
+import AlertBox from "./AlertBox";
 import PrimaryButton from "./Button/PrimaryButton";
 import SecondaryButton from "./Button/SecondaryButton";
 import InputFeildComponent from "./InputFeildComponent";
@@ -77,7 +77,7 @@ export default function AccordionForSetting(props) {
     switch (sendValue) {
       case "name":
         const fulldata = {
-          id: userId,
+          id: 1,
           data: {
             fullname: name,
           },

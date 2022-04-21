@@ -14,7 +14,6 @@ const PaymentHistory = () => {
   };  
 
   const getPaymentHistoryResponse=useGetPaymentHistoryQuery()
-  console.log("history",getPaymentHistoryResponse)
 
   // let rows={ totalcod:0, totalcodrecived:0, totaldeliverycharge:0, totalpickupcharge:0, data:[]}
 

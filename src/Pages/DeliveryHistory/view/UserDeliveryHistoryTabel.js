@@ -12,11 +12,17 @@ import { useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
-import moment from "moment";
 import CsvDownload from "react-json-to-csv";
 import AreYouSure from "../../../common/Components/AreYousureComp/AreYouSure";
-import { useUpdateDeliveryHistoryDataByidMutation } from "../../../Redux/Services/FetchApi";
-import AlertBox from "../../../common/AlertBox";
+import {
+  useReturnRefundMutation,
+  useUpdateDeliveryHistoryDataByidMutation,
+} from "../../../Redux/Services/FetchApi";
+import AlertBox from "../../../common/Components/AlertBox";
+import DailogComp from "../../../common/Components/Dailog/DailogComp";
+import InputFeildComponent from "../../../common/Components/InputFeildComponent";
+import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
+import { Row } from "react-bootstrap";
 
 const useStyles = makeStyles({
   root: {
@@ -56,9 +62,9 @@ export default function UserDeliveryHistoryTabel({
       format: (value) => value.toLocaleString("en-US"),
     })
   );
-  let navigate = useNavigate();
+  let navigation = useNavigate();
   const tableClickHandeller = (id) => {
-    navigate(`/${onTableRowCLick}/${id}`);
+    navigation(`/${onTableRowCLick}/${id}`);
   };
 
   function createData(
@@ -77,11 +83,6 @@ export default function UserDeliveryHistoryTabel({
     WeigntDimension,
     ProductValue,
     CODAmount,
-    PickupCharge,
-    Deliverycharge,
-    CODReceived,
-    PaymentReceived,
-    Balance,
     DeliveryStatus,
     Edit
   ) {
@@ -101,42 +102,50 @@ export default function UserDeliveryHistoryTabel({
       WeigntDimension,
       ProductValue,
       CODAmount,
-      PickupCharge,
-      Deliverycharge,
-      CODReceived,
-      PaymentReceived,
-      Balance,
       DeliveryStatus,
       Edit,
     };
   }
 
+  const [startdate, setStartDate] = useState("");
+  const [enddate, setEndDate] = useState("");
+  const [exportDataPopUp, setExportDataPopUp] = React.useState(false);
+
   const exportData = tabelData?.map((value) => {
-    return {
-      "Date Time": value.deliverytime,
-      Business: value.business,
-      Branch: value.deliverybranch,
-      Receiver: value.deliveryto,
-      Phone: value.phone,
-      Address: value.deliverylocation,
-      Email: value.email,
-      ProductValue: value.packagevalue,
-      DeliveryStatus: value.order_status,
-    };
+    const date = value.deliverytime.split("T")[0];
+    if (date < enddate && date > startdate) {
+      return {
+        OrderId: value.id,
+        OrderName: value.productname,
+        DateTime: value.deliverytime,
+        Business: value.business,
+        Branch: value.deliverybranch,
+        Receiver: value.deliveryto,
+        Phone: value.phone,
+        Address: value.deliverylocation,
+        Email: value.email,
+        ProductValue: value.packagevalue,
+        CODAmount: value.cod,
+        DeliveryStatus: value.order_status,
+      };
+    } else {
+      return {};
+    }
   });
 
-  const changeStringToVariableName = (variable, value) => {
-    window[variable] = value;
-  };
-  const verifiedStyle = (value) => {
-    if (value === "Veified") {
-      return <span style={{ color: "blue" }}>{value}</span>;
-    }
-  };
   const rows = [];
+  const [ReturnRefundPopUp, setReturnRefundPopUp] = useState(false);
+  const [RefundAmount, setRefundAmount] = useState();
+  const [RefundReturn, setReturnRefundId] = useState();
+  const [ReturnPopUp, setReturnPopUp] = useState(false);
 
   const navigateToEditPage = (id) => {
-    navigate(`/deliveryhistory/requestdeliveryform/${id}`);
+    navigation(`/deliveryhistory/requestdeliveryform/${id}`);
+  };
+
+  const navigateToDublicateOrder = (id) => {
+    navigation("/deliveryhistory/requestdeliveryform/", { state: { id: id } });
+    // navigation.navigate()
   };
   let lengthOfData = tabelData?.length;
   tabelData?.map((value, index) => {
@@ -189,13 +198,13 @@ export default function UserDeliveryHistoryTabel({
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>#12334</span>
+          <span>#{value.reference_id}</span>
         </div>,
         <div
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>45322</span>
+          <span>#{value.id}</span>
         </div>,
         <div
           className="rowHandeller"
@@ -243,7 +252,7 @@ export default function UserDeliveryHistoryTabel({
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>400 kg</span>
+          <span>{value.weight} kg</span>
         </div>,
         <div
           className="rowHandeller"
@@ -261,43 +270,22 @@ export default function UserDeliveryHistoryTabel({
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>{index * 4 + 10} rs</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>{index * 6 + 10} rs</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>Yes</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>Yes</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>3000 rs</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
           <span>{value.order_status}</span>
         </div>,
         <div className="tableCellbutton">
           <MenuComp
             onClickToEditUserDelivery={() => navigateToEditPage(value.id)}
             onClickCancel={() => setCancel(value.id)}
-            userDeliveryHistory
+            onClickDuplicate={() => navigateToDublicateOrder(value.id)}
+            onClickReturnRefund={() => {
+              setReturnRefundPopUp(true);
+              setReturnRefundId(value.id);
+            }}
+            onClickReturn={() => {
+              setReturnPopUp(true);
+              setReturnRefundId(value.id);
+            }}
+            value={value.order_status}
           >
             <BsThreeDotsVertical fontSize="20px" />
           </MenuComp>
@@ -308,6 +296,22 @@ export default function UserDeliveryHistoryTabel({
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [ReturnRefund, ReturnRefundResponse] = useReturnRefundMutation();
+
+  const onReturnRefundHandler = (e) => {
+    e.preventDefault();
+    ReturnRefund({
+      id: RefundReturn,
+      data: { refund_amount: RefundAmount },
+    });
+  };
+
+  const onReturnHandler = () => {
+    ReturnRefund({
+      id: RefundReturn,
+    });
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -334,12 +338,87 @@ export default function UserDeliveryHistoryTabel({
 
   return (
     <>
-    {DeliveryHistoryResponse.isSuccess && <AlertBox isError AlertMessage="Order is Cancled" />}
+      {ReturnRefundResponse.isSuccess && (
+        <AlertBox AlertMessage="Return or Return Refund Placed Successfully" />
+      )}
+      {DeliveryHistoryResponse.isSuccess && (
+        <AlertBox isError AlertMessage="Order is Cancled" />
+      )}
+
+      {/* Dialog Compoent to filter data from date while exporting */}
+      <DailogComp
+        open={exportDataPopUp}
+        dailogHandeller={() => setExportDataPopUp(false)}
+        title="Export Date Select"
+      >
+        <div className="RiderDaillyReciving_callender-inputs">
+          <div className="RiderDaillyReciving_callender-inputs-1">
+            <h4>Start</h4>
+            <input type="Date" onChange={(e) => setStartDate(e.target.value)} />
+          </div>
+          <div className="RiderDaillyReciving_callender-inputs-2">
+            <h4>End</h4>
+            <input type="Date" onChange={(e) => setEndDate(e.target.value)} />
+          </div>
+        </div>
+        <br />
+        <PrimaryButton>
+          <CsvDownload
+            filename="Franchise form.csv"
+            style={{
+              background: "transparent",
+              color: "white",
+              fontWeight: "600",
+              border: "none",
+              outline: "none",
+            }}
+            data={exportData}
+          >
+            Export
+          </CsvDownload>
+        </PrimaryButton>
+      </DailogComp>
+
+      {/* Pop of Return and Refund Data which is only possible after delivered. Is used to enter Refund Amount */}
+      <DailogComp
+        open={ReturnRefundPopUp}
+        dailogHandeller={() => setReturnRefundPopUp(false)}
+        title="Return Refund"
+      >
+        <form onSubmit={onReturnRefundHandler}>
+          <Row>
+            <InputFeildComponent
+              label="Refund Amount"
+              onChange={(e) => setRefundAmount(e.target.value)}
+              value={RefundAmount}
+            />
+          </Row>
+          <br />
+          <Row>
+            <PrimaryButton type="submit">Submit</PrimaryButton>
+          </Row>
+          <br />
+          <Row>
+            <SecondaryButton onClick={(e) => setReturnRefundPopUp(false)}>
+              Cancel
+            </SecondaryButton>
+          </Row>
+        </form>
+      </DailogComp>
+
       <AreYouSure
         title={"Are you sure, you want to Cancel Delivery"}
         open={cancel}
         dailogHandeller={CancelDeliveryHandler}
-        onConform={onConfirmCancelDelivery}
+        onConform={() => onConfirmCancelDelivery}
+        img="/assets/cancel.png"
+        error
+      />
+      <AreYouSure
+        title={"Are you sure, you want to Return Delivery"}
+        open={ReturnPopUp}
+        dailogHandeller={() => setReturnPopUp(false)}
+        onConform={onReturnHandler}
         img="/assets/cancel.png"
         error
       />
@@ -400,20 +479,8 @@ export default function UserDeliveryHistoryTabel({
 
       <div className="userTable__paginatin">
         <div className="userTable__paginatin-1">
-          <PrimaryButton>
-            <CsvDownload
-              filename="Franchise form.csv"
-              style={{
-                background: "transparent",
-                color: "white",
-                fontWeight: "600",
-                border: "none",
-                outline: "none",
-              }}
-              data={exportData}
-            >
-              Export
-            </CsvDownload>
+          <PrimaryButton onClick={(e) => setExportDataPopUp(true)}>
+            Export
           </PrimaryButton>
         </div>
         <div className="userTable__paginatin-2">
@@ -426,10 +493,6 @@ export default function UserDeliveryHistoryTabel({
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-          {/* <h2>Showing out of 200</h2>
-          <button>
-            View 6 <ExpandMoreIcon />
-          </button> */}
         </div>
       </div>
     </>

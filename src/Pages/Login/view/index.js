@@ -37,17 +37,6 @@ const UserLoginPage = (props) => {
       localStorage.setItem("token", loginDataResponseInfo.data.token);
       localStorage.setItem("userid", loginDataResponseInfo.data.user_id);
       localStorage.setItem("userState", loginDataResponseInfo.data.userrole);
-      if (enteredEmail.includes("@")) {
-        localStorage.setItem(
-          "hash",
-          btoa(`${enteredEmail + ":" + enteredPassword}`)
-        );
-      } else {
-        localStorage.setItem(
-          "hash",
-          btoa(`977${enteredEmail + ":" + enteredPassword}`)
-        );
-      }
       dispatch(
         changingRole(loginDataResponseInfo.data.userrole.toLowerCase()),
         changingId(loginDataResponseInfo.data.userid)

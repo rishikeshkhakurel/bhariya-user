@@ -10,7 +10,7 @@ import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 import { useAddBusinessFormMutation } from "../../../Redux/Services/FetchApi";
 import Loading from "../../../common/Components/loading/LoadingComp";
-import AlertBox from "../../../common/AlertBox";
+import AlertBox from "../../../common/Components/AlertBox";
 import { Col, Row } from "react-bootstrap";
 
 const UserBusiness = () => {
