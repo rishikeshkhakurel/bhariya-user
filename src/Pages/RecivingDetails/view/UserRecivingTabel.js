@@ -128,21 +128,21 @@ export default function UserRecivingTabel({
       createData(
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
           <span>{lengthOfData--}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
           <span>
-            {value.productname} <br /> <span>{value.id}</span>
+            {value?.productname} <br /> <span>{value?.id}</span>
           </span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
           <span>
             {date}
@@ -154,69 +154,81 @@ export default function UserRecivingTabel({
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.business}</span>
+          <span>#{value?.reference_id}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.deliverybranch}</span>
+          <span>#{value?.id}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>Salina Lama</span>
+          <span>{value?.business}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.phone}</span>
+          <span>{value?.deliverybranch}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.deliverylocation}</span>
+          <span>{value?.deliveryto}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.email}</span>
+          <span>{value?.phone}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.livelocation}</span>
+          <span>{value?.deliverylocation}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.weight} kg</span>
+          <span>{value?.email}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.packagevalue}</span>
+          <span>{value?.livelocation}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.cod}</span>
+          <span>{value?.weight} kg</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.order_status}</span>
+          <span>{value?.packagevalue}</span>
+        </div>,
+        <div
+          className="rowHandeller"
+          onClick={() => tableClickHandeller(value?.id)}
+        >
+          <span>{value?.cod}</span>
+        </div>,
+        <div
+          className="rowHandeller"
+          onClick={() => tableClickHandeller(value?.id)}
+        >
+          <span>{value?.order_status}</span>
         </div>,
         <div className="tableCellbutton">
           <MenuComp userRecivingTabel>
@@ -244,21 +256,21 @@ export default function UserRecivingTabel({
   };
 
   const exportData = tabelData?.map((value) => {
-    const date = value.deliverytime.split("T")[0];
+    const date = value?.deliverytime?.split("T")[0];
     if (date < enddate && date > startdate) {
       return {
-        OrderId: value.id,
-        OrderName: value.productname,
-        DateTime: value.deliverytime,
-        Business: value.business,
-        Branch: value.deliverybranch,
-        Receiver: value.deliveryto,
-        Phone: value.phone,
-        Address: value.deliverylocation,
-        Email: value.email,
-        ProductValue: value.packagevalue,
-        CODAmount: value.cod,
-        DeliveryStatus: value.order_status,
+        OrderId: value?.id,
+        OrderName: value?.productname,
+        DateTime: value?.deliverytime,
+        Business: value?.business,
+        Branch: value?.deliverybranch,
+        Receiver: value?.deliveryto,
+        Phone: value?.phone,
+        Address: value?.deliverylocation,
+        Email: value?.email,
+        ProductValue: value?.packagevalue,
+        CODAmount: value?.cod,
+        DeliveryStatus: value?.order_status,
       };
     } else {
       return {};

@@ -37,11 +37,6 @@ const UserRecivingDetails = () => {
     WeigntDimension: false,
     ProductValue: true,
     CODAmount: true,
-    PickupCharge: false,
-    Deliverycharge: false,
-    CODReceived: false,
-    PaymentReceived: false,
-    Balance: false,
     DeliveryStatus: true,
   });
   const row = [
@@ -60,11 +55,6 @@ const UserRecivingDetails = () => {
     "WeigntDimension",
     "ProductValue",
     "CODAmount",
-    "PickupCharge",
-    "Deliverycharge",
-    "CODReceived",
-    "PaymentReceived",
-    "Balance",
     "DeliveryStatus",
   ];
 
