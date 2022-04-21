@@ -8,8 +8,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import { useNavigate } from "react-router-dom";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import MenuComp from "../../../common/Components/MenuComp";
@@ -112,10 +110,7 @@ export default function PaymentTable(props) {
       format: (value) => value.toLocaleString("en-US"),
     },
   ];
-  let navigate = useNavigate();
-  const tableClickHandeller = (id) => {
-    navigate(`/${props.onTableRowCLick}/:${id}`);
-  };
+
   function createData(
     sn,
     OrderId,
@@ -150,29 +145,29 @@ export default function PaymentTable(props) {
   tabelData?.map((value, index) => {
     rows.unshift(
       createData(
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{lengthOfData--}</span>
         </div>,
 
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.order[0]?.id}</span>
         </div>,
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.reference_id}</span>
         </div>,
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.business}</span>
         </div>,
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.recievingbranch}</span>
         </div>,
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.deliveryto}</span>
         </div>,
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.phone}</span>
         </div>,
-        <div className="rowHandeller" onClick={tableClickHandeller}>
+        <div className="rowHandeller" >
           <span>{value?.deliverylocation}</span>
         </div>,
         <div className="tableCellbutton">
