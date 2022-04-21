@@ -45,7 +45,7 @@ const RequestDeliveryForm = () => {
   const location = useLocation();
   const getAllBranchResponseInfo = useGetBranchDetailsQuery();
   const listOfBranches = getAllBranchResponseInfo?.data?.map(
-    (value) => value.branchname
+    (value) => value?.branchname
   );
 
   const [getPosition, setGetPosition] = useState({
@@ -79,23 +79,22 @@ const RequestDeliveryForm = () => {
 
   const getDeliveryHistoryDataByidResponseInfo =
     useGetDeliveryHistoryDataByidQuery(location?.state?.id);
-    console.log(getDeliveryHistoryDataByidResponseInfo)
   const setAllDataToDefault = () => {
-    setBusiness(getDeliveryHistoryDataByidResponseInfo.data.business);
-    setProductname(getDeliveryHistoryDataByidResponseInfo.data.productname);
-    setPackagedetail(getDeliveryHistoryDataByidResponseInfo.data.packagedetail);
-    setPackageValue(getDeliveryHistoryDataByidResponseInfo.data.packagevalue);
-    setCod(getDeliveryHistoryDataByidResponseInfo.data.cod);
-    setWeight(getDeliveryHistoryDataByidResponseInfo.data.weight);
-  }
+    setBusiness(getDeliveryHistoryDataByidResponseInfo?.data?.business);
+    setProductname(getDeliveryHistoryDataByidResponseInfo?.data?.productname);
+    setPackagedetail(
+      getDeliveryHistoryDataByidResponseInfo?.data?.packagedetail
+    );
+    setPackageValue(getDeliveryHistoryDataByidResponseInfo?.data?.packagevalue);
+    setCod(getDeliveryHistoryDataByidResponseInfo?.data?.cod);
+    setWeight(getDeliveryHistoryDataByidResponseInfo?.data?.weight);
+  };
 
   useEffect(() => {
     if (getDeliveryHistoryDataByidResponseInfo.isSuccess) {
       setAllDataToDefault();
     }
-  }, [getDeliveryHistoryDataByidResponseInfo]);  
-
-
+  }, [getDeliveryHistoryDataByidResponseInfo]);
 
   useEffect(() => {
     fetchUserLiveLocation();
@@ -111,7 +110,7 @@ const RequestDeliveryForm = () => {
   const getLocationOfuserAgain = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLiveLocation(
-        `${position.coords.longitude},${position.coords.latitude}`
+        `${position?.coords?.longitude},${position?.coords?.latitude}`
       );
     });
   };
@@ -125,10 +124,10 @@ const RequestDeliveryForm = () => {
   const fillValueOfData = (id) => {
     searchUserDataResponseInfo?.data?.map((value) => {
       if (value.id === id) {
-        setDeliveryto(value.fullname);
-        setPhoneNumber(value.phonenumber);
-        setEmail(value.email);
-        setAddress(value.address);
+        setDeliveryto(value?.fullname);
+        setPhoneNumber(value?.phonenumber);
+        setEmail(value?.email);
+        setAddress(value?.address);
       }
     });
     setSearchUser("");
@@ -136,10 +135,10 @@ const RequestDeliveryForm = () => {
 
   useEffect(() => {
     if (getuserSettingResponseInfo.isSuccess) {
-      setPickUpName(getuserSettingResponseInfo.data[0].fullname);
-      setPickUpContact(getuserSettingResponseInfo.data[0].phonenumber);
-      setPickUpEmail(getuserSettingResponseInfo.data[0].email);
-      setPickUpLocation(getuserSettingResponseInfo.data[0].address);
+      setPickUpName(getuserSettingResponseInfo?.data[0]?.fullname);
+      setPickUpContact(getuserSettingResponseInfo?.data[0]?.phonenumber);
+      setPickUpEmail(getuserSettingResponseInfo?.data[0]?.email);
+      setPickUpLocation(getuserSettingResponseInfo?.data[0]?.address);
     }
   }, [getuserSettingResponseInfo.isSuccess]);
   // const getUserDetails = () => {};
@@ -731,7 +730,8 @@ const RequestDeliveryForm = () => {
                         searchUserDataResponseInfo?.data?.map((value) => {
                           if (value?.user_role === "user") {
                             if (
-                              value?.id != getuserSettingResponseInfo?.data[0]?.id
+                              value?.id !=
+                              getuserSettingResponseInfo?.data[0]?.id
                             ) {
                               return (
                                 <div

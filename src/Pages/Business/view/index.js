@@ -61,7 +61,7 @@ const UserBusiness = () => {
   const [isValidated, setIsValidated] = useState(true);
 
   const checkvalidation = () => {
-    const dataurl = images.map((value) => value.data_url);
+    const dataurl = images.map((value) => value?.data_url);
     if (
       businessname &&
       contactperson &&

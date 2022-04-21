@@ -74,7 +74,7 @@ const BusinessDetails = () => {
 
   const onChange = (imageList, addUpdateIndex) => {
     const newImage = imageList?.map((value) => {
-      if (value.data_url) {
+      if (value?.data_url) {
         return value.data_url;
       } else return value;
     });

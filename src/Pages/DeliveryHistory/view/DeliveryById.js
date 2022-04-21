@@ -35,22 +35,22 @@ const DeliveryById = () => {
   data?.addnoteall.map((value) => {
     allNotes.push({
       ...value,
-      notes: value.note,
-      noteAdder: value.notedby.user_role,
+      notes: value?.note,
+      noteAdder: value?.notedby.user_role,
     });
   });
   data?.addpay.map((value) =>
     allNotes.push({
       ...value,
-      notes: value.addnote,
-      noteAdder: value.postedby.user_role,
+      notes: value?.addnote,
+      noteAdder: value?.postedby.user_role,
     })
   );
   data?.internalnote?.map((value) => {
     allNotes.push({
       ...value,
-      notes: value.note,
-      noteAdder: value.posted.user_role,
+      notes: value?.note,
+      noteAdder: value?.posted.user_role,
     });
   });
 
@@ -243,16 +243,16 @@ const DeliveryById = () => {
                       </div>
                       <div className="deliverycommentcontainer">
                         {deliveryCommentData.reverse().map((value) => {
-                          const date = moment(value.added).format(
+                          const date = moment(value?.added).format(
                             "ddd Do MMM YYYY h:mm A"
                           );
                           return (
                             <div className="deliverySummery-container-right_Comments-box">
                               <div className="deliverySummery-container-right_Comments-box-left">
-                                {value.posted.user_role}
+                                {value?.posted?.user_role}
                               </div>
                               <div className="deliverySummery-container-right_Comments-box-right">
-                                {value.note}
+                                {value?.note}
                                 <div className="deliverySummery-container-right_Comments-box-bttom">
                                   {date}
                                 </div>

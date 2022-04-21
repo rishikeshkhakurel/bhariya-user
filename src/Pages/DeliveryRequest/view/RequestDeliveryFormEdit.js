@@ -79,37 +79,37 @@ const RequestDeliveryFormEdit = () => {
   const [weight, setWeight] = useState();
 
   const setAllDataToDefault = () => {
-    setBusiness(getDeliveryHistoryDataByidResponseInfo.data.business);
-    setProductname(getDeliveryHistoryDataByidResponseInfo.data.productname);
-    setPackagedetail(getDeliveryHistoryDataByidResponseInfo.data.packagedetail);
-    setPackageValue(getDeliveryHistoryDataByidResponseInfo.data.packagevalue);
-    setWeight(getDeliveryHistoryDataByidResponseInfo.data.weight);
-    setCod(getDeliveryHistoryDataByidResponseInfo.data.cod);
-    setDeliveryto(getDeliveryHistoryDataByidResponseInfo.data.deliveryto);
-    setPhoneNumber(getDeliveryHistoryDataByidResponseInfo.data.phone);
-    setEmail(getDeliveryHistoryDataByidResponseInfo.data.email);
-    setLandMark(getDeliveryHistoryDataByidResponseInfo.data.nearestlandmark);
+    setBusiness(getDeliveryHistoryDataByidResponseInfo?.data?.business);
+    setProductname(getDeliveryHistoryDataByidResponseInfo?.data?.productname);
+    setPackagedetail(getDeliveryHistoryDataByidResponseInfo?.data?.packagedetail);
+    setPackageValue(getDeliveryHistoryDataByidResponseInfo?.data?.packagevalue);
+    setWeight(getDeliveryHistoryDataByidResponseInfo?.data?.weight);
+    setCod(getDeliveryHistoryDataByidResponseInfo?.data?.cod);
+    setDeliveryto(getDeliveryHistoryDataByidResponseInfo?.data?.deliveryto);
+    setPhoneNumber(getDeliveryHistoryDataByidResponseInfo?.data?.phone);
+    setEmail(getDeliveryHistoryDataByidResponseInfo?.data?.email);
+    setLandMark(getDeliveryHistoryDataByidResponseInfo?.data?.nearestlandmark);
     setDeliveryBranch(
-      getDeliveryHistoryDataByidResponseInfo.data.deliverybranch
+      getDeliveryHistoryDataByidResponseInfo?.data?.deliverybranch
     );
-    setLiveLocation(getDeliveryHistoryDataByidResponseInfo.data.livelocation);
-    setAddress(getDeliveryHistoryDataByidResponseInfo.data.deliverylocation);
-    setRequestPickUp(getDeliveryHistoryDataByidResponseInfo.data.requestpickup);
-    setPickUpName(getDeliveryHistoryDataByidResponseInfo.data.order[0].name);
+    setLiveLocation(getDeliveryHistoryDataByidResponseInfo?.data?.livelocation);
+    setAddress(getDeliveryHistoryDataByidResponseInfo?.data?.deliverylocation);
+    setRequestPickUp(getDeliveryHistoryDataByidResponseInfo?.data?.requestpickup);
+    setPickUpName(getDeliveryHistoryDataByidResponseInfo?.data?.order[0]?.name);
     setPickUpEmail(
-      getDeliveryHistoryDataByidResponseInfo.data.order[0].senderemail
+      getDeliveryHistoryDataByidResponseInfo?.data?.order[0]?.senderemail
     );
     setPickUpContact(
-      getDeliveryHistoryDataByidResponseInfo.data.order[0].sendercontact
+      getDeliveryHistoryDataByidResponseInfo?.data?.order[0]?.sendercontact
     );
     setPickUpLocation(
-      getDeliveryHistoryDataByidResponseInfo.data.order[0].senderlocation
+      getDeliveryHistoryDataByidResponseInfo?.data?.order[0]?.senderlocation
     );
     setPickUpBranch(
-      getDeliveryHistoryDataByidResponseInfo.data.order[0].recievingbranch
+      getDeliveryHistoryDataByidResponseInfo?.data?.order[0]?.recievingbranch
     );
     setPickUpLiveLocation(
-      getDeliveryHistoryDataByidResponseInfo.data.order[0].senderlivelocation
+      getDeliveryHistoryDataByidResponseInfo?.data?.order[0]?.senderlivelocation
     );
   };
   useEffect(() => {
@@ -125,7 +125,7 @@ const RequestDeliveryFormEdit = () => {
   const fetchUserLiveLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setPickUpLiveLocation(
-        `${position.coords.longitude},${position.coords.latitude}`
+        `${position?.coords?.longitude},${position?.coords?.latitude}`
       );
     });
   };
@@ -133,7 +133,7 @@ const RequestDeliveryFormEdit = () => {
   const getLocationOfuserAgain = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLiveLocation(
-        `${position.coords.longitude},${position.coords.latitude}`
+        `${position?.coords?.longitude},${position?.coords?.latitude}`
       );
     });
   };
@@ -193,8 +193,8 @@ const RequestDeliveryFormEdit = () => {
   const [branchOption, setBranchOption] = useState([]);
   useEffect(() => {
     if (getBranchListResponseInfo.isSuccess) {
-      const newArray = getBranchListResponseInfo.data.map((value) => {
-        return value.branchname;
+      const newArray = getBranchListResponseInfo?.data?.map((value) => {
+        return value?.branchname;
       });
       setBranchOption(newArray);
     }
@@ -532,8 +532,8 @@ const RequestDeliveryFormEdit = () => {
                 >
                   <MenuItem value="none">Chose Business</MenuItem>
                   {getBusinessForm?.data?.map((value, index) => (
-                    <MenuItem value={`${value.businessname}`}>
-                      {value.businessname}
+                    <MenuItem value={`${value?.businessname}`}>
+                      {value?.businessname}
                     </MenuItem>
                   ))}
                 </Select>

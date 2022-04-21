@@ -75,9 +75,9 @@ const DeliveryHistory = () => {
           row.deliverybranch
             .toLowerCase()
             .includes(searchedVal.toLowerCase()) ||
-          row.business.toLowerCase().includes(searchedVal.toLowerCase()) ||
-          row.deliverytime.toLowerCase().includes(searchedVal.toLowerCase()) ||
-          row.deliveryto.toLowerCase().includes(searchedVal.toLowerCase())
+          row?.business?.toLowerCase().includes(searchedVal.toLowerCase()) ||
+          row?.deliverytime?.toLowerCase().includes(searchedVal.toLowerCase()) ||
+          row?.deliveryto?.toLowerCase().includes(searchedVal.toLowerCase())
         );
       }
     );
@@ -87,8 +87,7 @@ const DeliveryHistory = () => {
   const requestSearchBranch = (searchedVal) => {
     const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
-        return row.deliverybranch
-          .toLowerCase()
+        return row?.deliverybranch?.toLowerCase()
           .includes(searchedVal.toLowerCase());
       }
     );
@@ -98,7 +97,7 @@ const DeliveryHistory = () => {
   const requestSearchBusiness = (searchedVal) => {
     const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
-        return row.business.toLowerCase().includes(searchedVal.toLowerCase());
+        return row?.business?.toLowerCase().includes(searchedVal.toLowerCase());
       }
     );
     setRows(filteredRows);
@@ -107,8 +106,7 @@ const DeliveryHistory = () => {
   const requestSearchstatus = async (searchedVal) => {
     const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
-        return row.order_status
-          .toLowerCase()
+        return row?.order_status?.toLowerCase()
           .includes(searchedVal.toLowerCase());
       }
     );

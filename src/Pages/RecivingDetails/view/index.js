@@ -77,8 +77,6 @@ const UserRecivingDetails = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const usersId = useSelector((state) => state.authentiaction.userid);
-  const [userdeliveryData, setuserdeliveryData] = useState();
   const userDeliveryHistoryResponseInfo = useGetRecivingDetailsQuery();
   const [rows, setRows] = useState();
 
@@ -90,11 +88,10 @@ const UserRecivingDetails = () => {
     const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
         return (
-          row.deliverybranch
-            .toLowerCase()
+          row?.deliverybranch?.toLowerCase()
             .includes(searchedVal.toLowerCase()) ||
-          row.business.toLowerCase().includes(searchedVal.toLowerCase()) ||
-          row.deliveryto.toLowerCase().includes(searchedVal.toLowerCase())
+          row?.business?.toLowerCase().includes(searchedVal.toLowerCase()) ||
+          row?.deliveryto?.toLowerCase().includes(searchedVal.toLowerCase())
         );
       }
     );
@@ -104,8 +101,7 @@ const UserRecivingDetails = () => {
   const requestSearchBranch = (searchedVal) => {
     const filteredRows = userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
-        return row.deliverybranch
-          .toLowerCase()
+        return row?.deliverybranch?.toLowerCase()
           .includes(searchedVal.toLowerCase());
       }
     );
@@ -123,8 +119,7 @@ const UserRecivingDetails = () => {
   const requestSearchstatus = async (searchedVal) => {
     const filteredRows = await userDeliveryHistoryResponseInfo?.data?.filter(
       (row) => {
-        return row.order_status
-          .toLowerCase()
+        return row?.order_status?.toLowerCase()
           .includes(searchedVal.toLowerCase());
       }
     );

@@ -1,7 +1,6 @@
 import { BsBank, BsWallet } from "react-icons/bs";
 import { useState } from "react";
 import {
-  Checkbox,
   FormControl,
   FormControlLabel,
   Radio,

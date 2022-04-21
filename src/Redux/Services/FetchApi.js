@@ -304,6 +304,19 @@ export const FetchApis = createApi({
       },
       providesTags: ["deliveryHistory"],
     }),
+    getRecivingHistoryDataByid: builder.query({
+      query: (userId) => {
+        return {
+          url: `/recievingdetail/${userId}/`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+      },
+      providesTags: ["deliveryHistory"],
+    }),
     updateDeliveryHistoryDataByid: builder.mutation({
       query: ({ id, data }) => {
         return {
@@ -477,4 +490,5 @@ export const {
   useGetPaymentHistoryQuery,
   useReturnRefundMutation,
   useOnLogoutMutation,
+  useGetRecivingHistoryDataByidQuery
 } = FetchApis;

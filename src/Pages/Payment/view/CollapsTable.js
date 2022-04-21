@@ -161,18 +161,18 @@ export default function CollapsTable(props) {
   const [exportDataPopUp, setExportDataPopUp] = React.useState(false);
 
   const exportData = props.tabelData?.map((value) => {
-    const date = value.deliverytime.split("T")[0];
+    const date = value?.deliverytime.split("T")[0];
     console.log(enddate, startdate);
     if (date < enddate && date > startdate) {
       return {
-        TotalOrder: value.TotalOrder,
-        DateTime: value.DateTime,
-        CODAmount: value.CODAmount,
-        DeliveryCharge: value.DeliveryCharge,
-        PaymentReceive: value.PaymentReceive,
-        PaymentMode: value.PaymentMode,
-        Payout: value.Payout,
-        Note: value.Note,
+        TotalOrder: value?.TotalOrder,
+        DateTime: value?.DateTime,
+        CODAmount: value?.CODAmount,
+        DeliveryCharge: value?.DeliveryCharge,
+        PaymentReceive: value?.PaymentReceive,
+        PaymentMode: value?.PaymentMode,
+        Payout: value?.Payout,
+        Note: value?.Note,
       };
     } else {
       return {};

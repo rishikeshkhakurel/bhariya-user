@@ -67,15 +67,10 @@ export default function UserRecivingTabel({
     Phone,
     Address,
     Email,
-    LiveLocation,
     WeigntDimension,
+    LiveLocation,
     ProductValue,
     CODAmount,
-    PickupCharge,
-    Deliverycharge,
-    CODReceived,
-    PaymentReceived,
-    Balance,
     DeliveryStatus,
     Edit
   ) {
@@ -91,15 +86,10 @@ export default function UserRecivingTabel({
       Phone,
       Address,
       Email,
-      LiveLocation,
       WeigntDimension,
+      LiveLocation,
       ProductValue,
       CODAmount,
-      PickupCharge,
-      Deliverycharge,
-      CODReceived,
-      PaymentReceived,
-      Balance,
       DeliveryStatus,
       Edit,
     };
@@ -166,18 +156,6 @@ export default function UserRecivingTabel({
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>#12334</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>45322</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
           <span>{value.business}</span>
         </div>,
         <div
@@ -220,7 +198,7 @@ export default function UserRecivingTabel({
           className="rowHandeller"
           onClick={() => tableClickHandeller(value.id)}
         >
-          <span>400 kg</span>
+          <span>{value.weight} kg</span>
         </div>,
         <div
           className="rowHandeller"
@@ -233,36 +211,6 @@ export default function UserRecivingTabel({
           onClick={() => tableClickHandeller(value.id)}
         >
           <span>{value.cod}</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>{index * 4 + 10} rs</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>{index * 6 + 10} rs</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>Yes</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>Yes</span>
-        </div>,
-        <div
-          className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
-        >
-          <span>3000 rs</span>
         </div>,
         <div
           className="rowHandeller"

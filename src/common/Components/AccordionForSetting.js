@@ -47,16 +47,16 @@ export default function AccordionForSetting(props) {
   };
 
   const addFetchDataToState = () => {
-    if(sendgetuserSettingResponseInfo.data){
-      setName(sendgetuserSettingResponseInfo.data[0].fullname);
-      setemail(sendgetuserSettingResponseInfo.data[0].email);
-      setPhoneNUmber(sendgetuserSettingResponseInfo.data[0].phonenumber);
-      setUserId(sendgetuserSettingResponseInfo.data[0].id);
-      setAddress(sendgetuserSettingResponseInfo.data[0].address);
-      const userCitizen = sendgetuserSettingResponseInfo.data[0].usercitizen.map(
+    if(sendgetuserSettingResponseInfo?.data){
+      setName(sendgetuserSettingResponseInfo?.data[0]?.fullname);
+      setemail(sendgetuserSettingResponseInfo?.data[0]?.email);
+      setPhoneNUmber(sendgetuserSettingResponseInfo?.data[0]?.phonenumber);
+      setUserId(sendgetuserSettingResponseInfo?.data[0]?.id);
+      setAddress(sendgetuserSettingResponseInfo?.data[0]?.address);
+      const userCitizen = sendgetuserSettingResponseInfo?.data[0]?.usercitizen.map(
         (value) => {
           return {
-            data_url: value.citizen,
+            data_url: value?.citizen,
           };
         }
       );
@@ -109,7 +109,7 @@ export default function AccordionForSetting(props) {
         });
         break;
       case "citizen":
-        const imageList = citizenShip.map((value) => value.data_url);
+        const imageList = citizenShip.map((value) => value?.data_url);
         setUserSettings({
           id: userId,
           data: {
@@ -124,24 +124,24 @@ export default function AccordionForSetting(props) {
   const changeCancelHandeller = (sendValue) => {
     switch (sendValue) {
       case "name":
-        setName(sendgetuserSettingResponseInfo.data[0].fullname);
+        setName(sendgetuserSettingResponseInfo?.data[0]?.fullname);
         break;
       case "email":
-        setemail(sendgetuserSettingResponseInfo.data[0].email);
+        setemail(sendgetuserSettingResponseInfo?.data[0]?.email);
 
         break;
       case "phone":
-        setPhoneNUmber(sendgetuserSettingResponseInfo.data[0].phonenumber);
+        setPhoneNUmber(sendgetuserSettingResponseInfo?.data[0]?.phonenumber);
 
         break;
       case "address":
-        setAddress(sendgetuserSettingResponseInfo.data[0].address);
+        setAddress(sendgetuserSettingResponseInfo?.data[0]?.address);
         break;
       case "citizen":
         const userCitizen =
-          sendgetuserSettingResponseInfo.data[0].usercitizen.map((value) => {
+          sendgetuserSettingResponseInfo?.data[0]?.usercitizen?.map((value) => {
             return {
-              data_url: value.citizen,
+              data_url: value?.citizen,
             };
           });
         setCitizenShip(userCitizen);

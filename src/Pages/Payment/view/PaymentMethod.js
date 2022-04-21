@@ -53,17 +53,17 @@ const PaymentMethod = () => {
                         </div>
                         <div className="PaymentMethod_bank-details">
                           <h4>
-                            Bank Name: <span> {value.bankname}</span>
+                            Bank Name: <span> {value?.bankname}</span>
                           </h4>
                           <h4>
-                            Branch : <span> {value.bankbranch} </span>
+                            Branch : <span> {value?.bankbranch} </span>
                           </h4>
                           <h4>
                             Account Number:{" "}
-                            <span> {value.accountnumberorid}</span>
+                            <span> {value?.accountnumberorid}</span>
                           </h4>
                           <h4>
-                            Account Name: <span>{value.accountholder}</span>
+                            Account Name: <span>{value?.accountholder}</span>
                           </h4>
                         </div>
                       </div>
@@ -93,10 +93,10 @@ const PaymentMethod = () => {
                         </div>
                         <div className="PaymentMethod_bank-details">
                           <h4>
-                            ID : <span> {value.accountnumberorid}</span>
+                            ID : <span> {value?.accountnumberorid}</span>
                           </h4>
                           <h4>
-                            Name : <span> {value.accountholder} </span>
+                            Name : <span> {value?.accountholder} </span>
                           </h4>
                         </div>
                       </div>

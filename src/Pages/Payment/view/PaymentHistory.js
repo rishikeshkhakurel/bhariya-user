@@ -21,7 +21,7 @@ const PaymentHistory = () => {
 
   // })
 
-  return getPaymentHistoryResponse.isLoading ? (
+  return getPaymentHistoryResponse?.isLoading ? (
     <Loading />
   ) : (
     <>

@@ -150,8 +150,8 @@ export default function UserDeliveryHistoryTabel({
   let lengthOfData = tabelData?.length;
   tabelData?.map((value, index) => {
     let date, time, formatingtime, isAm;
-    date = value.deliverytime.split("T")[0];
-    formatingtime = value.deliverytime.split("T")[1].split(".")[0].split(":");
+    date = value?.deliverytime?.split("T")[0];
+    formatingtime = value?.deliverytime?.split("T")[1].split(".")[0].split(":");
     time = () => {
       if (formatingtime[0] > 12) {
         return `${formatingtime[0] - 12}:${formatingtime[1]}`;
@@ -170,21 +170,21 @@ export default function UserDeliveryHistoryTabel({
       createData(
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
           <span>{lengthOfData--}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
           <span>
-            {value.productname} <br /> <span>{value.id}</span>
+            {value?.productname} <br /> <span>{value?.id}</span>
           </span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
           <span>
             {date}
@@ -196,96 +196,96 @@ export default function UserDeliveryHistoryTabel({
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>#{value.reference_id}</span>
+          <span>#{value?.reference_id}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>#{value.id}</span>
+          <span>#{value?.id}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.business}</span>
+          <span>{value?.business}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.deliverybranch}</span>
+          <span>{value?.deliverybranch}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.deliveryto}</span>
+          <span>{value?.deliveryto}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.phone}</span>
+          <span>{value?.phone}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.deliverylocation}</span>
+          <span>{value?.deliverylocation}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.email}</span>
+          <span>{value?.email}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.livelocation}</span>
+          <span>{value?.livelocation}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.weight} kg</span>
+          <span>{value?.weight} kg</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.packagevalue}</span>
+          <span>{value?.packagevalue}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.cod}</span>
+          <span>{value?.cod}</span>
         </div>,
         <div
           className="rowHandeller"
-          onClick={() => tableClickHandeller(value.id)}
+          onClick={() => tableClickHandeller(value?.id)}
         >
-          <span>{value.order_status}</span>
+          <span>{value?.order_status}</span>
         </div>,
         <div className="tableCellbutton">
           <MenuComp
-            onClickToEditUserDelivery={() => navigateToEditPage(value.id)}
-            onClickCancel={() => setCancel(value.id)}
-            onClickDuplicate={() => navigateToDublicateOrder(value.id)}
+            onClickToEditUserDelivery={() => navigateToEditPage(value?.id)}
+            onClickCancel={() => setCancel(value?.id)}
+            onClickDuplicate={() => navigateToDublicateOrder(value?.id)}
             onClickReturnRefund={() => {
               setReturnRefundPopUp(true);
-              setReturnRefundId(value.id);
+              setReturnRefundId(value?.id);
             }}
             onClickReturn={() => {
               setReturnPopUp(true);
-              setReturnRefundId(value.id);
+              setReturnRefundId(value?.id);
             }}
-            value={value.order_status}
+            value={value?.order_status}
           >
             <BsThreeDotsVertical fontSize="20px" />
           </MenuComp>
@@ -305,6 +305,7 @@ export default function UserDeliveryHistoryTabel({
       id: RefundReturn,
       data: { refund_amount: RefundAmount },
     });
+    setReturnRefundPopUp(false);
   };
 
   const onReturnHandler = () => {
@@ -457,8 +458,8 @@ export default function UserDeliveryHistoryTabel({
                               <>
                                 <TableCell
                                   style={{ cursor: "pointer" }}
-                                  key={column.id}
-                                  align={column.align}
+                                  key={column?.id}
+                                  align={column?.align}
                                 >
                                   {column.format && typeof value === "number"
                                     ? column.format(value)
@@ -487,7 +488,7 @@ export default function UserDeliveryHistoryTabel({
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
+            count={rows?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

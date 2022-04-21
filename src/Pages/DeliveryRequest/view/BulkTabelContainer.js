@@ -203,7 +203,7 @@ export default function BulkTabelContainer() {
 
   const changeValueofanbulkdata = (id, value, key) => {
     const copyofbulktabeldata = bulktabeldata;
-    const updatedValue = copyofbulktabeldata.map((data) => {
+    const updatedValue = copyofbulktabeldata?.map((data) => {
       if (data.id === id) {
         return {
           ...data,
@@ -242,23 +242,23 @@ export default function BulkTabelContainer() {
               {bulktabeldata?.map((row, index) => {
                 return (
                   <>
-                    <TableRow key={row.id}>
+                    <TableRow key={row?.id}>
                       <TableCell component="th" scope="row">
-                        <div className="bulktabeldata">{index}</div>
+                        <div className="bulktabeldata">{++index}</div>
                       </TableCell>
                       <TableCell component="th" scope="row">
                         <div className="bulktabeldata">
                           <input
-                            value={row.productname}
+                            value={row?.productname}
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "productname"
                               )
                             }
                             onBlur={(e) =>
-                              sendEnteredDataProductName(row.id, e.target.value)
+                              sendEnteredDataProductName(row?.id, e.target.value)
                             }
                             type="text"
                             placeholder="ex: Dharan"
@@ -268,7 +268,7 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.packagedetail}
+                            value={row?.packagedetail}
                             onChange={(e) =>
                               changeValueofanbulkdata(
                                 row.id,
@@ -278,7 +278,7 @@ export default function BulkTabelContainer() {
                             }
                             onBlur={(e) =>
                               sendEnteredDataproductdetails(
-                                row.id,
+                                row?.id,
                                 e.target.value
                               )
                             }
@@ -290,17 +290,17 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.packagevalue}
+                            value={row?.packagevalue}
                             type="text"
                             onBlur={(e) =>
                               sendEnteredDatapackagevalue(
-                                row.id,
+                                row?.id,
                                 e.target.value
                               )
                             }
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "packagevalue"
                               )
@@ -312,17 +312,17 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.cod}
+                            value={row?.cod}
                             type="text"
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "cod"
                               )
                             }
                             onBlur={(e) =>
-                              sendEnteredDatacod(row.id, e.target.value)
+                              sendEnteredDatacod(row?.id, e.target.value)
                             }
                             placeholder="ex: Dharan"
                           />
@@ -331,14 +331,14 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.deliveryto}
+                            value={row?.deliveryto}
                             type="text"
                             onBlur={(e) =>
-                              sendEnteredDatadeliveryto(row.id, e.target.value)
+                              sendEnteredDatadeliveryto(row?.id, e.target.value)
                             }
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "deliveryto"
                               )
@@ -350,15 +350,15 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.phone}
+                            value={row?.phone}
                             type="text"
                             placeholder="ex: Dharan"
                             onBlur={(e) =>
-                              sendEnteredDataphone(row.id, e.target.value)
+                              sendEnteredDataphone(row?.id, e.target.value)
                             }
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "phone"
                               )
@@ -369,15 +369,15 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.email}
+                            value={row?.email}
                             type="text"
                             placeholder="ex: Dharan"
                             onBlur={(e) =>
-                              sendEnteredDataemail(row.id, e.target.value)
+                              sendEnteredDataemail(row?.id, e.target.value)
                             }
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "email"
                               )
@@ -388,18 +388,18 @@ export default function BulkTabelContainer() {
                       <TableCell align="left">
                         <div className="bulktabeldata">
                           <input
-                            value={row.deliverylocation}
+                            value={row?.deliverylocation}
                             type="text"
                             placeholder="ex: Dharan"
                             onBlur={(e) =>
                               sendEnteredDatadeliverylocation(
-                                row.id,
+                                row?.id,
                                 e.target.value
                               )
                             }
                             onChange={(e) =>
                               changeValueofanbulkdata(
-                                row.id,
+                                row?.id,
                                 e.target.value,
                                 "deliverylocation"
                               )
@@ -408,13 +408,13 @@ export default function BulkTabelContainer() {
                         </div>
                       </TableCell>
                       <TableCell
-                        onClick={() => setClickValue(row.id)}
+                        onClick={() => setClickValue(row?.id)}
                         align="left"
                       >
                         <div className="bulktabeldata">
                           <MenuComp
                             onClickToConfirm={() =>
-                              sendDataOnConfirmDelivery(row.id)
+                              sendDataOnConfirmDelivery(row?.id)
                             }
                             onClickToRemove={onClickToRemove}
                             bulktabel

@@ -155,25 +155,25 @@ export default function PaymentTable(props) {
         </div>,
 
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.order[0].id}</span>
+          <span>{value?.order[0]?.id}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.reference_id}</span>
+          <span>{value?.reference_id}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.business}</span>
+          <span>{value?.business}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.recievingbranch}</span>
+          <span>{value?.recievingbranch}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.deliveryto}</span>
+          <span>{value?.deliveryto}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.phone}</span>
+          <span>{value?.phone}</span>
         </div>,
         <div className="rowHandeller" onClick={tableClickHandeller}>
-          <span>{value.deliverylocation}</span>
+          <span>{value?.deliverylocation}</span>
         </div>,
         <div className="tableCellbutton">
           <MenuComp>
