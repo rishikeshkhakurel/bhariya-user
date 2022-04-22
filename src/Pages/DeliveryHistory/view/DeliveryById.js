@@ -90,7 +90,7 @@ const DeliveryById = () => {
 
   data?.externalnote?.map((value) => {
     if (
-      value.whometoshow.includes(getUserSettingResponseInfo?.data[0].user_role)
+      value.whometoshow.includes(getUserSettingResponseInfo?.data?.user_role)
     )
       deliveryCommentData.push(value);
   });
@@ -161,25 +161,23 @@ const DeliveryById = () => {
                     <h4> Delivery Details</h4>
                     <li>
                       Sender :{" "}
-                      {data?.order?.map((value) => {
-                        <span>{value?.name} </span>;
-                      })}
+                        <span>{data?.user?.fullname} </span>
                     </li>
                     <li>
                       Order ID : <span>{data?.id}</span>
                     </li>
                     <li>
-                      Address : <span>{data?.order[0]?.senderlocation}</span>
+                      Address : <span>{data?.deliverylocation}</span>
                     </li>
                     <li>
-                      Brach : <span>{data.order[0]?.recievingbranch}</span>
+                      Brach : <span>{data?.recievingbranch}</span>
                     </li>
                     <li>
                       Phone Number :{" "}
-                      <span> {data?.order[0]?.sendercontact} </span>
+                      <span> {data?.user?.phonenumber} </span>
                     </li>
                     <li>
-                      Email : <span> {data?.order[0]?.senderemail} </span>
+                      Email : <span> {data?.user?.email} </span>
                     </li>
                     <li>
                       COD charge : <span> Rs. {data?.cod}</span>

@@ -69,9 +69,9 @@ function App() {
 
   const Payment = SapRoutes(lazy(() => import("./Pages/Payment/view")))
 
-  const RecivingPreviewPage = SapRoutes(lazy(() =>
-    import("./Pages/RecivingDetails/view/RecivingPreviewPage")
-  ))
+  // const RecivingPreviewPage = SapRoutes(lazy(() =>
+  //   import("./Pages/RecivingDetails/view/RecivingPreviewPage")
+  // ))
 
   const RequestDeliveryForm = SapRoutes(lazy(() =>
     import("./Pages/DeliveryRequest/view/RequestDelivery")
@@ -118,7 +118,7 @@ function App() {
 
               <Route
                 path="/recivingdetails/:id"
-                element={<RecivingPreviewPage />}
+                element={<DeliveryById />}
               />
 
               <Route path="/business" element={<UserBusiness />} />

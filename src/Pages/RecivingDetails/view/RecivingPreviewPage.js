@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BiMessageRoundedAdd } from "react-icons/bi";
 import CommentBox from "../../../common/Components/CommentBox";
 import DailogComp from "../../../common/Components/Dailog/DailogComp";
 import PrimaryButton from "../../../common/Components/Button/PrimaryButton";
 import SecondaryButton from "../../../common/Components/Button/SecondaryButton";
 import EmojiRating from "../../../common/Components/EmojiRating";
+import { useGetDeliveryHistoryDataByidQuery } from "../../../Redux/Services/FetchApi";
 
 const RecivingPreviewPage = () => {
+  const { id: orderId } = useParams();
+
+  const getAssignedOrderByIdResponseInfo =
+    useGetDeliveryHistoryDataByidQuery(orderId);
+
+  const data = getAssignedOrderByIdResponseInfo?.data;
+  
   // dailog for rating
   const [ratingDailogState, setratingDailogState] = useState(false);
   const ratingDailogStateHandeller = () => {
